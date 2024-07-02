@@ -10,10 +10,7 @@ module.exports = {
     extend: {
       spacing: px0_200,
       fontSize: px0_100,
-      width: {
-        ...px0_200,
-        max: '393px',
-      },
+      width: px0_200,
       height: {
         ...px0_200,
         topbar: '80px',
