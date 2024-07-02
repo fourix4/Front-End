@@ -1,9 +1,34 @@
 /** @type {import('tailwindcss').Config} */
 
+const px0_10 = { ...Array.from(Array(11)).map((_, i) => `${i}px`) };
+const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
+const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
+
 module.exports = {
   content: ['./src/**/*.{ts,tsx,js,jsx,html}'],
   theme: {
-    extend: {},
+    extend: {
+      spacing: px0_200,
+      fontSize: px0_100,
+      width: {
+        ...px0_100,
+        max: '393px',
+      },
+      height: {
+        ...px0_100,
+        topbar: '80px',
+      },
+      backgroundImage: {
+        alarm: "url('/src/assets/alarm.svg')",
+        menu: "url('/src/assets/menu.svg')",
+        close: "url('/src/assets/close.svg')",
+        'arrow-right': "url('/src/assets/arrow-right.svg')",
+      },
+    },
+    colors: {
+      'light-gray': '#E6E6E6',
+      gray: '#CCCCCC',
+    },
   },
   plugins: [],
 };
