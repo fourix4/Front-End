@@ -21,9 +21,19 @@ module.exports = {
       backgroundImage: {
         alarm: "url('/src/assets/alarm.svg')",
         menu: "url('/src/assets/menu.svg')",
+        polygon: "url('/src/assets/polygon.svg')",
+      },
+      backgroundPosition: {
+        right: 'right 10px center',
+      },
+      borderRadius: {
+        default: '30px',
       },
     },
-    colors: {},
+    colors: {
+      'light-gray': '#CCCCCC',
+      'dark-gray': '#9B9B9B',
+    },
   },
   plugins: [],
 };
