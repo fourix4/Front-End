@@ -1,4 +1,5 @@
 import CityFilter from '../../components/CityFilter/CityFilter';
+import StudyCafeList from '../../components/StudyCafeList/StudyCafeList';
 import Topbar from '../../components/Topbar/Topbar';
 
 const MainPage: React.FC = () => {
@@ -6,6 +7,7 @@ const MainPage: React.FC = () => {
     <>
       <Topbar />
       <CityFilter />
+      <StudyCafeList />
     </>
   );
 };

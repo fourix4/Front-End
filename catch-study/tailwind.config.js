@@ -11,11 +11,11 @@ module.exports = {
       spacing: px0_200,
       fontSize: px0_100,
       width: {
-        ...px0_100,
+        ...px0_200,
         max: '393px',
       },
       height: {
-        ...px0_100,
+        ...px0_200,
         topbar: '80px',
       },
       backgroundImage: {
