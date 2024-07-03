@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { CLIENT_URL } from '../../config/constants';
+import { SERVER_URL } from '../../config/constants';
 
 const instance = axios.create({
-  baseURL: `${CLIENT_URL}/api/`,
+  baseURL: `${SERVER_URL}/api`,
   headers: {
     withCredentials: true,
   },
