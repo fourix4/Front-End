@@ -1,14 +1,16 @@
 import { ResponseTypes } from '../../types/interfaces';
 import instance from '../utils/axios';
 
-export const postLogin = async (authCode: string) => {
+const postLogin = async (authCode: string) => {
   try {
-    const { data } = await instance.post<ResponseTypes>(
-      '/users/login/kakao',
-      authCode,
-    );
+    const { data } = await instance.post<ResponseTypes>('/users/login/kakao', {
+      code: authCode,
+    });
+
     return data;
   } catch (error) {
-    throw error;
+    return { code: 400, message: 'Server Error' };
   }
 };
+
+export default postLogin;
