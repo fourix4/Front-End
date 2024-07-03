@@ -6,7 +6,7 @@ interface MenuTypes {
 const Menu: React.FC<MenuTypes> = ({ isOpen, close }) => {
   return (
     <div
-      className={`fixed top-0 right-0 h-screen bg-white duration-500 ease-in-out ${isOpen ? 'w-screen' : 'w-0'}`}
+      className={`z-10 fixed top-0 right-0 h-screen bg-white duration-500 ease-in-out ${isOpen ? 'w-screen' : 'w-0'}`}
     >
       <div className='flex justify-end px-24 py-12'>
         <button
