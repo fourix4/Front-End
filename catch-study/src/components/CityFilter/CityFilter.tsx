@@ -1,4 +1,4 @@
-import CITY_LIST from '../../config/constants';
+import { CITY_LIST } from '../../config/constants';
 
 const CityFilter: React.FC = () => {
   return (
