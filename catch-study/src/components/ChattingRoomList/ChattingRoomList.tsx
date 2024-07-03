@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CHATTING_ROOM_LISTS } from '../../config/constants';
+import getTime from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const ChattingRoomList: React.FC = () => {
             <div className='flex items-end justify-between w-full gap-10'>
               <p className='font-bold text-20'>{chattingRoom.cafe_name}</p>
               <span className='font-normal text-12'>
-                {chattingRoom.last_chat_date}
+                {getTime(chattingRoom.last_chat_date)}
               </span>
             </div>
             <p className='font-light text-16'>{chattingRoom.last_chat}</p>
