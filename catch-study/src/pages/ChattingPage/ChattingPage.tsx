@@ -1,5 +1,13 @@
+import ChattingRoomList from '../../components/ChattingRoomList/ChattingRoomList';
+import Topbar from '../../components/Topbar/Topbar';
+
 const ChattingPage: React.FC = () => {
-  return <div>채팅</div>;
+  return (
+    <>
+      <Topbar />
+      <ChattingRoomList />
+    </>
+  );
 };
 
 export default ChattingPage;

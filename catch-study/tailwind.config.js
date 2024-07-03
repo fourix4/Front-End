@@ -29,12 +29,14 @@ module.exports = {
       'light-gray': '#CCCCCC',
       'dark-gray': '#9B9B9B',
       white: '#FFFFFF',
+      red: '#FF0B0B',
     },
     backgroundPosition: {
       right: 'right 10px center',
     },
     borderRadius: {
       default: '30px',
+      full: '50%',
     },
     boxShadow: {
       modal: '0px -4px 10px 0px #CCCCCC',
