@@ -11,26 +11,31 @@ const CITY_LIST: CityListTypes = {
 export default CITY_LIST;
 
 export interface ChattingRoomType {
-  chattingRoomId: number;
-  cafeName: string;
-  lastChattingContent: string;
-  lastChattingContentTime: string;
-  isRead: boolean;
+  chat_room_id: number;
+  cafe_id: number;
+  cafe_name: string;
+  last_chat: string;
+  last_chat_date: string;
+  status: boolean;
 }
 
 export const CHATTING_ROOM_LISTS: ChattingRoomType[] = [
   {
-    chattingRoomId: 1,
-    cafeName: '이지 스터디 카페',
-    lastChattingContent: '마지막 채팅1',
-    lastChattingContentTime: '20:00',
-    isRead: false,
+    chat_room_id: 1,
+    cafe_id: 1,
+    cafe_name: '이지 스터디 카페',
+    last_chat: '마지막 채팅 내용',
+    last_chat_date: '2024-06-28 11:00',
+    status: true,
   },
   {
-    chattingRoomId: 2,
-    cafeName: '초심 스터디 카페',
-    lastChattingContent: '마지막 채팅2',
-    lastChattingContentTime: '19:00',
-    isRead: true,
+    chat_room_id: 2,
+    cafe_id: 2,
+    cafe_name: '초심 스터디 카페',
+    last_chat: '마지막 채팅 내용',
+    last_chat_date: '2024-06-28 11:00',
+    status: false,
   },
 ];
+
+// const CHATTINGS = [];
