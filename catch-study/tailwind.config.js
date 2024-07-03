@@ -23,6 +23,7 @@ module.exports = {
         polygon: "url('/src/assets/polygon.svg')",
         close: "url('/src/assets/close.svg')",
         'arrow-right': "url('/src/assets/arrow-right.svg')",
+        'send-plane': "url('/src/assets/send-plane.svg')",
       },
     },
     colors: {
@@ -30,6 +31,7 @@ module.exports = {
       'dark-gray': '#9B9B9B',
       white: '#FFFFFF',
       red: '#FF0B0B',
+      blue: '#1B68FF',
     },
     backgroundPosition: {
       right: 'right 10px center',
@@ -37,6 +39,7 @@ module.exports = {
     borderRadius: {
       default: '30px',
       full: '50%',
+      sm: '10px',
     },
     boxShadow: {
       modal: '0px -4px 10px 0px #CCCCCC',

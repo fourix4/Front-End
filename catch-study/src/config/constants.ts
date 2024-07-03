@@ -38,4 +38,27 @@ export const CHATTING_ROOM_LISTS: ChattingRoomType[] = [
   },
 ];
 
-// const CHATTINGS = [];
+export interface MessageType {
+  user_id: number;
+  message_id: number;
+  chat: string;
+  create_date: string;
+  message_image: string;
+}
+
+export const MESSAGES: MessageType[] = [
+  {
+    user_id: 1,
+    message_id: 1,
+    chat: '메시지 내용1',
+    create_date: '2024-06-27 18:00',
+    message_image: '이미지 링크 1',
+  },
+  {
+    user_id: 2,
+    message_id: 2,
+    chat: '메시지 내용2',
+    create_date: '2024-06-27 18:01',
+    message_image: '이미지 링크 2',
+  },
+];
