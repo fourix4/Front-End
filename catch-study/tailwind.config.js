@@ -22,12 +22,13 @@ module.exports = {
         menu: "url('/src/assets/menu.svg')",
         polygon: "url('/src/assets/polygon.svg')",
         close: "url('/src/assets/close.svg')",
-        'arrow-right': "url('/src/assets/arrow-right.svg')",        
+        'arrow-right': "url('/src/assets/arrow-right.svg')",
       },
     },
     colors: {
       'light-gray': '#CCCCCC',
       'dark-gray': '#9B9B9B',
+      white: '#FFFFFF',
     },
     backgroundPosition: {
       right: 'right 10px center',
