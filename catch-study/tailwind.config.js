@@ -22,7 +22,8 @@ module.exports = {
         menu: "url('/src/assets/menu.svg')",
         polygon: "url('/src/assets/polygon.svg')",
         close: "url('/src/assets/close.svg')",
-        'arrow-right': "url('/src/assets/arrow-right.svg')",        
+        'arrow-right': "url('/src/assets/arrow-right.svg')",
+        'kakao-login': 'url(/src/assets/kakao_login_medium_wide.png)',
       },
     },
     colors: {

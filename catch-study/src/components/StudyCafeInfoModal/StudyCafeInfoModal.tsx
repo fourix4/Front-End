@@ -4,17 +4,17 @@ import time from '../../assets/time.svg';
 const StudyCafeInfoModal = () => {
   return (
     <div className='relative bottom-0 h-modal p-30 rounded-t-default shadow-modal'>
-      <div className='w-50 h-6 rounded-default bg-light-gray m-[0_auto] mb-20'></div>
-      <img className='min-w-340 min-h-150 w-full mb-20' />
+      <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
+      <img className='w-full mb-20 min-w-340 min-h-150' />
       <div className='mb-20'>
-        <p className='text-20 font-bold mb-15'>이용 가능 좌석</p>
+        <p className='font-bold text-20 mb-15'>이용 가능 좌석</p>
         <div>
           <span className='mr-60'>
-            <span className='text-16 font-bold mr-25'>자유석</span>
+            <span className='font-bold text-16 mr-25'>자유석</span>
             <span className='text-16'>10/15</span>
           </span>
           <span>
-            <span className='text-16 font-bold mr-25'>스터디룸</span>
+            <span className='font-bold text-16 mr-25'>스터디룸</span>
             <span className='text-16'>1/5</span>
           </span>
         </div>
