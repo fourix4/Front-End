@@ -25,6 +25,9 @@ module.exports = {
         'arrow-right': "url('/src/assets/arrow-right.svg')",
         'send-plane': "url('/src/assets/send-plane.svg')",
       },
+      zIndex: {
+        menu: '10',
+      },
     },
     colors: {
       'light-gray': '#CCCCCC',
