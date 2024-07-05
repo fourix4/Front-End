@@ -1,15 +1,9 @@
-import { ResponseTypes } from '../../types/interfaces';
+import { LoginResponseTypes, ResponseTypes } from './../../types/interfaces';
 import instance from '../utils/axios';
-
-interface LoginResponseTypes extends ResponseTypes {
-  data: {
-    accessToken: string;
-  };
-}
 
 const postLogin = async (authCode: string) => {
   try {
-    const { data } = await instance.post<LoginResponseTypes>(
+    const { data } = await instance.post<LoginResponseTypes | ResponseTypes>(
       '/users/login/kakao',
       {
         code: authCode,

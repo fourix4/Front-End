@@ -5,3 +5,9 @@ export interface ResponseTypes {
     [key: string]: string | number;
   };
 }
+
+export interface LoginResponseTypes extends ResponseTypes {
+  data: {
+    accessToken: string;
+  };
+}
