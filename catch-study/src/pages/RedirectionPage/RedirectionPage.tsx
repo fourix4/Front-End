@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postLogin } from '../../apis/api/user';
 import isSuccessLogin from '../../apis/services/user';
+import { ROUTE } from '../../config/constants';
 
 const RedirectionPage = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const RedirectionPage = () => {
       }
     })();
 
-    navigate('/');
+    navigate(ROUTE.HOME);
   }, []);
 
   return <div></div>;

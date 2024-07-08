@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { ACCESS_TOKEN } from '../../config/constants';
+import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate();
@@ -7,7 +7,7 @@ const MyPage: React.FC = () => {
   const logoutClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     localStorage.removeItem(ACCESS_TOKEN);
-    navigate('/');
+    navigate(ROUTE.HOME);
   };
 
   return (

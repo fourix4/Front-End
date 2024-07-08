@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router';
+import { ROUTE } from '../../config/constants';
 
 interface MenuTypes {
   isOpen: boolean;
@@ -8,8 +9,9 @@ interface MenuTypes {
 const Menu: React.FC<MenuTypes> = ({ isOpen, close }) => {
   const navigate = useNavigate();
 
-  const myPageClick = () => {
-    navigate('/mypage');
+  const myPageClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    e.preventDefault();
+    navigate(ROUTE.MYPAGE);
   };
 
   return (

@@ -10,6 +10,17 @@ export const CITY_LIST: CityListTypes = {
 
 export const ACCESS_TOKEN = 'accessToken';
 
+export const ROUTE = {
+  HOME: '/',
+  LOGIN: '/login',
+  KAKAO_REDIRECT: '/oauthkakao',
+  CHATTING: '/chatting',
+  CHATTING_ROOM: '/chatting/:chattingId',
+  MYPAGE: '/mypage',
+};
+
+export const MENU = {};
+
 export interface ChattingRoomType {
   chat_room_id: number;
   cafe_id: number;
