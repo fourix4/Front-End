@@ -10,7 +10,6 @@ const Topbar: React.FC = () => {
         <div className='inline-block cursor-pointer text-24'>Catch Study</div>
         <div className='inline-block'>
           <button className='mr-20 bg-alarm button-icon'></button>
-          <button className='bg-menu button-icon'></button>
           <button className='bg-menu button-icon' onClick={openMenu}></button>
         </div>
       </header>
