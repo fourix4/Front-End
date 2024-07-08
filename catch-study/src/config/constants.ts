@@ -18,6 +18,7 @@ export const ROUTE = {
   CHATTING_ROOM: '/chatting/:chattingId',
   MYPAGE: '/mypage',
   BOOKING: '/booking',
+  MANAGEMENT: '/management',
 };
 
 interface MenuTypes {

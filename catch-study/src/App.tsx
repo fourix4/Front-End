@@ -1,11 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
+import { ROUTE } from './config/constants';
 import ChattingPage from './pages/ChattingPage/ChattingPage';
 import ChattingRoomPage from './pages/ChattingRoomPage/ChattingRoomPage';
-import MainPage from './pages/MainPage/MainPage';
 import LoginPage from './pages/LoginPage/LoginPage';
-import RedirectionPage from './pages/RedirectionPage/RedirectionPage';
+import MainPage from './pages/MainPage/MainPage';
+import ManagementPage from './pages/ManagementPage/ManagementPage';
 import MyPage from './pages/MyPage/MyPage';
-import { ROUTE } from './config/constants';
+import RedirectionPage from './pages/RedirectionPage/RedirectionPage';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
         <Route path={ROUTE.CHATTING} element={<ChattingPage />} />
         <Route path={ROUTE.CHATTING_ROOM} element={<ChattingRoomPage />} />
         <Route path={ROUTE.MYPAGE} element={<MyPage />} />
+        <Route path={ROUTE.MANAGEMENT} element={<ManagementPage />} />
       </Routes>
     </>
   );
