@@ -1,8 +1,8 @@
 import { LoginResponseTypes, ResponseTypes } from './../../types/interfaces';
 import instance from '../utils/axios';
-import { API_ADDRESS } from '../../config/api';
+import { API_ADDRESS, STATUS } from '../../config/api';
 
-const postLogin = async (authCode: string) => {
+export const postLogin = async (authCode: string) => {
   try {
     const { data } = await instance.post<LoginResponseTypes | ResponseTypes>(
       API_ADDRESS.KAKAO_LOGIN_URI,
@@ -13,8 +13,16 @@ const postLogin = async (authCode: string) => {
 
     return data;
   } catch (error) {
-    return { code: 400, message: 'Server Error' };
+    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
   }
 };
 
-export default postLogin;
+export const postLogout = async () => {
+  try {
+    const { data } = await instance.post<ResponseTypes>(API_ADDRESS.LOGOUT_URI);
+
+    return data;
+  } catch (error) {
+    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+  }
+};

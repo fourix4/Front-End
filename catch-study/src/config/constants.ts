@@ -10,6 +10,27 @@ export const CITY_LIST: CityListTypes = {
 
 export const ACCESS_TOKEN = 'accessToken';
 
+export const ROUTE = {
+  HOME: '/',
+  LOGIN: '/login',
+  KAKAO_REDIRECT: '/oauthkakao',
+  CHATTING: '/chatting',
+  CHATTING_ROOM: '/chatting/:chattingId',
+  MYPAGE: '/mypage',
+  BOOKING: '/booking',
+};
+
+interface MenuTypes {
+  [key: string]: string;
+}
+
+export const MENU: MenuTypes = {
+  로그인: ROUTE.LOGIN,
+  마이페이지: ROUTE.MYPAGE,
+  '예약 관리': ROUTE.BOOKING,
+  채팅: ROUTE.CHATTING,
+};
+
 export interface ChattingRoomType {
   chat_room_id: number;
   cafe_id: number;
