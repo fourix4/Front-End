@@ -1,10 +1,10 @@
 import axios, { AxiosError } from 'axios';
-import { ACCESS_TOKEN, SERVER_URL } from '../../config/constants';
+import { ACCESS_TOKEN } from '../../config/constants';
 import { LoginResponseTypes } from '../../types/interfaces';
 import { API_ADDRESS, STATUS } from '../../config/api';
 
 const instance = axios.create({
-  baseURL: `${SERVER_URL}`,
+  baseURL: `${process.env.REACT_APP_SERVER_URL}`,
   headers: {
     withCredentials: true,
   },

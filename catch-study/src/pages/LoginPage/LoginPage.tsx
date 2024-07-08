@@ -1,9 +1,8 @@
 import Topbar from '../../components/Topbar/Topbar';
-import { KAKAO_REDIRECT_URI, REST_API_KEY } from '../../config/constants';
 
 const LoginPage = () => {
   const loginClick = () => {
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
   };
 
   return (
