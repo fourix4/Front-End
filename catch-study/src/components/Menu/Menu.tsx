@@ -1,9 +1,17 @@
+import { useNavigate } from 'react-router';
+
 interface MenuTypes {
   isOpen: boolean;
   close: () => void;
 }
 
 const Menu: React.FC<MenuTypes> = ({ isOpen, close }) => {
+  const navigate = useNavigate();
+
+  const myPageClick = () => {
+    navigate('/mypage');
+  };
+
   return (
     <div
       className={`z-10 fixed top-0 right-0 h-screen bg-white duration-500 ease-in-out ${isOpen ? 'w-screen' : 'w-0'}`}
@@ -21,7 +29,10 @@ const Menu: React.FC<MenuTypes> = ({ isOpen, close }) => {
           <span>로그인</span>
           <button className='w-24 h-24 bg-center bg-no-repeat bg-arrow-right'></button>
         </li>
-        <li className='flex justify-between px-24 py-12 text-base font-bold duration-300 ease-in-out cursor-pointer transition-bg hover:bg-light-gray'>
+        <li
+          onClick={myPageClick}
+          className='flex justify-between px-24 py-12 text-base font-bold duration-300 ease-in-out cursor-pointer transition-bg hover:bg-light-gray'
+        >
           <span>마이페이지</span>
           <button className='w-24 h-24 bg-center bg-no-repeat bg-arrow-right'></button>
         </li>
