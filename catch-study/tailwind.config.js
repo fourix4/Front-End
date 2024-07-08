@@ -23,6 +23,7 @@ module.exports = {
         polygon: "url('/src/assets/polygon.svg')",
         close: "url('/src/assets/close.svg')",
         'arrow-right': "url('/src/assets/arrow-right.svg')",
+        'kakao-login': 'url(/src/assets/kakao_login_medium_wide.png)',
         'send-plane': "url('/src/assets/send-plane.svg')",
       },
     },

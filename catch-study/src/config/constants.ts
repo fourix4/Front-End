@@ -2,13 +2,18 @@ interface CityListTypes {
   [key: string]: string[];
 }
 
-const CITY_LIST: CityListTypes = {
+export const SERVER_URL = 'http://localhost:8080/api';
+
+export const CITY_LIST: CityListTypes = {
   시: [],
   '군/구': [],
   동: [],
 };
 
-export default CITY_LIST;
+export const REST_API_KEY = '2cf7340813dcbc2896890c0087cdcce4';
+export const KAKAO_REDIRECT_URI = 'http://localhost:3000/oauthkakao';
+
+export const ACCESS_TOKEN = 'accessToken';
 
 export interface ChattingRoomType {
   chat_room_id: number;

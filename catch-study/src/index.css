@@ -18,6 +18,9 @@
     -moz-appearance: none;
     appearance: none;
   }
+  .m-middle {
+    margin: 0 auto;
+  }
 }
 
 input {
