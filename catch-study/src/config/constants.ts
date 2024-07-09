@@ -19,6 +19,7 @@ export const ROUTE = {
   MYPAGE: '/mypage',
   BOOKING: '/booking',
   MANAGEMENT: '/management',
+  MANAGEMENT_INFO: '/management/info',
 };
 
 interface MenuTypes {

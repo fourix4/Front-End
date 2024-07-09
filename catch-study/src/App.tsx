@@ -4,6 +4,7 @@ import ChattingPage from './pages/ChattingPage/ChattingPage';
 import ChattingRoomPage from './pages/ChattingRoomPage/ChattingRoomPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
+import ManagementInfo from './pages/ManagementInfoPage/ManagementInfo';
 import ManagementPage from './pages/ManagementPage/ManagementPage';
 import MyPage from './pages/MyPage/MyPage';
 import RedirectionPage from './pages/RedirectionPage/RedirectionPage';
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path={ROUTE.CHATTING_ROOM} element={<ChattingRoomPage />} />
         <Route path={ROUTE.MYPAGE} element={<MyPage />} />
         <Route path={ROUTE.MANAGEMENT} element={<ManagementPage />} />
+        <Route path={ROUTE.MANAGEMENT_INFO} element={<ManagementInfo />} />
       </Routes>
     </>
   );
