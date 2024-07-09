@@ -9,14 +9,25 @@ interface StudyCafeListPropTypes {
 
 const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
   const [studycafeList, setStudycafeList] = useState<StudyCafeListTypes[]>([]);
+  const [page] = useState(1);
 
   useEffect(() => {
+    const { city, country, town } = filter;
+
+    if (city === '시' && country === '군/구' && town === '동') {
+      return;
+    }
+
     (async () => {
-      const rawData = await getStudycafeList(filter);
+      const rawData = await getStudycafeList(filter, page);
 
       setStudycafeList(getStudycafeListData(rawData));
     })();
   }, [filter]);
+
+  useEffect(() => {
+    console.log(studycafeList);
+  }, [studycafeList]);
 
   return (
     <div>

@@ -5,8 +5,11 @@ import {
 } from '../../types/interfaces';
 import instance from '../utils/axios';
 
-const getStudycafeList = async ({ city, country, town }: CityFilterTypes) => {
-  const params = { city, country, town };
+const getStudycafeList = async (
+  { city, country, town }: CityFilterTypes,
+  page: number,
+) => {
+  const params = { city, country, town, page };
 
   try {
     const { data } = await instance.get<StudyCafeListResponseTypes>(
