@@ -39,7 +39,7 @@ const refreshAccessToken = async () => {
       },
     );
 
-    const { accessToken } = response.data.data;
+    const { accessToken } = response.data.data.result;
 
     localStorage.setItem(ACCESS_TOKEN, accessToken);
 
