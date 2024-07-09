@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
 import getStudycafeList from '../../apis/api/studycafe';
 import getStudycafeListData from '../../apis/services/studycafe';
@@ -9,7 +9,44 @@ interface StudyCafeListPropTypes {
 
 const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
   const [studycafeList, setStudycafeList] = useState<StudyCafeListTypes[]>([]);
-  const [page] = useState(1);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const elementRef = useRef(null);
+
+  const fetchGetStudycafe = async () => {
+    const rawData = await getStudycafeList(filter, page);
+    const data = getStudycafeListData(rawData);
+
+    if (data.length === 0) {
+      setHasMore(false);
+      return;
+    }
+
+    setStudycafeList(prev => [...prev, ...data]);
+    setPage(prev => prev + 1);
+  };
+
+  const observerCallback = (entries: Array<IntersectionObserverEntry>) => {
+    const firstEntry = entries[0];
+
+    if (firstEntry.isIntersecting && hasMore) {
+      fetchGetStudycafe();
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(observerCallback);
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
+      }
+    };
+  }, [hasMore, page]);
 
   useEffect(() => {
     const { city, country, town } = filter;
@@ -23,11 +60,9 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
 
       setStudycafeList(getStudycafeListData(rawData));
     })();
-  }, [filter]);
 
-  useEffect(() => {
-    console.log(studycafeList);
-  }, [studycafeList]);
+    setHasMore(true);
+  }, [filter]);
 
   return (
     <div>
@@ -40,7 +75,7 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
         }) => (
           <div
             key={id}
-            className='flex items-center p-20 border-b h-140 border-light-gray'
+            className='flex items-center p-20 border-b studycafe h-140 border-light-gray'
           >
             <img className='mr-20 w-100 h-100' src={cafeImage} />
             <div>
@@ -50,6 +85,7 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
           </div>
         ),
       )}
+      {hasMore && <div ref={elementRef}>more</div>}
     </div>
   );
 };
