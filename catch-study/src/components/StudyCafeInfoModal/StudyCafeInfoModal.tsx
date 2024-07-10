@@ -8,6 +8,7 @@ import { StudycafeInfoDataTypes } from '../../types/interfaces';
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
   clickedStudycafe: number | null;
+  closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const defaultInfoData = {
@@ -29,6 +30,7 @@ const defaultInfoData = {
 const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   isOpen,
   clickedStudycafe,
+  closeModal,
 }) => {
   const [info, setInfo] = useState<StudycafeInfoDataTypes>(defaultInfoData);
 
@@ -50,7 +52,14 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
     <div
       className={`fixed bottom-0 left-0  right-0 p-30 rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'}`}
     >
-      <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
+      <div className='relative'>
+        <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
+        <button
+          onClick={closeModal}
+          className='absolute w-24 h-24 bg-center bg-no-repeat bg-close right-0 inset-y-1/2 translate-y-[-50%]'
+        ></button>
+      </div>
+
       <img className='w-full mb-20 min-w-340 min-h-150' />
       <div className='mb-20'>
         <p className='font-bold text-20 mb-15'>이용 가능 좌석</p>
