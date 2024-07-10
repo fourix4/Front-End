@@ -21,8 +21,18 @@
   .m-middle {
     margin: 0 auto;
   }
+
+  .input-box {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: white;
+    border: 2px solid #cccccc;
+    border-radius: 10px;
+    display: flex;
+    gap: 20px;
+  }
 }
 
 input {
-  @apply p-0 m-0 border-none outline-none appearance-none bg-none;
+  @apply p-0 m-0 outline-none appearance-none bg-none;
 }
