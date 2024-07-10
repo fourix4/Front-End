@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
 import { getStudycafeList } from '../../apis/api/studycafe';
 import { getStudycafeListData } from '../../apis/services/studycafe';
+import loading from '../../assets/loading.svg';
 
 interface StudyCafeListPropTypes {
   filter: CityFilterTypes;
@@ -91,7 +92,11 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
           </div>
         ),
       )}
-      {hasMore && <div ref={elementRef}>more</div>}
+      {hasMore && (
+        <div ref={elementRef}>
+          <img src={loading} className='w-50 h-50 m-middle'></img>
+        </div>
+      )}
     </div>
   );
 };

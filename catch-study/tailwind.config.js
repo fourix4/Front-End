@@ -25,6 +25,7 @@ module.exports = {
         'arrow-right': "url('/src/assets/arrow-right.svg')",
         'kakao-login': 'url(/src/assets/kakao_login_medium_wide.png)',
         'send-plane': "url('/src/assets/send-plane.svg')",
+        loading: "url('/src/assets/loading.svg')",
       },
     },
     colors: {
