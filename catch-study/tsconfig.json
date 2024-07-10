@@ -24,6 +24,6 @@
     "strictNullChecks": true, // 엄격한 null 확인 여부
     "strictFunctionTypes": true // 함수 타입에 대한 엄격한 확인 여부
   },
-  "include": ["src"],
+  "include": ["src", "custom.d.ts"],
   "exclude": ["node_modules"]
 }
