@@ -58,7 +58,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
           <span className='mr-60'>
             <span className='font-bold text-16 mr-25'>자유석</span>
             <span className='text-16'>
-              {info.available_seats}/{info.total_rooms}
+              {info.available_seats}/{info.total_seats}
             </span>
           </span>
           <span>
