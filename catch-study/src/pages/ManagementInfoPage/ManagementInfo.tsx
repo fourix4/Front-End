@@ -217,58 +217,10 @@ const ManagementInfo: React.FC = () => {
           onRemoveFee={handleRemoveFee}
           onFeeChange={handleFeeChange}
         />
-        {/* <input
-          name='titleImage'
-          placeholder='썸네일 사진 파일'
-          value={formData.titleImage}
-          onChange={handleInputChange}
-          className=''
-        />
-        <input
-          name='multipleImages'
-          placeholder='카페 사진 파일1'
-          value={formData.multipleImages[0]}
-          onChange={e => {
-            const newImages = [...formData.multipleImages];
 
-            newImages[0] = e.target.value;
-            setFormData({
-              ...formData,
-              multipleImages: newImages,
-            });
-          }}
-          className=''
-        />
-        <input
-          name='multipleImages'
-          placeholder='카페 사진 파일2'
-          value={formData.multipleImages[1]}
-          onChange={e => {
-            const newImages = [...formData.multipleImages];
-
-            newImages[1] = e.target.value;
-            setFormData({
-              ...formData,
-              multipleImages: newImages,
-            });
-          }}
-          className=''
-        />
-        <input
-          name='seatChartImage'
-          placeholder='좌석배치도 사진 주소'
-          value={formData.seatChartImage}
-          onChange={handleInputChange}
-          className=''
-        />
-        <input
-          name='cafePhone'
-          placeholder='카페 전화번호'
-          value={formData.cafePhone}
-          onChange={handleInputChange}
-          className=''
-        /> */}
-        <button type='submit'>저장</button>
+        <button type='submit' className='px-16 py-12 text-white bg-blue'>
+          저장
+        </button>
       </form>
     </div>
   );

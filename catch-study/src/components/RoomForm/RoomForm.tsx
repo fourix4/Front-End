@@ -96,7 +96,7 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
           <button
             type='button'
             onClick={() => onRemoveRoom(index)}
-            className='w-24 h-24 p-12 bg-center bg-no-repeat border-2 rounded-sm bg-close border-light-gray'
+            className='w-24 h-24 p-12 bg-center bg-no-repeat bg-close'
           ></button>
         </div>
       ))}
