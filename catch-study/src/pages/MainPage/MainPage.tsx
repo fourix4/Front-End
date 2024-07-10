@@ -32,6 +32,11 @@ const MainPage: React.FC = () => {
     setClickedStudycafe(id);
   };
 
+  const closeModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setIsOpen(false);
+  };
+
   return (
     <>
       <div onClick={layoutClick}>
@@ -39,7 +44,11 @@ const MainPage: React.FC = () => {
         <CityFilter onFilterChange={filterChange} />
       </div>
       <StudyCafeList filter={filter} studycafeClick={studycafeClick} />
-      <StudyCafeInfoModal isOpen={isOpen} clickedStudycafe={clickedStudycafe} />
+      <StudyCafeInfoModal
+        isOpen={isOpen}
+        clickedStudycafe={clickedStudycafe}
+        closeModal={closeModal}
+      />
     </>
   );
 };
