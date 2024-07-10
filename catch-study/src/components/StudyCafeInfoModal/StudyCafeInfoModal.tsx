@@ -4,6 +4,11 @@ import time from '../../assets/time.svg';
 import { getStudycafeInfo } from '../../apis/api/studycafe';
 import { getStudycafeInfoData } from '../../apis/services/studycafe';
 import { StudycafeInfoDataTypes } from '../../types/interfaces';
+import SlideImage from '../SlideImage/SlideImage';
+import test1 from '../../assets/test1.png';
+import test2 from '../../assets/test2.png';
+import test3 from '../../assets/test3.png';
+import test4 from '../../assets/test4.png';
 
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
@@ -50,7 +55,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
 
   return (
     <div
-      className={`fixed bottom-0 left-0  right-0 p-30 rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'}`}
+      className={`fixed bottom-0 min-w-[300px] w-full p-30 rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'}`}
     >
       <div className='relative'>
         <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
@@ -60,7 +65,9 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
         ></button>
       </div>
 
-      <img className='w-full mb-20 min-w-340 min-h-150' />
+      {/* <SlideImage images={info.cafe_images} /> */}
+      <SlideImage images={[test1, test2, test3, test4]} />
+
       <div className='mb-20'>
         <p className='font-bold text-20 mb-15'>이용 가능 좌석</p>
         <div>
