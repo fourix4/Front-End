@@ -48,7 +48,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
 
   return (
     <div
-      className={`fixed bottom-0 left-0  right-0 h-modal p-30 rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'}`}
+      className={`fixed bottom-0 left-0  right-0 p-30 rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'}`}
     >
       <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
       <img className='w-full mb-20 min-w-340 min-h-150' />
