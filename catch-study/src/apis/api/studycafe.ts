@@ -5,7 +5,7 @@ import {
 } from '../../types/interfaces';
 import instance from '../utils/axios';
 
-const getStudycafeList = async (
+export const getStudycafeList = async (
   { city, country, town }: CityFilterTypes,
   page: number,
 ) => {
@@ -25,4 +25,14 @@ const getStudycafeList = async (
   }
 };
 
-export default getStudycafeList;
+export const getStudycafeInfo = async (studycafeId: number) => {
+  try {
+    const { data } = await instance.get<StudyCafeListResponseTypes>(
+      `${API_ADDRESS.STUDYCAFE_INFO}/${studycafeId}`,
+    );
+
+    return data;
+  } catch (error) {
+    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+  }
+};

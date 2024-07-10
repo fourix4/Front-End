@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
-import getStudycafeList from '../../apis/api/studycafe';
-import getStudycafeListData from '../../apis/services/studycafe';
+import { getStudycafeList } from '../../apis/api/studycafe';
+import { getStudycafeListData } from '../../apis/services/studycafe';
 
 interface StudyCafeListPropTypes {
   filter: CityFilterTypes;
+  studycafeClick: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    id: number,
+  ) => void;
 }
 
-const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
+const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
+  filter,
+  studycafeClick,
+}) => {
   const [studycafeList, setStudycafeList] = useState<StudyCafeListTypes[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
@@ -67,14 +74,13 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({ filter }) => {
   return (
     <div>
       {studycafeList.map(
-        ({
-          cafe_id: id,
-          cafe_name: cafeName,
-          address,
-          cafe_image: cafeImage,
-        }) => (
+        (
+          { cafe_id: id, cafe_name: cafeName, address, cafe_image: cafeImage },
+          i,
+        ) => (
           <div
-            key={id}
+            key={i}
+            onClick={e => studycafeClick(e, id)}
             className='flex items-center p-20 border-b studycafe h-140 border-light-gray'
           >
             <img className='mr-20 w-100 h-100' src={cafeImage} />

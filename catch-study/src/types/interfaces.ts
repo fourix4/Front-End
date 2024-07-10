@@ -32,3 +32,25 @@ export interface CityFilterTypes {
   country: string;
   town: string;
 }
+
+export interface StudycafeInfoDataTypes {
+  cafe_id: number;
+  cafe_name: string;
+  address: string;
+  cafe_images: string[];
+  seating_chart_image: string;
+  opening_hours: string;
+  closed_hours: string;
+  cloesd_day: string;
+  cafe_phone: string;
+  total_seats: number;
+  available_seats: number;
+  total_rooms: number;
+  available_rooms: number;
+}
+
+export interface StudycafeInfoResponseTypes extends ResponseTypes {
+  data: {
+    result: StudycafeInfoDataTypes;
+  };
+}
