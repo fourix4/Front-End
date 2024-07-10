@@ -25,6 +25,15 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
     });
   };
 
+  const nextClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setCurrentImgIndex(prev => prev + 1);
+    setStyle({
+      transform: `translateX(-${currentImgIndex + 1}00%)`,
+      transition: `all 0.4s ease-in-out`,
+    });
+  };
+
   useEffect(() => {
     if (currentImgIndex === 0) {
       setCurrentImgIndex(imageList.length - 2);
@@ -36,7 +45,7 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
       }, 500);
     }
 
-    if (currentImgIndex >= imageList?.length - 1) {
+    if (currentImgIndex >= imageList.length - 1) {
       setCurrentImgIndex(1);
       setTimeout(() => {
         setStyle({
@@ -46,15 +55,6 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
       }, 500);
     }
   }, [currentImgIndex, imageList.length]);
-
-  const nextClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    setCurrentImgIndex(prev => prev + 1);
-    setStyle({
-      transform: `translateX(-${currentImgIndex + 1}00%)`,
-      transition: `all 0.4s ease-in-out`,
-    });
-  };
 
   return (
     <>
