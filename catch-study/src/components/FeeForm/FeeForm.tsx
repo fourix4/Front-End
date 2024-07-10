@@ -22,6 +22,7 @@ const FeeForm: React.FC<FeeFormPropTypes> = ({
       <div className='flex items-center justify-start gap-20'>
         <p>사용 요금</p>
         <button
+          type='button'
           onClick={onAddFee}
           className='px-8 py-4 border-2 text-dark-gray text-12 border-light-gray rounded-default'
         >
@@ -50,6 +51,7 @@ const FeeForm: React.FC<FeeFormPropTypes> = ({
             <div className='whitespace-nowrap'>원</div>
           </div>
           <button
+            type='button'
             onClick={() => onRemoveFee(index)}
             className='w-24 h-24 p-12 bg-center bg-no-repeat bg-close'
           ></button>

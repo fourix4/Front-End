@@ -12,8 +12,8 @@ export interface AddressTypes {
 }
 
 export interface RoomInfoTypes {
+  name: string;
   capacity: number;
-  counts: number;
 }
 
 export interface UsageFeeTypes {
@@ -28,7 +28,12 @@ interface FormDataTypes {
   closedHours: string;
   closedDay: string;
   seats: number;
-  roomInfo: RoomInfoTypes[];
+  roomInfo: [
+    {
+      cancelAvailableTime: number;
+      rooms: RoomInfoTypes[];
+    },
+  ];
   usageFee: UsageFeeTypes[];
   titleImage: string;
   multipleImages: string[];
@@ -38,6 +43,7 @@ interface FormDataTypes {
 
 const ManagementInfo: React.FC = () => {
   const [roomInfos, setRoomInfos] = useState<RoomInfoTypes[]>([]);
+  const [cancelTime, setCancelTime] = useState(0);
   const [usageFees, setUsageFees] = useState<UsageFeeTypes[]>([]);
 
   const [formData, setFormData] = useState<FormDataTypes>({
@@ -52,7 +58,12 @@ const ManagementInfo: React.FC = () => {
     closedHours: '',
     closedDay: '',
     seats: 0,
-    roomInfo: roomInfos,
+    roomInfo: [
+      {
+        cancelAvailableTime: cancelTime,
+        rooms: roomInfos,
+      },
+    ],
     usageFee: usageFees,
     titleImage: '',
     multipleImages: [],
@@ -99,8 +110,19 @@ const ManagementInfo: React.FC = () => {
     );
   };
 
+  const handleRoomNameChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    const { name, value } = e.target;
+
+    setRoomInfos(prev =>
+      prev.map((room, i) => (i === index ? { ...room, [name]: value } : room)),
+    );
+  };
+
   const handleAddRoom = () => {
-    setRoomInfos(prev => [...prev, { capacity: 0, counts: 0 }]);
+    setRoomInfos(prev => [...prev, { name: '', capacity: 0, counts: 0 }]);
   };
 
   const handleRemoveRoom = (index: number) => {
@@ -183,9 +205,11 @@ const ManagementInfo: React.FC = () => {
         </div>
         <RoomForm
           roomInfos={roomInfos}
+          setCancelTime={setCancelTime}
           onAddRoom={handleAddRoom}
           onRemoveRoom={handleRemoveRoom}
           onRoomChange={handleRoomChange}
+          onRoomNameChange={handleRoomNameChange}
         />
         <FeeForm
           usageFees={usageFees}
@@ -244,6 +268,7 @@ const ManagementInfo: React.FC = () => {
           onChange={handleInputChange}
           className=''
         /> */}
+        <button type='submit'>저장</button>
       </form>
     </div>
   );
