@@ -1,19 +1,22 @@
 import { ChangeEvent, useState } from 'react';
+import AddressForm from '../../components/AddressForm/AddreesFrom';
+import FeeForm from '../../components/FeeForm/FeeForm';
+import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
 
-interface AddressTypes {
+export interface AddressTypes {
   city: string;
   country: string;
   town: string;
   etc: string;
 }
 
-interface RoomInfoTypes {
+export interface RoomInfoTypes {
   capacity: number;
   counts: number;
 }
 
-interface UsageFeeTypes {
+export interface UsageFeeTypes {
   hours: number;
   price: number;
 }
@@ -52,7 +55,7 @@ const ManagementInfo: React.FC = () => {
     roomInfo: roomInfos,
     usageFee: usageFees,
     titleImage: '',
-    multipleImages: ['', ''],
+    multipleImages: [],
     seatChartImage: '',
     cafePhone: '',
   });
@@ -66,24 +69,20 @@ const ManagementInfo: React.FC = () => {
     }));
   };
 
-  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleNestedInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    field: string,
+    setData: React.Dispatch<React.SetStateAction<FormDataTypes>>,
+  ) => {
     const { name, value } = e.target;
 
-    setFormData(prevFormData => ({
+    setData(prevFormData => ({
       ...prevFormData,
-      address: {
+      [field]: {
         ...prevFormData.address,
         [name]: value,
       },
     }));
-  };
-
-  const handleAddRoom = () => {
-    setRoomInfos(prev => [...prev, { capacity: 0, counts: 0 }]);
-  };
-
-  const handleRemoveRoom = (index: number) => {
-    setRoomInfos(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleRoomChange = (
@@ -98,6 +97,14 @@ const ManagementInfo: React.FC = () => {
         i === index ? { ...room, [field]: numberValue } : room,
       ),
     );
+  };
+
+  const handleAddRoom = () => {
+    setRoomInfos(prev => [...prev, { capacity: 0, counts: 0 }]);
+  };
+
+  const handleRemoveRoom = (index: number) => {
+    setRoomInfos(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleAddFee = () => {
@@ -128,7 +135,7 @@ const ManagementInfo: React.FC = () => {
       <h1 className='w-full pt-10 font-bold text-center text-22'>
         스터디 카페 정보 입력
       </h1>
-      <div className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'>
+      <form className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'>
         <div className='input-box'>
           <input
             name='cafeName'
@@ -138,50 +145,20 @@ const ManagementInfo: React.FC = () => {
             className=''
           />
         </div>
-        <div className='flex flex-col input-box'>
-          <div>
-            <input
-              name='city'
-              placeholder='도시'
-              value={formData.address.city}
-              onChange={handleAddressChange}
-              className='w-1/3'
-            />
-            <input
-              name='country'
-              placeholder='구'
-              value={formData.address.country}
-              onChange={handleAddressChange}
-              className='w-1/3'
-            />
-            <input
-              name='town'
-              placeholder='동'
-              value={formData.address.town}
-              onChange={handleAddressChange}
-              className='w-1/3'
-            />
-          </div>
-          <div>
-            <input
-              name='etc'
-              placeholder='기타 주소'
-              value={formData.address.etc}
-              onChange={handleAddressChange}
-              className='w-full'
-            />
-          </div>
-        </div>
+        <AddressForm
+          address={formData.address}
+          onChange={e => handleNestedInputChange(e, 'address', setFormData)}
+        />
         <input
           name='openingHours'
-          placeholder='영업시간'
+          placeholder='영업시간 (10:00)'
           value={formData.openingHours}
           onChange={handleInputChange}
           className='input-box'
         />
         <input
           name='closedHours'
-          placeholder='마감시간'
+          placeholder='마감시간 (23:00)'
           value={formData.closedHours}
           onChange={handleInputChange}
           className='input-box'
@@ -204,84 +181,19 @@ const ManagementInfo: React.FC = () => {
             className='input-box'
           />
         </div>
-        <div className='flex items-center justify-start gap-20'>
-          <p>스터디룸 정보 입력 (선택)</p>
-          <button
-            onClick={handleAddRoom}
-            className='px-8 py-4 border-2 text-dark-gray text-12 border-light-gray rounded-default'
-          >
-            추가하기
-          </button>
-        </div>
-        {roomInfos.map((room, index) => (
-          <div
-            key={index}
-            className='flex items-center justify-center w-full gap-30'
-          >
-            <div className='flex items-center justify-start w-full gap-10'>
-              <div className='whitespace-nowrap'>스터디룸</div>
-              <input
-                type='text'
-                value={room.capacity}
-                onChange={e =>
-                  handleRoomChange(index, 'capacity', e.target.value)
-                }
-                className='input-box'
-              />
-              <div className='whitespace-nowrap'>인실</div>
-              <input
-                type='text'
-                value={room.counts}
-                onChange={e =>
-                  handleRoomChange(index, 'counts', e.target.value)
-                }
-                className='input-box'
-              />
-              <div className='whitespace-nowrap'>개</div>
-            </div>
-            <button
-              onClick={() => handleRemoveRoom(index)}
-              className='w-24 h-24 p-12 bg-center bg-no-repeat bg-close'
-            ></button>
-          </div>
-        ))}
-        <div className='flex items-center justify-start gap-20'>
-          <p>사용 요금</p>
-          <button
-            onClick={handleAddFee}
-            className='px-8 py-4 border-2 text-dark-gray text-12 border-light-gray rounded-default'
-          >
-            추가하기
-          </button>
-        </div>
-        {usageFees.map((fee, index) => (
-          <div
-            key={index}
-            className='flex items-center justify-start w-full gap-30'
-          >
-            <div className='flex items-center justify-start w-full gap-10'>
-              <input
-                type='string'
-                value={fee.hours}
-                onChange={e => handleFeeChange(index, 'hours', e.target.value)}
-                className='input-box'
-              />
-              <div className='whitespace-nowrap'>시간</div>
-              <input
-                type='string'
-                value={fee.price}
-                onChange={e => handleFeeChange(index, 'price', e.target.value)}
-                className='input-box'
-              />
-              <div className='whitespace-nowrap'>원</div>
-            </div>
-            <button
-              onClick={() => handleRemoveFee(index)}
-              className='w-24 h-24 p-12 bg-center bg-no-repeat bg-close'
-            ></button>
-          </div>
-        ))}
-        <input
+        <RoomForm
+          roomInfos={roomInfos}
+          onAddRoom={handleAddRoom}
+          onRemoveRoom={handleRemoveRoom}
+          onRoomChange={handleRoomChange}
+        />
+        <FeeForm
+          usageFees={usageFees}
+          onAddFee={handleAddFee}
+          onRemoveFee={handleRemoveFee}
+          onFeeChange={handleFeeChange}
+        />
+        {/* <input
           name='titleImage'
           placeholder='썸네일 사진 파일'
           value={formData.titleImage}
@@ -331,8 +243,8 @@ const ManagementInfo: React.FC = () => {
           value={formData.cafePhone}
           onChange={handleInputChange}
           className=''
-        />
-      </div>
+        /> */}
+      </form>
     </div>
   );
 };
