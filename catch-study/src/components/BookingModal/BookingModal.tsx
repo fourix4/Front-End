@@ -11,12 +11,14 @@ interface BookingModalPropTypes {
     id: number;
   };
   usageFee: SeatPriceTypes[];
+  closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const BookingModal: React.FC<BookingModalPropTypes> = ({
   isOpen,
   selectedSeat,
   usageFee,
+  closeModal,
 }) => {
   const navigate = useNavigate();
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -32,7 +34,10 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
         <div className='h-490 p-30'>
           <div className='relative'>
             <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
-            <button className='absolute w-24 h-24 bg-center bg-no-repeat bg-close right-0 inset-y-1/2 translate-y-[-50%]'></button>
+            <button
+              onClick={closeModal}
+              className='absolute w-24 h-24 bg-center bg-no-repeat bg-close right-0 inset-y-1/2 translate-y-[-50%]'
+            ></button>
           </div>
           <div className='mb-20 text-20 font-bold text-center'>
             날짜/시간 선택

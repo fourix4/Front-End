@@ -72,6 +72,11 @@ const StudycafeBookingPage: React.FC = () => {
     };
   }, [seatsRef]);
 
+  const closeModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    setIsClicked(false);
+  };
+
   return (
     <div>
       <Topbar />
@@ -97,6 +102,7 @@ const StudycafeBookingPage: React.FC = () => {
 
         <BookingModal
           isOpen={isClicked}
+          closeModal={closeModal}
           selectedSeat={selectedSeat}
           usageFee={usageFee}
         />
