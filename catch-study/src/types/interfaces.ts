@@ -54,3 +54,28 @@ export interface StudycafeInfoResponseTypes extends ResponseTypes {
     result: StudycafeInfoDataTypes;
   };
 }
+
+export interface SeatsTypes {
+  seat_id: number;
+  seat_number: string;
+  is_available: boolean; // 사용 불가
+}
+
+export interface RoomsTypes {
+  room_id: number;
+  room_name: string;
+  capacity: number;
+  cancel_available_time: number; // 분 단위
+}
+
+export interface StudycafeSeatTypes {
+  seating_chart: string;
+  seats: SeatsTypes[];
+  rooms: RoomsTypes[];
+}
+
+export interface StudycafeSeatResponseTypes extends ResponseTypes {
+  data: {
+    result: StudycafeSeatTypes;
+  };
+}

@@ -57,10 +57,13 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
     })();
   }, [clickedStudycafe]);
 
-  const bookingClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const bookingClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    cafeId: number,
+  ) => {
     e.preventDefault();
     closeModal(e);
-    navigate(ROUTE.STUDYCAFE_BOOKING);
+    navigate(ROUTE.STUDYCAFE_BOOKING, { state: { key: { cafeId } } });
   };
 
   return (
@@ -113,7 +116,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
         </div>
       </div>
       <button
-        onClick={bookingClick}
+        onClick={e => bookingClick(e, info.cafe_id)}
         className={`w-full h-60 text-24 font-bold text-white bg-blue`}
       >
         예약하기

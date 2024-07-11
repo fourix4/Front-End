@@ -4,6 +4,8 @@ import {
   StudycafeInfoResponseTypes,
   StudyCafeListResponseTypes,
   StudyCafeListTypes,
+  StudycafeSeatResponseTypes,
+  StudycafeSeatTypes,
 } from '../../types/interfaces';
 
 export const getStudycafeListData = (
@@ -45,6 +47,40 @@ export const getStudycafeInfoData = (
     available_seats: 20,
     total_rooms: 5,
     available_rooms: 2,
+  };
+
+  // return null;
+};
+
+export const getStudycafeSeatData = (
+  rawData: StudycafeSeatResponseTypes | ResponseTypes,
+): StudycafeSeatTypes | null => {
+  if (rawData.data) {
+    return rawData.data.result;
+  }
+
+  return {
+    seating_chart: '좌석 배치도 이미지 주소',
+    seats: [
+      {
+        seat_id: 1,
+        seat_number: '1A',
+        is_available: false, // 사용 불가
+      },
+      {
+        seat_id: 2,
+        seat_number: '1B',
+        is_available: true, // 사용 가능
+      },
+    ],
+    rooms: [
+      {
+        room_id: 1,
+        room_name: '4인용 스터디룸',
+        capacity: 4,
+        cancel_available_time: 360, // 분 단위
+      },
+    ],
   };
 
   // return null;

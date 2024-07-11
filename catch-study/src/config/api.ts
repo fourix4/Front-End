@@ -4,6 +4,7 @@ export const API_ADDRESS = {
   LOGOUT_URI: '/users/logout',
   STUDYCAFE_SEARCH_URI: '/search',
   STUDYCAFE_INFO: '/studycafes',
+  STUDYCAFE_SEATING_CHART: '/seatingchart',
 };
 
 export const STATUS = {
