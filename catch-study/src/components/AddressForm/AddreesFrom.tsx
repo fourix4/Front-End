@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { AddressTypes } from '../../pages/ManagementInfoPage/ManagementInfo';
+import { AddressTypes } from '../../types/manage';
 
 interface AddressFromPropTypes {
   address: AddressTypes;
