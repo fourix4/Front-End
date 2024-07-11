@@ -39,7 +39,10 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
           </div>
           <div className='flex w-full max-h-[85%] overflow-auto flex-wrap'>
             {selectedSeat.type === SEAT_TYPE.SEAT ? (
-              <BookingSeatModal usageFee={usageFee} />
+              <BookingSeatModal
+                usageFee={usageFee}
+                selectedSeat={selectedSeat}
+              />
             ) : (
               <BookingRoomModal />
             )}
