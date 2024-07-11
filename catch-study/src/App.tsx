@@ -9,6 +9,7 @@ import ManagementPage from './pages/ManagementPage/ManagementPage';
 import MyPage from './pages/MyPage/MyPage';
 import RedirectionPage from './pages/RedirectionPage/RedirectionPage';
 import StudycafeBookingPage from './pages/StudycafeBookingPage/StudycafeBookingPage';
+import PaymentPage from './pages/PaymentPage/PaymentPage';
 
 const App: React.FC = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FC = () => {
           path={ROUTE.STUDYCAFE_BOOKING}
           element={<StudycafeBookingPage />}
         />
+        <Route path={ROUTE.PAYMENT} element={<PaymentPage />} />
       </Routes>
     </>
   );

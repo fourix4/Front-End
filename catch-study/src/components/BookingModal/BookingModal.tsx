@@ -1,4 +1,5 @@
-import { SEAT_TYPE } from '../../config/constants';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE, SEAT_TYPE } from '../../config/constants';
 import { SeatPriceTypes } from '../../types/interfaces';
 import BookingRoomModal from '../BookingRoomModal/BookingRoomModal';
 import BookingSeatModal from '../BookingSeatModal/BookingSeatModal';
@@ -17,6 +18,12 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   selectedSeat,
   usageFee,
 }) => {
+  const navigate = useNavigate();
+  const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    navigate(ROUTE.PAYMENT);
+  };
+
   return (
     <>
       <div
@@ -38,7 +45,10 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
             )}
           </div>
         </div>
-        <button className={`w-full h-60 text-24 font-bold text-white bg-blue`}>
+        <button
+          onClick={paymentClick}
+          className={`w-full h-60 text-24 font-bold text-white bg-blue`}
+        >
           결제하기
         </button>
       </div>
