@@ -3,15 +3,17 @@ import { useEffect, useRef, useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
 import { getStudycafeSeatingChart } from '../../apis/api/studycafe';
 import { getStudycafeSeatData } from '../../apis/services/studycafe';
-import { RoomsTypes, SeatsTypes } from '../../types/interfaces';
+import { RoomsTypes, SeatPriceTypes, SeatsTypes } from '../../types/interfaces';
 import BookingModal from '../../components/BookingModal/BookingModal';
+import { SEAT_TYPE } from '../../config/constants';
 
 const StudycafeBookingPage: React.FC = () => {
   const location = useLocation();
   const { cafeId } = location.state.key;
   const [seats, setSeats] = useState<SeatsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
-  const [clickedSeat, setClickedseat] = useState({
+  const [usageFee, setUsageFee] = useState<SeatPriceTypes[]>([]);
+  const [selectedSeat, setSeletedSeat] = useState({
     type: '',
     id: 0,
   });
@@ -26,6 +28,7 @@ const StudycafeBookingPage: React.FC = () => {
       if (data) {
         setSeats(data.seats);
         setRooms(data.rooms);
+        setUsageFee(data.usage_fee);
       }
     })();
   }, []);
@@ -42,11 +45,11 @@ const StudycafeBookingPage: React.FC = () => {
       setIsClicked(prev => !prev);
     }
 
-    if (isClicked && clickedSeat.id === id && clickedSeat.type === type) {
+    if (isClicked && selectedSeat.id === id && selectedSeat.type === type) {
       setIsClicked(prev => !prev);
     }
 
-    setClickedseat({
+    setSeletedSeat({
       type,
       id,
     });
@@ -55,7 +58,6 @@ const StudycafeBookingPage: React.FC = () => {
   useEffect(() => {
     const handleFocus = (e: MouseEvent) => {
       if (
-        seatsRef &&
         seatsRef.current &&
         !seatsRef.current.contains(e.target as HTMLDivElement)
       ) {
@@ -77,8 +79,8 @@ const StudycafeBookingPage: React.FC = () => {
         {seats.map(seat => (
           <div
             key={seat.seat_number}
-            onClick={e => seatClick(e, seat.seat_id, 'seat')}
-            className={`border-[1px] ${isClicked && clickedSeat.id === seat.seat_id && clickedSeat.type === 'seat' ? 'bg-dark-gray' : ''}`}
+            onClick={e => seatClick(e, seat.seat_id, SEAT_TYPE.SEAT)}
+            className={`border-[1px] ${isClicked && selectedSeat.id === seat.seat_id && selectedSeat.type === SEAT_TYPE.SEAT ? 'bg-dark-gray' : ''}`}
           >
             {seat.seat_number}
           </div>
@@ -86,15 +88,19 @@ const StudycafeBookingPage: React.FC = () => {
         {rooms.map(room => (
           <div
             key={room.room_name}
-            onClick={e => seatClick(e, room.room_id, 'room')}
-            className={`border-[1px] ${isClicked && clickedSeat.id === room.room_id && clickedSeat.type === 'room' ? 'bg-dark-gray' : ''}`}
+            onClick={e => seatClick(e, room.room_id, SEAT_TYPE.ROOM)}
+            className={`border-[1px] ${isClicked && selectedSeat.id === room.room_id && selectedSeat.type === SEAT_TYPE.ROOM ? 'bg-dark-gray' : ''}`}
           >
             {room.room_name}
           </div>
         ))}
-      </div>
 
-      <BookingModal />
+        <BookingModal
+          isOpen={isClicked}
+          selectedSeat={selectedSeat}
+          usageFee={usageFee}
+        />
+      </div>
     </div>
   );
 };

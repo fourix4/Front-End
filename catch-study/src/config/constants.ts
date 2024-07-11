@@ -47,6 +47,11 @@ export const MENU: MenuTypes = {
   채팅: ROUTE.CHATTING,
 };
 
+export const SEAT_TYPE = {
+  SEAT: 'seat',
+  ROOM: 'room',
+};
+
 export interface ChattingRoomType {
   chat_room_id: number;
   cafe_id: number;

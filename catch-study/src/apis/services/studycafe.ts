@@ -79,6 +79,21 @@ export const getStudycafeSeatData = (
         room_name: '4인용 스터디룸',
         capacity: 4,
         cancel_available_time: 360, // 분 단위
+        price: 5000,
+      },
+    ],
+    usage_fee: [
+      {
+        hours: 1,
+        price: 2000,
+      },
+      {
+        hours: 2,
+        price: 3000,
+      },
+      {
+        hours: 5,
+        price: 4000,
       },
     ],
   };

@@ -66,12 +66,19 @@ export interface RoomsTypes {
   room_name: string;
   capacity: number;
   cancel_available_time: number; // 분 단위
+  price: number;
+}
+
+export interface SeatPriceTypes {
+  hours: number;
+  price: number;
 }
 
 export interface StudycafeSeatTypes {
   seating_chart: string;
   seats: SeatsTypes[];
   rooms: RoomsTypes[];
+  usage_fee: SeatPriceTypes[];
 }
 
 export interface StudycafeSeatResponseTypes extends ResponseTypes {
