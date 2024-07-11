@@ -1,4 +1,3 @@
-// useManagementInfo.js
 import { ChangeEvent, useState } from 'react';
 import {
   FormDataTypes,
@@ -12,28 +11,28 @@ const useManagementInfo = () => {
   const [usageFees, setUsageFees] = useState<UsageFeeTypes[]>([]);
 
   const [formData, setFormData] = useState<FormDataTypes>({
-    cafeName: '',
+    cafe_name: '',
     address: {
       city: '',
       country: '',
       town: '',
       etc: '',
     },
-    openingHours: '',
-    closedHours: '',
-    closedDay: '',
+    opening_hours: '',
+    closed_hours: '',
+    closed_day: '',
     seats: 0,
-    roomInfo: [
+    room_info: [
       {
-        cancelAvailableTime: cancelTime,
+        cancel_available_time: cancelTime,
         rooms: roomInfos,
       },
     ],
-    usageFee: usageFees,
-    titleImage: '',
-    multipleImages: [],
-    seatChartImage: '',
-    cafePhone: '',
+    usage_fee: usageFees,
+    title_image: '',
+    multiple_images: [],
+    seatChart_image: '',
+    cafe_phone: '',
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

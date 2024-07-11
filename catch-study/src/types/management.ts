@@ -16,21 +16,21 @@ export interface UsageFeeTypes {
 }
 
 export interface FormDataTypes {
-  cafeName: string;
+  cafe_name: string;
   address: AddressTypes;
-  openingHours: string;
-  closedHours: string;
-  closedDay: string;
+  opening_hours: string;
+  closed_hours: string;
+  closed_day: string;
   seats: number;
-  roomInfo: [
+  room_info: [
     {
-      cancelAvailableTime: number;
+      cancel_available_time: number;
       rooms: RoomInfoTypes[];
     },
   ];
-  usageFee: UsageFeeTypes[];
-  titleImage: string;
-  multipleImages: string[];
-  seatChartImage: string;
-  cafePhone: string;
+  usage_fee: UsageFeeTypes[];
+  title_image: string;
+  multiple_images: string[];
+  seatChart_image: string;
+  cafe_phone: string;
 }

@@ -1,3 +1,4 @@
+import { postManagementInfo } from '../../apis/api/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
@@ -22,18 +23,31 @@ const ManagementInfo: React.FC = () => {
     handleFeeChange,
   } = useManagementInfo();
 
+  const handleInfoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(formData);
+
+    const rawData = await postManagementInfo(formData);
+
+    console.log(rawData);
+  };
+
   return (
     <div className='w-screen h-full'>
       <Topbar />
       <h1 className='w-full pt-10 font-bold text-center text-22'>
         스터디 카페 정보 입력
       </h1>
-      <form className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'>
+      <form
+        onSubmit={handleInfoSubmit}
+        className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'
+      >
         <div className='input-box'>
           <input
             name='cafeName'
             placeholder='스터디 카페 이름'
-            value={formData.cafeName}
+            value={formData.cafe_name}
             onChange={handleInputChange}
             className=''
           />
@@ -45,21 +59,21 @@ const ManagementInfo: React.FC = () => {
         <input
           name='openingHours'
           placeholder='영업시간 (10:00)'
-          value={formData.openingHours}
+          value={formData.opening_hours}
           onChange={handleInputChange}
           className='input-box'
         />
         <input
           name='closedHours'
           placeholder='마감시간 (23:00)'
-          value={formData.closedHours}
+          value={formData.closed_hours}
           onChange={handleInputChange}
           className='input-box'
         />
         <input
           name='closedDay'
           placeholder='휴무일'
-          value={formData.closedDay}
+          value={formData.closed_day}
           onChange={handleInputChange}
           className='input-box'
         />
