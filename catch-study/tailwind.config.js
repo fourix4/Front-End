@@ -15,7 +15,7 @@ module.exports = {
       height: {
         ...px0_1000,
         topbar: '80px',
-        modal: '500px',
+        modal: '550px',
       },
       backgroundImage: {
         alarm: "url('/src/assets/alarm.svg')",
