@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import mapPin from '../../assets/map-pin.svg';
 import time from '../../assets/time.svg';
 import { getStudycafeInfo } from '../../apis/api/studycafe';
@@ -9,6 +10,7 @@ import test1 from '../../assets/test1.png';
 import test2 from '../../assets/test2.png';
 import test3 from '../../assets/test3.png';
 import test4 from '../../assets/test4.png';
+import { ROUTE } from '../../config/constants';
 
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
@@ -38,6 +40,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   closeModal,
 }) => {
   const [info, setInfo] = useState<StudycafeInfoDataTypes>(defaultInfoData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (clickedStudycafe === null) {
@@ -52,6 +55,12 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
       }
     })();
   }, [clickedStudycafe]);
+
+  const bookingClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    closeModal(e);
+    navigate(ROUTE.STUDYCAFE_BOOKING);
+  };
 
   return (
     <div
@@ -98,7 +107,10 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
         </div>
         <div className='ml-30 text-16'>휴무일 {info.cloesd_day}</div>
       </div>
-      <button className={`w-full h-60 text-24 font-bold text-white bg-blue`}>
+      <button
+        onClick={bookingClick}
+        className={`w-full h-60 text-24 font-bold text-white bg-blue`}
+      >
         예약하기
       </button>
     </div>

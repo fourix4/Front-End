@@ -33,6 +33,7 @@ export const ROUTE = {
   BOOKING: '/booking',
   MANAGEMENT: '/management',
   MANAGEMENT_INFO: '/management/info',
+  STUDYCAFE_BOOKING: '/studycafe/booking',
 };
 
 interface MenuTypes {
