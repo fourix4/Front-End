@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface SlideImagePropTypes {
   images: string[];
@@ -15,6 +15,11 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
     transform: `translateX(-${currentImgIndex}00%)`,
     transition: `all 0.4s ease-in-out`,
   });
+  const [touch, setTouch] = useState({
+    start: 0,
+    end: 0,
+  });
+  const flexRef = useRef<HTMLDivElement>(null);
 
   const prevClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -56,11 +61,58 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
     }
   }, [currentImgIndex, imageList.length]);
 
+  const touchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    setTouch({
+      ...touch,
+      start: e.touches[0].pageX,
+    });
+  };
+
+  const touchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (flexRef.current) {
+      const current = flexRef.current.clientWidth * currentImgIndex;
+      const result = e.targetTouches[0].pageX - touch.start - current;
+
+      setStyle({
+        transform: `translateX(${result}px)`,
+        transition: '0ms',
+      });
+    }
+  };
+
+  const touchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const end = e.changedTouches[0].pageX;
+
+    if (touch.start > end) {
+      setCurrentImgIndex(prev => prev + 1);
+      setStyle({
+        transform: `translateX(-${currentImgIndex + 1}00%)`,
+        transition: `all 0.4s ease-in-out`,
+      });
+    } else {
+      setCurrentImgIndex(prev => prev - 1);
+      setStyle({
+        transform: `translateX(-${currentImgIndex - 1}00%)`,
+        transition: `all 0.4s ease-in-out`,
+      });
+    }
+
+    setTouch({
+      ...touch,
+      end,
+    });
+  };
+
   return (
     <>
       <div className='relative mb-20'>
-        <div className='overflow-hidden bg-black w-400 h-150 m-middle'>
-          <div className='flex' style={style}>
+        <div
+          className='overflow-hidden bg-black w-400 h-150 m-middle'
+          onTouchStart={touchStart}
+          onTouchMove={touchMove}
+          onTouchEnd={touchEnd}
+        >
+          <div ref={flexRef} className='flex' style={style}>
             {imageList.map((image, i) => (
               <img
                 key={i}
