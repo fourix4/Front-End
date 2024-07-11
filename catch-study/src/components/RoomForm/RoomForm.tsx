@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { RoomInfoTypes } from '../../types/manage';
+import { RoomInfoTypes } from '../../types/management';
 
 interface RoomFormPropTypes {
   roomInfos: RoomInfoTypes[];

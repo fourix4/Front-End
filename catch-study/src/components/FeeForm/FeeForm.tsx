@@ -1,4 +1,4 @@
-import { UsageFeeTypes } from '../../types/manage';
+import { UsageFeeTypes } from '../../types/management';
 
 interface FeeFormPropTypes {
   usageFees: UsageFeeTypes[];
