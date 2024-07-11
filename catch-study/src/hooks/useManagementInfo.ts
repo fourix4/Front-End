@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import {
   FormDataTypes,
   RoomInfoTypes,
@@ -86,7 +86,10 @@ const useManagementInfo = () => {
   };
 
   const handleAddRoom = () => {
-    setRoomInfos(prev => [...prev, { name: '', capacity: 0, counts: 0 }]);
+    setRoomInfos(prev => [
+      ...prev,
+      { name: '', capacity: 0, counts: 0, price: 0 },
+    ]);
   };
 
   const handleRemoveRoom = (index: number) => {
@@ -114,6 +117,19 @@ const useManagementInfo = () => {
       ),
     );
   };
+
+  useEffect(() => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      room_info: [
+        {
+          cancel_available_time: cancelTime,
+          rooms: roomInfos,
+        },
+      ],
+      usage_fee: usageFees,
+    }));
+  }, [roomInfos, usageFees, cancelTime]);
 
   return {
     roomInfos,

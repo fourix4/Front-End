@@ -78,23 +78,37 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
       {roomInfos.map((room, index) => (
         <div
           key={index}
-          className='flex items-center justify-center w-full gap-10'
+          className='flex items-center justify-center w-full gap-30'
         >
-          <input
-            name='name'
-            placeholder='이름'
-            value={room.name}
-            onChange={e => onRoomNameChange(e, index)}
-            className='input-box'
-          />
-          <div className='whitespace-nowrap'>스터디룸</div>
-          <input
-            type='text'
-            value={room.capacity}
-            onChange={e => onRoomChange(index, 'capacity', e.target.value)}
-            className='input-box'
-          />
-          <div className='whitespace-nowrap'>인실</div>
+          <div className='flex flex-col items-center justify-center w-full gap-10'>
+            <div className='flex items-center justify-start w-full gap-10'>
+              <input
+                name='name'
+                placeholder='이름'
+                value={room.name}
+                onChange={e => onRoomNameChange(e, index)}
+                className='input-box'
+              />
+              <div className='whitespace-nowrap'>스터디룸</div>
+              <input
+                type='text'
+                value={room.capacity}
+                onChange={e => onRoomChange(index, 'capacity', e.target.value)}
+                className='input-box'
+              />
+              <div className='whitespace-nowrap'>인실</div>
+            </div>
+            <div className='flex items-center justify-center w-full gap-10'>
+              <div className='whitespace-nowrap'>시간당</div>
+              <input
+                type='text'
+                value={room.price}
+                onChange={e => onRoomChange(index, 'price', e.target.value)}
+                className='input-box'
+              />
+              <div className='whitespace-nowrap'>원</div>
+            </div>
+          </div>
           <button
             type='button'
             onClick={() => onRemoveRoom(index)}

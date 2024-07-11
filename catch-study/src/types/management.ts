@@ -8,6 +8,7 @@ export interface AddressTypes {
 export interface RoomInfoTypes {
   name: string;
   capacity: number;
+  price: number;
 }
 
 export interface UsageFeeTypes {
