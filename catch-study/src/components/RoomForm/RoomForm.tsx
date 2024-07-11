@@ -59,20 +59,22 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
           추가하기
         </button>
       </div>
-      <div className='flex items-center justify-start w-full gap-10'>
-        <p className='whitespace-nowrap'>예약 시간 이전</p>
-        <input
-          type='number'
-          value={time}
-          onChange={handleCancelTimeChange}
-          className='input-box max-w-100'
-        />
-        <select value={timeType} onChange={handleTimeTypeChange}>
-          <option value='분'>분</option>
-          <option value='시간'>시간</option>
-        </select>
-        <p className='whitespace-nowrap'>전까지 취소 가능</p>
-      </div>
+      {roomInfos.length !== 0 && (
+        <div className='flex items-center justify-start w-full gap-10'>
+          <p className='whitespace-nowrap'>예약 시간 이전</p>
+          <input
+            type='number'
+            value={time}
+            onChange={handleCancelTimeChange}
+            className='input-box max-w-100'
+          />
+          <select value={timeType} onChange={handleTimeTypeChange}>
+            <option value='분'>분</option>
+            <option value='시간'>시간</option>
+          </select>
+          <p className='whitespace-nowrap'>전까지 취소 가능</p>
+        </div>
+      )}
       {roomInfos.map((room, index) => (
         <div
           key={index}
