@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import mapPin from '../../assets/map-pin.svg';
 import time from '../../assets/time.svg';
+import phone from '../../assets/phone.svg';
 import { getStudycafeInfo } from '../../apis/api/studycafe';
 import { getStudycafeInfoData } from '../../apis/services/studycafe';
 import { StudycafeInfoDataTypes } from '../../types/interfaces';
@@ -99,13 +100,17 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
           <img src={mapPin} className='inline mr-10' />
           <span className='align-middle text-16'>{info.address}</span>
         </div>
-        <div className='mb-20'>
+        <div className='mb-15'>
           <img src={time} className='inline mr-10' />
           <span className='align-middle text-16'>
             {info.opening_hours} ~ {info.closed_hours}
           </span>
         </div>
-        <div className='ml-30 text-16'>휴무일 {info.cloesd_day}</div>
+        <div className='ml-30 text-16 mb-15'>휴무일 {info.cloesd_day}</div>
+        <div>
+          <img src={phone} className='inline mr-10' />
+          <span className='align-middle text-16'>{info.cafe_phone}</span>
+        </div>
       </div>
       <button
         onClick={bookingClick}
