@@ -12,7 +12,15 @@ export const getStudycafeListData = (
   rawData: StudyCafeListResponseTypes | ResponseTypes,
 ): StudyCafeListTypes[] => {
   if (rawData.data) {
-    return rawData.data.result;
+    return Array(20)
+      .fill(0)
+      .map((_, i) => ({
+        cafe_id: i,
+        cafe_name: '이지 스터디 카페',
+        address: '서울 강남구 논현동 12번지 2',
+        cafe_image: '썸네일_주소',
+      }));
+    // return rawData.data.result;
   }
 
   return Array(20)

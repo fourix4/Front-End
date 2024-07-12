@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE, SEAT_TYPE } from '../../config/constants';
 import { SeatPriceTypes } from '../../types/interfaces';
@@ -21,10 +22,30 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   closeModal,
 }) => {
   const navigate = useNavigate();
+  const [selectedPrice, setSelectedPrice] = useState(0);
+
+  const priceClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    price: number,
+  ) => {
+    e.preventDefault();
+
+    setSelectedPrice(price);
+  };
+
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
+
+    if (!selectedPrice) {
+      alert('시간을 선택해주세요');
+      return;
+    }
     navigate(ROUTE.PAYMENT);
   };
+
+  useEffect(() => {
+    setSelectedPrice(0);
+  }, [selectedSeat]);
 
   return (
     <>
@@ -39,14 +60,15 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
               className='absolute w-24 h-24 bg-center bg-no-repeat bg-close right-0 inset-y-1/2 translate-y-[-50%]'
             ></button>
           </div>
-          <div className='mb-20 text-20 font-bold text-center'>
+          <div className='mb-20 font-bold text-center text-20'>
             날짜/시간 선택
           </div>
           <div className='flex w-full max-h-[85%] overflow-auto flex-wrap'>
             {selectedSeat.type === SEAT_TYPE.SEAT ? (
               <BookingSeatModal
                 usageFee={usageFee}
-                selectedSeat={selectedSeat}
+                priceClick={priceClick}
+                selectedPrice={selectedPrice}
               />
             ) : (
               <BookingRoomModal />
