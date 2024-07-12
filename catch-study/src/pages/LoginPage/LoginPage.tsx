@@ -3,7 +3,7 @@ import Topbar from '../../components/Topbar/Topbar';
 const LoginPage = () => {
   const loginClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
+    window.location.href = `http://3.39.182.9:8080/oauth2/authorization/kakao`;
   };
 
   return (
