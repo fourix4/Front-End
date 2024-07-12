@@ -4,6 +4,9 @@ import { ROUTE, SEAT_TYPE } from '../../config/constants';
 import { SeatPriceTypes } from '../../types/interfaces';
 import BookingRoomModal from '../BookingRoomModal/BookingRoomModal';
 import BookingSeatModal from '../BookingSeatModal/BookingSeatModal';
+import { getRoomTimeInfo } from '../../apis/api/studycafe';
+import { dateTo8Digit } from '../../utils/time.utils';
+import { getRoomTimetable } from '../../apis/services/studycafe';
 
 interface BookingModalPropTypes {
   isOpen: boolean;
@@ -23,6 +26,12 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
 }) => {
   const navigate = useNavigate();
   const [selectedPrice, setSelectedPrice] = useState(0);
+  const [roomDate, setRoomDate] = useState({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    date: new Date().getDate(),
+  });
+  const [roomTime, setRoomTime] = useState(1);
 
   const priceClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -31,6 +40,22 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
     e.preventDefault();
 
     setSelectedPrice(price);
+  };
+
+  const yearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRoomDate(prev => ({ ...prev, year: +e.target.value }));
+  };
+
+  const monthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRoomDate(prev => ({ ...prev, month: +e.target.value }));
+  };
+
+  const dateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRoomDate(prev => ({ ...prev, date: +e.target.value }));
+  };
+
+  const timeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setRoomTime(+e.target.value);
   };
 
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -46,6 +71,16 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   useEffect(() => {
     setSelectedPrice(0);
   }, [selectedSeat]);
+
+  useEffect(() => {
+    (async () => {
+      const date = dateTo8Digit(roomDate.year, roomDate.month, roomDate.date);
+      const rawData = await getRoomTimeInfo(selectedSeat.id, date, roomTime);
+      const data = getRoomTimetable(rawData);
+
+      console.log(data);
+    })();
+  }, [roomDate, roomTime]);
 
   return (
     <>
@@ -71,7 +106,12 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
                 selectedPrice={selectedPrice}
               />
             ) : (
-              <BookingRoomModal />
+              <BookingRoomModal
+                yearChange={yearChange}
+                monthChange={monthChange}
+                dateChange={dateChange}
+                timeChange={timeChange}
+              />
             )}
           </div>
         </div>

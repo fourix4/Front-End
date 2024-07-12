@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CHATTING_ROOM_LISTS } from '../../config/constants';
-import getTime from '../../utils/time.utils';
+import { getTime } from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
   return (

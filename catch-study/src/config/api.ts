@@ -5,6 +5,7 @@ export const API_ADDRESS = {
   STUDYCAFE_SEARCH_URI: '/studycafes/search',
   STUDYCAFE_INFO: '/studycafes',
   STUDYCAFE_SEATING_CHART: '/seatingchart',
+  ROOM_TIME_INFO: '/studycafes/timeinfo',
 };
 
 export const STATUS = {

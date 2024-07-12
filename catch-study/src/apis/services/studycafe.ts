@@ -1,5 +1,6 @@
 import {
   ResponseTypes,
+  RoomTimeInfoResponseTypes,
   StudycafeInfoDataTypes,
   StudycafeInfoResponseTypes,
   StudyCafeListResponseTypes,
@@ -107,4 +108,16 @@ export const getStudycafeSeatData = (
   };
 
   // return null;
+};
+
+export const getRoomTimetable = (
+  rawData: RoomTimeInfoResponseTypes | ResponseTypes,
+) => {
+  if (rawData.data) {
+    return rawData.data.result;
+  }
+
+  return ['13:00', '15:00'];
+
+  // return [];
 };

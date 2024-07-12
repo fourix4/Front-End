@@ -86,3 +86,11 @@ export interface StudycafeSeatResponseTypes extends ResponseTypes {
     result: StudycafeSeatTypes;
   };
 }
+
+export interface RoomTimeInfoResponseTypes extends ResponseTypes {
+  data: {
+    result: {
+      available_start_time: string[];
+    };
+  };
+}

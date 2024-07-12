@@ -1,5 +1,5 @@
 import { MESSAGES } from '../../config/constants';
-import getTime from '../../utils/time.utils';
+import { getTime } from '../../utils/time.utils';
 
 const ChattingRoom = () => {
   const MY_USER_ID = 1;
