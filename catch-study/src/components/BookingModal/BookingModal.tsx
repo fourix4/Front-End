@@ -32,6 +32,8 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
     date: new Date().getDate(),
   });
   const [roomTime, setRoomTime] = useState(1);
+  const [availableTime, setAvailableTime] = useState<string[]>([]);
+  const [selectedStartTime, setSelectedStartTime] = useState('');
 
   const priceClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -58,6 +60,10 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
     setRoomTime(+e.target.value);
   };
 
+  const startTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedStartTime(e.target.value);
+  };
+
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
@@ -78,7 +84,7 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
       const rawData = await getRoomTimeInfo(selectedSeat.id, date, roomTime);
       const data = getRoomTimetable(rawData);
 
-      console.log(data);
+      setAvailableTime(data);
     })();
   }, [roomDate, roomTime]);
 
@@ -111,6 +117,9 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
                 monthChange={monthChange}
                 dateChange={dateChange}
                 timeChange={timeChange}
+                startTimeChange={startTimeChange}
+                availableTime={availableTime}
+                selectedStartTime={selectedStartTime}
               />
             )}
           </div>

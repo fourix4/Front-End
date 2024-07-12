@@ -1,8 +1,14 @@
+import { useEffect, useState } from 'react';
+import { TIME_TABLE } from '../../config/constants';
+
 interface BookingRoomModalPropTypes {
   yearChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   monthChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   dateChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   timeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  startTimeChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  availableTime: string[];
+  selectedStartTime: string;
 }
 
 const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
@@ -10,7 +16,16 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
   monthChange,
   dateChange,
   timeChange,
+  startTimeChange,
+  availableTime,
+  selectedStartTime,
 }) => {
+  const [endTime] = useState('');
+
+  useEffect(() => {
+    console.log(selectedStartTime);
+  }, [selectedStartTime]);
+
   return (
     <div className='w-full max-h-[85%]'>
       <div className='flex justify-between w-full mb-10 h-60'>
@@ -65,12 +80,25 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
         </select>
       </div>
       <div className='flex justify-between w-full h-60'>
-        <select className='px-10 w-1/2 h-60 mr-10 select cursor-pointer rounded-sm border-[1px] border-dark-gray text-16 text-center'>
-          <option className='text-16'></option>
+        <select
+          onChange={startTimeChange}
+          className='px-10 w-1/2 h-60 mr-10 select cursor-pointer rounded-sm border-[1px] border-dark-gray text-16 text-center'
+        >
+          <option>시작 시간</option>
+          {TIME_TABLE.map((time, i) => (
+            <option
+              key={i}
+              value={time}
+              disabled={!availableTime.includes(time)}
+              className={`text-16 ${!availableTime.includes(time) ? 'bg-light-gray' : ''}`}
+            >
+              {time}
+            </option>
+          ))}
         </select>
-        <select className='px-10 w-1/2 h-60 mr-10 select cursor-pointer rounded-sm border-[1px] border-dark-gray text-16 text-center'>
-          <option className='text-16'></option>
-        </select>
+        <div className='px-10 w-1/2 h-60 mr-10 rounded-sm border-[1px] border-dark-gray text-16 text-center'>
+          {endTime}
+        </div>
       </div>
     </div>
   );

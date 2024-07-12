@@ -53,6 +53,22 @@ export const SEAT_TYPE = {
   ROOM: 'room',
 };
 
+export const TIME_TABLE = Array.from({ length: 48 }, (_, i) => {
+  if (i === 0) {
+    return 0;
+  }
+
+  return Math.floor(i / 2);
+}).map((v, i) => {
+  let result = '';
+
+  result += v < 10 ? `0${v}` : `${v}`;
+  result += ':';
+  result += i % 2 === 0 ? '00' : '30';
+
+  return result;
+});
+
 export interface ChattingRoomType {
   chat_room_id: number;
   cafe_id: number;
