@@ -39,7 +39,7 @@ const ManagementPage: React.FC = () => {
     seatChart_image: '',
     cafe_phone: '',
   });
-  const [isExist, setIsExist] = useState(true);
+  const [isExist, setIsExist] = useState(false);
 
   useEffect(() => {
     (async () => {
