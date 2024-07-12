@@ -112,7 +112,6 @@ const ManagementInfo: React.FC = () => {
           <input
             name='seats'
             type='number'
-            placeholder=''
             value={formData.seats}
             onChange={handleInputChange}
             className='input-box'

@@ -11,3 +11,9 @@ export interface LoginResponseTypes extends ResponseTypes {
     accessToken: string;
   };
 }
+
+// export interface ManagementResponseTypes extends ResponseTypes {
+//   data: {
+//     result: FormDataTypes
+//   }
+// }
