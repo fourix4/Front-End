@@ -32,6 +32,7 @@ const Menu: React.FC<MenuTypes> = ({ isOpen, close }) => {
       >
         {Object.keys(MENU).map(menuName => (
           <li
+            key={menuName}
             onClick={e => menuClick(e, menuName)}
             className='flex justify-between px-24 py-12 text-base font-bold duration-300 ease-in-out cursor-pointer transition-bg hover:bg-light-gray'
           >

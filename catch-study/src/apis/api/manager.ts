@@ -29,3 +29,13 @@ export const patchManagementInfo = async (editFormData: FormDataTypes) => {
     return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
   }
 };
+
+export const getManagementInfo = async () => {
+  try {
+    const { data } = await instance.get(API_ADDRESS.MANAGER_INFO_URI);
+
+    return data;
+  } catch (error) {
+    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+  }
+};
