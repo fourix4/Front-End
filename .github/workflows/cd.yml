@@ -66,7 +66,7 @@ jobs:
         run: aws s3 cp --region ap-northeast-2 ./catch-study-build.zip s3://${{ secrets.S3_BUCKET_NAME }}/catch-study-build.zip
 
       - name: Code Deploy
-        run: |
+        run:
           aws deploy create-deployment
           --application-name ${{ secrets.CODE_DEPLOY_APPLICATION_NAME }}
           --deployment-config-name CodeDeployDefault.AllAtOnce
