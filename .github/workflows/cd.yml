@@ -36,10 +36,10 @@ jobs:
         with:
           node-version: '18.19.1'
 
-      - name : Generate ENvironment Variables File for Production
+      - name : Generate Environment Variables File for Production
         run : |
           cd catch-study
-          echo "REACT_APP_SERVER_URL" >> .env.production
+          echo "REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL" >> .env.production
           env:
             REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL }}
 
