@@ -27,5 +27,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - run: ls -al
-      - run: cat .github/workflows/ci.yml
+        
+      - name: Use Node.js 18.19.1
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.19.1'
