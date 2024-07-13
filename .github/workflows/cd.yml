@@ -53,9 +53,7 @@ jobs:
           yarn build
 
       - name: zip create
-        run: |
-          cd catch-study
-          zip -qq -r ./catch-study-build.zip . -x "node_modules/*"
+        run: zip -qq -r ./catch-study-build.zip . -x "node_modules/*"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
