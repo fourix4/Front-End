@@ -12,9 +12,9 @@ on:
         default: 'warning'
         type: choice
         options:
-        - info
-        - warning
-        - debug
+          - info
+          - warning
+          - debug
       tags:
         description: 'Test scenario tags'
         required: false
@@ -30,14 +30,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Use Node.js 18.19.1
         uses: actions/setup-node@v4
         with:
           node-version: '18.19.1'
 
-      - name : Generate Environment Variables File for Production
-        run : |
+      - name: Generate Environment Variables File for Production
+        run: |
+
           cd catch-study
           touch .env.production
           echo REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}\ >> .env.production
@@ -66,8 +67,8 @@ jobs:
         run: aws s3 cp --region ap-northeast-2 ./catch-study-build.zip s3://${{ secrets.S3_BUCKET_NAME }}/catch-study-build.zip
 
       - name: Code Deploy
-        run:
-          aws deploy create-deployment
+        run: aws deploy create-deployment
+
           --application-name ${{ secrets.CODE_DEPLOY_APPLICATION_NAME }}
           --deployment-config-name CodeDeployDefault.AllAtOnce
           --deployment-group-name ${{ secrets.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }}
