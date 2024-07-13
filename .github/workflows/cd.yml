@@ -43,5 +43,5 @@ jobs:
 
       - name: React Build
         run: |
-          ls
+          cd catch-study
           yarn build
