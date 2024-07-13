@@ -39,9 +39,8 @@ jobs:
       - name : Generate Environment Variables File for Production
         run : |
           cd catch-study
-          echo "REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL" >> .env.production
-          env:
-            REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL }}
+          touch .env.production
+          echo REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}\ >> .env.production
 
       - name: Install dependencies
         run: |
