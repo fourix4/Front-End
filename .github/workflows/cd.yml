@@ -37,7 +37,11 @@ jobs:
           node-version: '18.19.1'
 
       - name: Install dependencies
-        run: yarn
+        run: |
+          cd catch-study
+          yarn
 
       - name: React Build
-        run: yarn build
+        run: |
+          ls
+          yarn build
