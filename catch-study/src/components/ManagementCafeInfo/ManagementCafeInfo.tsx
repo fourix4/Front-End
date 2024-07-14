@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react';
+import { patchManagementInfo } from '../../apis/api/manager';
+import {
+  MANAGEMENT_INFO_ERROR,
+  ManagementErrorTypes,
+} from '../../config/error';
 import useManagementInfo from '../../hooks/useManagementInfo';
 import { FormDataTypes } from '../../types/management';
 
@@ -29,6 +34,43 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
 
   const [isEdit, setIsEdit] = useState(false);
 
+  const getErrorMessage = (errorType: ManagementErrorTypes): string => {
+    return MANAGEMENT_INFO_ERROR[errorType];
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+
+    let errorType: ManagementErrorTypes | null = null;
+
+    if (formData.cafe_name === '') {
+      errorType = 'CAFE_NAME_ERROR';
+    } else if (formData.seats === 0) {
+      errorType = 'SEATS_ERROR';
+    } else {
+      const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+      if (!timePattern.test(formData.opening_hours)) {
+        errorType = 'OPENING_HOURS_ERROR';
+      } else if (!timePattern.test(formData.closed_hours)) {
+        errorType = 'CLOSED_HOURS_ERROR';
+      }
+    }
+
+    if (errorType !== null) {
+      alert(getErrorMessage(errorType));
+      return;
+    }
+
+    const rawData = await patchManagementInfo(formData);
+
+    // 올바른 요청일 때
+    setIsEdit(false);
+
+    console.log(rawData);
+  };
+
   useEffect(() => {
     setFormData(cafeInfo);
     setUsageFees(cafeInfo.usage_fee);
@@ -38,13 +80,17 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
   return (
     <>
       {isEdit ? (
-        <form className='relative w-full p-20 border-2 rounded-sm border-light-gray bg-bright-gray'>
+        <form
+          onSubmit={handleEditSubmit}
+          className='relative w-full p-20 border-2 rounded-sm border-light-gray bg-bright-gray'
+        >
           <h1 className='mb-10 font-bold text-20'>스터디 카페 정보</h1>
+
           <button
-            onClick={() => setIsEdit(true)}
-            className='absolute p-6 bg-white border-2 text-14 text-light-gray top-10 right-10 border-light-gray rounded-default'
+            type='submit'
+            className='absolute p-6 text-white bg-blue text-14 top-10 right-10 rounded-default'
           >
-            수정하기
+            수정완료
           </button>
 
           <div className='flex flex-col items-start gap-30 md:flex-row'>
@@ -257,7 +303,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
           </div>
         </form>
       ) : (
-        <div className='relative w-full p-20 border-2 rounded-sm border-light-gray'>
+        <div className='relative w-full p-20 border-2 rounded-sm border-light-gray bg-bright-gray'>
           <h1 className='mb-10 font-bold text-20'>스터디 카페 정보</h1>
           <button
             onClick={() => setIsEdit(true)}
