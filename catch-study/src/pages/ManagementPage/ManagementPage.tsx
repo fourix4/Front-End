@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getManagementInfo } from '../../apis/api/manager';
-import isExistCafeInfo from '../../apis/services/manager';
 import ManagementCafeInfo from '../../components/ManagementCafeInfo/ManagementCafeInfo';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
@@ -39,21 +37,18 @@ const ManagementPage: React.FC = () => {
     seatChart_image: '',
     cafe_phone: '',
   });
-  const [isExist, setIsExist] = useState(false);
+  const [isExist, setIsExist] = useState(true);
 
   useEffect(() => {
-    (async () => {
-      const rawData = await getManagementInfo();
-
-      console.log(rawData);
-      if (isExistCafeInfo(rawData)) {
-        setIsExist(true);
-
-        return;
-      }
-
-      setCafeInfo(rawData.result as FormDataTypes);
-    })();
+    // (async () => {
+    //   const rawData = await getManagementInfo();
+    //   console.log(rawData);
+    //   if (isExistCafeInfo(rawData)) {
+    //     setIsExist(true);
+    //     return;
+    //   }
+    //   setCafeInfo(rawData.result as FormDataTypes);
+    // })();
   }, [isExist, setIsExist, setCafeInfo]);
 
   return (

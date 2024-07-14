@@ -20,6 +20,7 @@ export const ROUTE = {
   BOOKING: '/booking',
   MANAGEMENT: '/management',
   MANAGEMENT_INFO: '/management/info',
+  MANAGEMENT_EDIT: 'management/edit',
 };
 
 interface MenuTypes {

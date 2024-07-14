@@ -136,6 +136,8 @@ const useManagementInfo = () => {
     cancelTime,
     usageFees,
     formData,
+    setUsageFees,
+    setRoomInfos,
     setFormData,
     setCancelTime,
     handleInputChange,
