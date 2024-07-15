@@ -30,6 +30,9 @@ module.exports = {
         'image-arrow-left': "url('/src/assets/image-arrow-left.svg')",
         'image-arrow-right': "url('/src/assets/image-arrow-right.svg')",
       },
+      zIndex: {
+        menu: '10',
+      },
     },
     colors: {
       'bright-gray': '#F0EFF2',
