@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { RoomInfoTypes } from '../../pages/ManagementInfoPage/ManagementInfo';
+import { RoomInfoTypes } from '../../types/management';
 
 interface RoomFormPropTypes {
   roomInfos: RoomInfoTypes[];
@@ -59,40 +59,56 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
           추가하기
         </button>
       </div>
-      <div className='flex items-center justify-start w-full gap-10'>
-        <p className='whitespace-nowrap'>예약 시간 이전</p>
-        <input
-          type='number'
-          value={time}
-          onChange={handleCancelTimeChange}
-          className='input-box max-w-100'
-        />
-        <select value={timeType} onChange={handleTimeTypeChange}>
-          <option value='분'>분</option>
-          <option value='시간'>시간</option>
-        </select>
-        <p className='whitespace-nowrap'>전까지 취소 가능</p>
-      </div>
+      {roomInfos.length !== 0 && (
+        <div className='flex items-center justify-start w-full gap-10'>
+          <p className='whitespace-nowrap'>예약 시간 이전</p>
+          <input
+            type='number'
+            value={time}
+            onChange={handleCancelTimeChange}
+            className='input-box max-w-100'
+          />
+          <select value={timeType} onChange={handleTimeTypeChange}>
+            <option value='분'>분</option>
+            <option value='시간'>시간</option>
+          </select>
+          <p className='whitespace-nowrap'>전까지 취소 가능</p>
+        </div>
+      )}
       {roomInfos.map((room, index) => (
         <div
           key={index}
-          className='flex items-center justify-center w-full gap-10'
+          className='flex items-center justify-center w-full gap-30'
         >
-          <input
-            name='name'
-            placeholder='이름'
-            value={room.name}
-            onChange={e => onRoomNameChange(e, index)}
-            className='input-box'
-          />
-          <div className='whitespace-nowrap'>스터디룸</div>
-          <input
-            type='text'
-            value={room.capacity}
-            onChange={e => onRoomChange(index, 'capacity', e.target.value)}
-            className='input-box'
-          />
-          <div className='whitespace-nowrap'>인실</div>
+          <div className='flex flex-col items-center justify-center w-full gap-10'>
+            <div className='flex items-center justify-start w-full gap-10'>
+              <input
+                name='name'
+                placeholder='이름'
+                value={room.name}
+                onChange={e => onRoomNameChange(e, index)}
+                className='input-box'
+              />
+              <div className='whitespace-nowrap'>스터디룸</div>
+              <input
+                type='text'
+                value={room.capacity}
+                onChange={e => onRoomChange(index, 'capacity', e.target.value)}
+                className='input-box'
+              />
+              <div className='whitespace-nowrap'>인실</div>
+            </div>
+            <div className='flex items-center justify-center w-full gap-10'>
+              <div className='whitespace-nowrap'>시간당</div>
+              <input
+                type='text'
+                value={room.price}
+                onChange={e => onRoomChange(index, 'price', e.target.value)}
+                className='input-box'
+              />
+              <div className='whitespace-nowrap'>원</div>
+            </div>
+          </div>
           <button
             type='button'
             onClick={() => onRemoveRoom(index)}

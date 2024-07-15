@@ -1,4 +1,4 @@
-import { UsageFeeTypes } from '../../pages/ManagementInfoPage/ManagementInfo';
+import { UsageFeeTypes } from '../../types/management';
 
 interface FeeFormPropTypes {
   usageFees: UsageFeeTypes[];
@@ -20,7 +20,7 @@ const FeeForm: React.FC<FeeFormPropTypes> = ({
   return (
     <>
       <div className='flex items-center justify-start gap-20'>
-        <p>사용 요금</p>
+        <p>좌석 사용 요금</p>
         <button
           type='button'
           onClick={onAddFee}

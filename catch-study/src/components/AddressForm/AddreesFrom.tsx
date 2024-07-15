@@ -1,43 +1,66 @@
 import { ChangeEvent } from 'react';
-import { AddressTypes } from '../../pages/ManagementInfoPage/ManagementInfo';
+import { AddressTypes } from '../../types/management';
 
 interface AddressFromPropTypes {
   address: AddressTypes;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onSelectChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const AddressForm: React.FC<AddressFromPropTypes> = ({ address, onChange }) => {
+const AddressForm: React.FC<AddressFromPropTypes> = ({
+  address,
+  onInputChange,
+  onSelectChange,
+}) => {
   return (
     <div className='flex flex-col input-box'>
-      <div>
-        <input
+      <div className='flex items-center justify-center gap-10'>
+        <select
           name='city'
-          placeholder='도시'
           value={address.city}
-          onChange={onChange}
+          onChange={onSelectChange}
           className='w-1/3'
-        />
-        <input
+        >
+          <option selected hidden>
+            시
+          </option>
+          <option value={'1'}>1</option>
+          <option value={'2'}>2</option>
+          <option value={'3'}>3</option>
+        </select>
+        <select
           name='country'
-          placeholder='구'
           value={address.country}
-          onChange={onChange}
+          onChange={onSelectChange}
           className='w-1/3'
-        />
-        <input
+        >
+          <option selected hidden>
+            군/구
+          </option>
+          <option value={'1'}>1</option>
+          <option value={'2'}>2</option>
+          <option value={'3'}>3</option>
+        </select>
+        <select
           name='town'
-          placeholder='동'
           value={address.town}
-          onChange={onChange}
+          onChange={onSelectChange}
           className='w-1/3'
-        />
+        >
+          <option selected hidden>
+            동
+          </option>
+          <option value={'1'}>1</option>
+          <option value={'2'}>2</option>
+          <option value={'3'}>3</option>
+        </select>
       </div>
       <div>
         <input
           name='etc'
           placeholder='기타 주소'
           value={address.etc}
-          onChange={onChange}
+          onChange={onInputChange}
           className='w-full'
         />
       </div>

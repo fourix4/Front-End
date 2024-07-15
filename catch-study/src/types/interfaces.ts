@@ -54,3 +54,9 @@ export interface StudycafeInfoResponseTypes extends ResponseTypes {
     result: StudycafeInfoDataTypes;
   };
 }
+
+// export interface ManagementResponseTypes extends ResponseTypes {
+//   data: {
+//     result: FormDataTypes
+//   }
+// }
