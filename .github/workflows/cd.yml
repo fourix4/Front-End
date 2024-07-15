@@ -51,7 +51,7 @@ jobs:
       - name: React Build
         run: |
           cd catch-study
-          yarn build
+          yarn build-CI
 
       - name: zip create
         run: zip -qq -r ./catch-study-build.zip . -x "node_modules/*"
