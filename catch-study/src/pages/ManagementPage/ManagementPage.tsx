@@ -9,12 +9,11 @@ import { FormDataTypes } from '../../types/management';
 
 const ManagementPage: React.FC = () => {
   const [cafeInfo, setCafeInfo] = useState<FormDataTypes>();
-  const [isExist, setIsExist] = useState(true);
+  const [isExist, setIsExist] = useState(false);
 
   useEffect(() => {
     (async () => {
       const rawData = await getManagementInfo();
-      console.log(rawData);
       if (isExistCafeInfo(rawData)) {
         setIsExist(true);
         return;

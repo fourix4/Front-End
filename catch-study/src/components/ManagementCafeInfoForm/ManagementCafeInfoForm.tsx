@@ -15,6 +15,10 @@ interface ManagementCafeInfoFormPropsTypes {
     field: string,
     setData: React.Dispatch<React.SetStateAction<FormDataTypes>>,
   ) => void;
+  handleSelectChange: (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    field: string,
+  ) => void;
   usageFees: UsageFeeTypes[];
   handleAddFee: () => void;
   handleRemoveFee: (index: number) => void;
@@ -43,6 +47,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
   handleEditSubmit,
   handleInputChange,
   handleNestedInputChange,
+  handleSelectChange,
   usageFees,
   handleAddFee,
   handleRemoveFee,
@@ -81,41 +86,53 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
           </div>
           <div className='mb-4'>
             <h2 className='font-semibold text-17'>주소</h2>
-            <div className='w-full'>
-              <input
+            <div className='flex items-center justify-center w-full gap-10'>
+              <select
                 name='city'
-                placeholder='도시'
                 value={formData.address.city}
-                onChange={e =>
-                  handleNestedInputChange(e, 'address', setFormData)
-                }
+                onChange={e => handleSelectChange(e, 'address')}
                 className='w-1/3 p-4'
-              />
-              <input
+              >
+                <option selected hidden>
+                  군/구
+                </option>
+                <option value={'1'}>1</option>
+                <option value={'2'}>2</option>
+                <option value={'3'}>3</option>
+              </select>
+              <select
                 name='country'
-                placeholder='구'
                 value={formData.address.country}
-                onChange={e =>
-                  handleNestedInputChange(e, 'address', setFormData)
-                }
+                onChange={e => handleSelectChange(e, 'address')}
                 className='w-1/3 p-4'
-              />
-              <input
+              >
+                <option selected hidden>
+                  동
+                </option>
+                <option value={'1'}>1</option>
+                <option value={'2'}>2</option>
+                <option value={'3'}>3</option>
+              </select>
+              <select
                 name='town'
-                placeholder='동'
                 value={formData.address.town}
-                onChange={e =>
-                  handleNestedInputChange(e, 'address', setFormData)
-                }
+                onChange={e => handleSelectChange(e, 'address')}
                 className='w-1/3 p-4'
-              />
+              >
+                <option selected hidden>
+                  시
+                </option>
+                <option value={'1'}>1</option>
+                <option value={'2'}>2</option>
+                <option value={'3'}>3</option>
+              </select>
             </div>
             <input
               name='etc'
               placeholder='기타 주소'
               value={formData.address.etc}
               onChange={e => handleNestedInputChange(e, 'address', setFormData)}
-              className='w-full p-4'
+              className='w-full p-4 mt-10'
             />
           </div>
           <div className='mb-4'>

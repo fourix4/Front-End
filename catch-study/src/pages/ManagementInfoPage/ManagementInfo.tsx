@@ -18,6 +18,7 @@ const ManagementInfo: React.FC = () => {
     setCancelTime,
     handleInputChange,
     handleNestedInputChange,
+    handleSelectChange,
     handleRoomChange,
     handleRoomNameChange,
     handleAddRoom,
@@ -80,7 +81,10 @@ const ManagementInfo: React.FC = () => {
         />
         <AddressForm
           address={formData.address}
-          onChange={e => handleNestedInputChange(e, 'address', setFormData)}
+          onInputChange={e =>
+            handleNestedInputChange(e, 'address', setFormData)
+          }
+          onSelectChange={e => handleSelectChange(e, 'address')}
         />
         <div className='flex items-center justify-center gap-10'>
           <input

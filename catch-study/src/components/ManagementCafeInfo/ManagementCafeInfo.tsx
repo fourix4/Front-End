@@ -25,6 +25,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
     setFormData,
     handleInputChange,
     handleNestedInputChange,
+    handleSelectChange,
     handleRoomChange,
     handleRoomNameChange,
     handleAddRoom,
@@ -88,6 +89,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
           handleEditSubmit={handleEditSubmit}
           handleInputChange={handleInputChange}
           handleNestedInputChange={handleNestedInputChange}
+          handleSelectChange={handleSelectChange}
           usageFees={usageFees}
           handleAddFee={handleAddFee}
           handleRemoveFee={handleRemoveFee}

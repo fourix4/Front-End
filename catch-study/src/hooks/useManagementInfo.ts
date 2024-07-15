@@ -44,6 +44,22 @@ const useManagementInfo = () => {
     }));
   };
 
+  const handleSelectChange = (
+    e: ChangeEvent<HTMLSelectElement>,
+    field: string,
+  ) => {
+    const { name, value } = e.target;
+
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [field]: {
+        ...prevFormData.address,
+        [name]: value,
+      },
+    }));
+  };
+
+  // select로 바꿔야됨
   const handleNestedInputChange = (
     e: ChangeEvent<HTMLInputElement>,
     field: string,
@@ -142,6 +158,7 @@ const useManagementInfo = () => {
     setCancelTime,
     handleInputChange,
     handleNestedInputChange,
+    handleSelectChange,
     handleRoomChange,
     handleRoomNameChange,
     handleAddRoom,
