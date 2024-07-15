@@ -15,7 +15,7 @@ module.exports = {
       height: {
         ...px0_1000,
         topbar: '80px',
-        modal: '500px',
+        modal: '550px',
       },
       backgroundImage: {
         alarm: "url('/src/assets/alarm.svg')",
@@ -26,6 +26,9 @@ module.exports = {
         'kakao-login': 'url(/src/assets/kakao_login_medium_wide.png)',
         'send-plane': "url('/src/assets/send-plane.svg')",
         add: "url('/src/assets/add.svg')",
+        loading: "url('/src/assets/loading.svg')",
+        'image-arrow-left': "url('/src/assets/image-arrow-left.svg')",
+        'image-arrow-right': "url('/src/assets/image-arrow-right.svg')",
       },
     },
     colors: {
