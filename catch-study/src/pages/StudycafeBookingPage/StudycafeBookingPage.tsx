@@ -6,6 +6,7 @@ import { getStudycafeSeatData } from '../../apis/services/studycafe';
 import { RoomsTypes, SeatPriceTypes, SeatsTypes } from '../../types/interfaces';
 import BookingModal from '../../components/BookingModal/BookingModal';
 import { SEAT_TYPE } from '../../config/constants';
+import seatingchart from '../../assets/seatingchart-test.svg';
 
 const StudycafeBookingPage: React.FC = () => {
   const location = useLocation();
@@ -80,6 +81,19 @@ const StudycafeBookingPage: React.FC = () => {
   return (
     <div>
       <Topbar />
+      <div className='w-full h-600 overflow-x-auto m-middle'>
+        <div className='relative w-800 h-full box-border'>
+          <div>
+            <img
+              src={seatingchart}
+              className='min-w-800 w-full h-full object-none'
+            />
+          </div>
+
+          <button className='absolute w-50 h-50 left-[50px] top-[200px] border-2'></button>
+          <button className='absolute w-50 h-50 left-[50px] top-[250px] border-2'></button>
+        </div>
+      </div>
       <div ref={seatsRef}>
         {seats.map(seat => (
           <div
