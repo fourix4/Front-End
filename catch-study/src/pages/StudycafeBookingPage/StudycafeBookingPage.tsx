@@ -17,7 +17,7 @@ const StudycafeBookingPage: React.FC = () => {
   const [usageFee, setUsageFee] = useState<SeatPriceTypes[]>([]);
   const [selectedSeat, setSeletedSeat] = useState({
     type: '',
-    id: 0,
+    id: -1,
   });
   const [isClicked, setIsClicked] = useState(false);
   const seatsRef = useRef<HTMLDivElement>(null);
@@ -133,6 +133,7 @@ const StudycafeBookingPage: React.FC = () => {
               closeModal={closeModal}
               selectedSeat={selectedSeat}
               usageFee={usageFee}
+              rooms={rooms}
             />
           </div>
         </div>

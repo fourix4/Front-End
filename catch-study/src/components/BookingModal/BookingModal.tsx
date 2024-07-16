@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE, SEAT_TYPE } from '../../config/constants';
-import { SeatPriceTypes } from '../../types/interfaces';
+import { RoomsTypes, SeatPriceTypes } from '../../types/interfaces';
 import BookingRoomModal from '../BookingRoomModal/BookingRoomModal';
 import BookingSeatModal from '../BookingSeatModal/BookingSeatModal';
 import { getRoomTimeInfo } from '../../apis/api/studycafe';
@@ -16,6 +16,7 @@ interface BookingModalPropTypes {
   };
   usageFee: SeatPriceTypes[];
   closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  rooms: RoomsTypes[];
 }
 
 const BookingModal: React.FC<BookingModalPropTypes> = ({
@@ -23,6 +24,7 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   selectedSeat,
   usageFee,
   closeModal,
+  rooms,
 }) => {
   const navigate = useNavigate();
   const [selectedPrice, setSelectedPrice] = useState(0);
@@ -33,7 +35,7 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   });
   const [roomTime, setRoomTime] = useState(1);
   const [availableTime, setAvailableTime] = useState<string[]>([]);
-  const [selectedStartTime, setSelectedStartTime] = useState('');
+  const [selectedStartTime, setSelectedStartTime] = useState('시작 시간');
 
   const priceClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -67,7 +69,10 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    if (!selectedPrice) {
+    console.log(selectedSeat, selectedPrice, selectedStartTime);
+    console.log(!selectedPrice || selectedStartTime === '');
+
+    if (!selectedPrice && selectedStartTime === '시작 시간') {
       alert('시간을 선택해주세요');
       return;
     }
@@ -120,6 +125,8 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
                 startTimeChange={startTimeChange}
                 availableTime={availableTime}
                 selectedStartTime={selectedStartTime}
+                room={rooms.find(room => room.room_id === selectedSeat.id)}
+                roomTime={roomTime}
               />
             )}
           </div>
