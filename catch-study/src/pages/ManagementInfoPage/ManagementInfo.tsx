@@ -1,6 +1,7 @@
 import { postManagementInfo } from '../../apis/api/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
 import FeeForm from '../../components/FeeForm/FeeForm';
+import ImageForm from '../../components/ImangeForm/ImageForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
 import {
@@ -136,6 +137,8 @@ const ManagementInfo: React.FC = () => {
           onRoomChange={handleRoomChange}
           onRoomNameChange={handleRoomNameChange}
         />
+        <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
+        <ImageForm />
         <div className='w-full pt-50'>
           <button
             type='submit'
