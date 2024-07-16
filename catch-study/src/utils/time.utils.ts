@@ -13,3 +13,12 @@ export const dateTo8Digit = (year: number, month: number, date: number) => {
 
   return +result;
 };
+
+export const getEndTime = (startTime: string, duration: number) => {
+  const [hour, min] = startTime.split(':');
+  let newHour = +hour + duration;
+
+  newHour = newHour >= 24 ? newHour - 24 : newHour;
+
+  return `${newHour >= 10 ? newHour : `0${newHour}`}:${min}`;
+};

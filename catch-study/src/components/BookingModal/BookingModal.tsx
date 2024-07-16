@@ -48,17 +48,21 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
 
   const yearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRoomDate(prev => ({ ...prev, year: +e.target.value }));
+    setSelectedStartTime('시작 시간');
   };
 
   const monthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRoomDate(prev => ({ ...prev, month: +e.target.value }));
+    setSelectedStartTime('시작 시간');
   };
 
   const dateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setRoomDate(prev => ({ ...prev, date: +e.target.value }));
+    setSelectedStartTime('시작 시간');
   };
 
   const timeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedStartTime('시작 시간');
     setRoomTime(+e.target.value);
   };
 

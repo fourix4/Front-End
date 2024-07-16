@@ -115,7 +115,7 @@ export const getRoomTimetable = (
     return rawData.data.result;
   }
 
-  return ['13:00', '15:00'];
+  return ['13:00', '15:00', '23:00'];
 
   // return [];
 };

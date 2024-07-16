@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TIME_TABLE } from '../../config/constants';
 import { RoomsTypes } from '../../types/interfaces';
+import { getEndTime } from '../../utils/time.utils';
 
 interface BookingRoomModalPropTypes {
   yearChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -25,16 +26,21 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
   room,
   roomTime,
 }) => {
-  const [endTime] = useState('');
+  const [endTime, setEndTime] = useState('');
 
   useEffect(() => {
-    console.log(selectedStartTime);
+    if (/[0-9]{2}:[0-9]{2}/.test(selectedStartTime)) {
+      setEndTime(getEndTime(selectedStartTime, roomTime));
+      return;
+    }
+
+    setEndTime('');
   }, [selectedStartTime]);
 
   return (
     <div className='w-full max-h-[85%]'>
       <div className='mb-10 text-16'>
-        {room ? room.capacity : '1'}인용 스터디룸
+        {room ? room.capacity : '1'}인실 스터디룸
       </div>
       <div className='flex justify-between w-full mb-10 h-60'>
         <select
@@ -89,6 +95,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
       </div>
       <div className='flex justify-between w-full h-60 mb-10'>
         <select
+          value={selectedStartTime}
           onChange={startTimeChange}
           className='px-10 w-1/2 h-60 mr-10 select cursor-pointer rounded-sm border-[1px] border-dark-gray text-16 text-center'
         >
@@ -104,7 +111,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
             </option>
           ))}
         </select>
-        <div className='px-10 w-1/2 h-60 rounded-sm border-[1px] border-dark-gray text-16 text-center'>
+        <div className='flex px-10 w-1/2 h-60 rounded-sm border-[1px] border-dark-gray text-16 text-center top-1/2 justify-center items-center'>
           {endTime}
         </div>
       </div>
