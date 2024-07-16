@@ -7,6 +7,7 @@ import { RoomsTypes, SeatPriceTypes, SeatsTypes } from '../../types/interfaces';
 import BookingModal from '../../components/BookingModal/BookingModal';
 import { SEAT_TYPE } from '../../config/constants';
 import seatingchart from '../../assets/seatingchart-test.svg';
+import SEATINGCHART from '../../config/seatingchart';
 
 const StudycafeBookingPage: React.FC = () => {
   const location = useLocation();
@@ -35,12 +36,17 @@ const StudycafeBookingPage: React.FC = () => {
   }, []);
 
   const seatClick = (
-    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     id: number,
     type: string,
+    isAvailable: boolean,
   ) => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (!isAvailable) {
+      return;
+    }
 
     if (!isClicked) {
       setIsClicked(prev => !prev);
@@ -90,36 +96,46 @@ const StudycafeBookingPage: React.FC = () => {
             />
           </div>
 
-          <button className='absolute w-50 h-50 left-[50px] top-[200px] border-2'></button>
-          <button className='absolute w-50 h-50 left-[50px] top-[250px] border-2'></button>
-        </div>
-      </div>
-      <div ref={seatsRef}>
-        {seats.map(seat => (
-          <div
-            key={seat.seat_number}
-            onClick={e => seatClick(e, seat.seat_id, SEAT_TYPE.SEAT)}
-            className={`border-[1px] ${isClicked && selectedSeat.id === seat.seat_id && selectedSeat.type === SEAT_TYPE.SEAT ? 'bg-dark-gray' : ''}`}
-          >
-            {seat.seat_number}
-          </div>
-        ))}
-        {rooms.map(room => (
-          <div
-            key={room.room_name}
-            onClick={e => seatClick(e, room.room_id, SEAT_TYPE.ROOM)}
-            className={`border-[1px] ${isClicked && selectedSeat.id === room.room_id && selectedSeat.type === SEAT_TYPE.ROOM ? 'bg-dark-gray' : ''}`}
-          >
-            {room.room_name}
-          </div>
-        ))}
+          <div ref={seatsRef}>
+            {seats.map(seat => (
+              <button
+                key={seat.seat_number}
+                onClick={e =>
+                  seatClick(e, seat.seat_id, SEAT_TYPE.SEAT, seat.is_available)
+                }
+                style={{
+                  top: `${SEATINGCHART[cafeId][seat.seat_number].y}px`,
+                  left: `${SEATINGCHART[cafeId][seat.seat_number].x}px`,
+                }}
+                className={`absolute w-50 h-50 text-16 border-[1px] ${(isClicked && selectedSeat.id === seat.seat_id && selectedSeat.type === SEAT_TYPE.SEAT) || !seat.is_available ? 'bg-dark-gray' : ''}`}
+              >
+                {seat.seat_number}
+                {!seat.is_available ? <p className='text-12'>사용중</p> : ''}
+              </button>
+            ))}
 
-        <BookingModal
-          isOpen={isClicked}
-          closeModal={closeModal}
-          selectedSeat={selectedSeat}
-          usageFee={usageFee}
-        />
+            {rooms.map(room => (
+              <button
+                key={room.room_name}
+                onClick={e => seatClick(e, room.room_id, SEAT_TYPE.ROOM, true)}
+                style={{
+                  top: `${SEATINGCHART[cafeId][room.room_name].y}px`,
+                  left: `${SEATINGCHART[cafeId][room.room_name].x}px`,
+                }}
+                className={`absolute w-180 h-80 text-16 border-[1px] ${isClicked && selectedSeat.id === room.room_id && selectedSeat.type === SEAT_TYPE.ROOM ? 'bg-dark-gray' : ''}`}
+              >
+                {room.room_name}
+              </button>
+            ))}
+
+            <BookingModal
+              isOpen={isClicked}
+              closeModal={closeModal}
+              selectedSeat={selectedSeat}
+              usageFee={usageFee}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

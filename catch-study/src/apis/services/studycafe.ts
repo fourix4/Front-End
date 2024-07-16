@@ -1,3 +1,4 @@
+import SEATINGCHART from '../../config/seatingchart';
 import {
   ResponseTypes,
   RoomTimeInfoResponseTypes,
@@ -70,18 +71,15 @@ export const getStudycafeSeatData = (
 
   return {
     seating_chart: '좌석 배치도 이미지 주소',
-    seats: [
-      {
-        seat_id: 1,
-        seat_number: '1A',
-        is_available: false, // 사용 불가
-      },
-      {
-        seat_id: 2,
-        seat_number: '1B',
-        is_available: true, // 사용 가능
-      },
-    ],
+    seats: Object.keys(SEATINGCHART[1])
+      .filter(key => `${key}`.length === 2)
+      .map((key, i) => {
+        return {
+          seat_id: i + 1,
+          seat_number: key,
+          is_available: i % 2 === 0,
+        };
+      }),
     rooms: [
       {
         room_id: 1,
