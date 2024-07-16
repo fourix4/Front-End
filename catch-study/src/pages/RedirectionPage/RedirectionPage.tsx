@@ -6,16 +6,10 @@ import { ROUTE } from '../../config/constants';
 
 const RedirectionPage = () => {
   const navigate = useNavigate();
-  const code = new URL(document.location.toString()).searchParams.get('code');
 
   useEffect(() => {
-    if (!code) {
-      alert('로그인 실패');
-      return;
-    }
-
     (async () => {
-      const rawData = await postLogin(code);
+      const rawData = await postLogin();
 
       if (!isSuccessLogin(rawData)) {
         alert('로그인 실패');
