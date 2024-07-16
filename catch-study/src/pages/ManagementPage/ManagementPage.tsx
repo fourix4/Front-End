@@ -14,6 +14,7 @@ const ManagementPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const rawData = await getManagementInfo();
+
       if (isExistCafeInfo(rawData)) {
         setIsExist(true);
         return;
