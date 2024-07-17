@@ -94,3 +94,9 @@ export interface RoomTimeInfoResponseTypes extends ResponseTypes {
     };
   };
 }
+
+// export interface ManagementResponseTypes extends ResponseTypes {
+//   data: {
+//     result: FormDataTypes
+//   }
+// }

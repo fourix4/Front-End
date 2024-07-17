@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -11,10 +12,12 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "axios": "^1.7.2",
+    "env-cmd": "^10.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
+    "sockjs-client": "^1.6.1",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
@@ -22,6 +25,7 @@
     "dev": "react-scripts start",
     "prod": "env-cmd -f .env.production react-scripts start",
     "build": "react-scripts build",
+    "build-CI": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -46,6 +50,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.6.0",
+    "@types/sockjs-client": "^1.5.4",
     "autoprefixer": "^10.4.19",
     "eslint": "9.x",
     "eslint-config-naver": "^2.1.0",

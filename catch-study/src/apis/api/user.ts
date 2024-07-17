@@ -2,13 +2,10 @@ import { LoginResponseTypes, ResponseTypes } from './../../types/interfaces';
 import instance from '../utils/axios';
 import { API_ADDRESS, STATUS } from '../../config/api';
 
-export const postLogin = async (authCode: string) => {
+export const postLogin = async () => {
   try {
     const { data } = await instance.post<LoginResponseTypes | ResponseTypes>(
       API_ADDRESS.KAKAO_LOGIN_URI,
-      {
-        code: authCode,
-      },
     );
 
     return data;
