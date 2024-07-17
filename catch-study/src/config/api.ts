@@ -2,9 +2,12 @@ export const API_ADDRESS = {
   KAKAO_LOGIN_URI: '/users/login/kakao',
   REISSUANCE_URI: '/users/reissuance',
   LOGOUT_URI: '/users/logout',
+  STUDYCAFE_SEARCH_URI: '/studycafes/search',
   MANAGER_INFO_URI: '/manager',
   STUDYCAFE_SEARCH_URI: '/search',
   STUDYCAFE_INFO: '/studycafes',
+  STUDYCAFE_SEATING_CHART: '/seatingchart',
+  ROOM_TIME_INFO: '/studycafes/timeinfo',
 };
 
 export const STATUS = {

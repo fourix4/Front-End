@@ -1,16 +1,28 @@
+import SEATINGCHART from '../../config/seatingchart';
 import {
   ResponseTypes,
+  RoomTimeInfoResponseTypes,
   StudycafeInfoDataTypes,
   StudycafeInfoResponseTypes,
   StudyCafeListResponseTypes,
   StudyCafeListTypes,
+  StudycafeSeatResponseTypes,
+  StudycafeSeatTypes,
 } from '../../types/interfaces';
 
 export const getStudycafeListData = (
   rawData: StudyCafeListResponseTypes | ResponseTypes,
 ): StudyCafeListTypes[] => {
   if (rawData.data) {
-    return rawData.data.result;
+    return Array(20)
+      .fill(0)
+      .map((_, i) => ({
+        cafe_id: i,
+        cafe_name: '이지 스터디 카페',
+        address: '서울 강남구 논현동 12번지 2',
+        cafe_image: '썸네일_주소',
+      }));
+    // return rawData.data.result;
   }
 
   return Array(20)
@@ -48,4 +60,62 @@ export const getStudycafeInfoData = (
   };
 
   // return null;
+};
+
+export const getStudycafeSeatData = (
+  rawData: StudycafeSeatResponseTypes | ResponseTypes,
+): StudycafeSeatTypes | null => {
+  if (rawData.data) {
+    return rawData.data.result;
+  }
+
+  return {
+    seating_chart: '좌석 배치도 이미지 주소',
+    seats: Object.keys(SEATINGCHART[1])
+      .filter(key => `${key}`.length === 2)
+      .map((key, i) => {
+        return {
+          seat_id: i + 1,
+          seat_number: key,
+          is_available: i % 2 === 0,
+        };
+      }),
+    rooms: [
+      {
+        room_id: 1,
+        room_name: '4인용 스터디룸',
+        capacity: 4,
+        cancel_available_time: 360, // 분 단위
+        price: 5000,
+      },
+    ],
+    usage_fee: [
+      {
+        hours: 1,
+        price: 2000,
+      },
+      {
+        hours: 2,
+        price: 3000,
+      },
+      {
+        hours: 5,
+        price: 4000,
+      },
+    ],
+  };
+
+  // return null;
+};
+
+export const getRoomTimetable = (
+  rawData: RoomTimeInfoResponseTypes | ResponseTypes,
+) => {
+  if (rawData.data) {
+    return rawData.data.result;
+  }
+
+  return ['13:00', '15:00', '23:00'];
+
+  // return [];
 };

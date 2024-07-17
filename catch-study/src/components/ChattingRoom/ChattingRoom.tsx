@@ -2,7 +2,7 @@ import { Client, Frame } from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { MESSAGES } from '../../config/constants';
-import getTime from '../../utils/time.utils';
+import { getTime } from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
 // const RECIPIENT_ID = 2;
