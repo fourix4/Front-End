@@ -117,5 +117,6 @@ export const getRoomTimetable = (
     // return rawData.data.result.available_start_time;
   }
 
+  return ['13:00', '15:00', '23:00'];
   return [];
 };

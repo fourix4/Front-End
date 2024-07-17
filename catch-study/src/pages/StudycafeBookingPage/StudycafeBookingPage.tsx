@@ -4,10 +4,11 @@ import Topbar from '../../components/Topbar/Topbar';
 import { getStudycafeSeatingChart } from '../../apis/api/studycafe';
 import { getStudycafeSeatData } from '../../apis/services/studycafe';
 import { RoomsTypes, SeatPriceTypes, SeatsTypes } from '../../types/interfaces';
-import BookingModal from '../../components/BookingModal/BookingModal';
 import { SEAT_TYPE } from '../../config/constants';
 import seatingchart from '../../assets/seatingchart-test.svg';
 import SEATINGCHART from '../../config/seatingchart';
+import BookingRoomModal from '../../components/BookingRoomModal/BookingRoomModal';
+import BookingSeatModal from '../../components/BookingSeatModal/BookingSeatModal';
 
 const StudycafeBookingPage: React.FC = () => {
   const location = useLocation();
@@ -16,10 +17,12 @@ const StudycafeBookingPage: React.FC = () => {
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
   const [usageFee, setUsageFee] = useState<SeatPriceTypes[]>([]);
   const [_, setSeatingChart] = useState('');
-  const [selectedSeat, setSeletedSeat] = useState({
+  const [selectedType, setSelectedType] = useState({
     type: '',
     id: -1,
   });
+  const [selectedSeat, setSelectedSeat] = useState<SeatsTypes>();
+  const [selectedRoom, setSelectedRoom] = useState<RoomsTypes>();
   const [isClicked, setIsClicked] = useState(false);
   const seatsRef = useRef<HTMLDivElement>(null);
 
@@ -39,30 +42,55 @@ const StudycafeBookingPage: React.FC = () => {
 
   const seatClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    id: number,
-    type: string,
-    isAvailable: boolean,
+    seat: SeatsTypes,
   ) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!isAvailable) {
-      return;
-    }
+    // if (!isAvailable) {
+    //   return;
+    // }
 
     if (!isClicked) {
       setIsClicked(prev => !prev);
     }
 
-    if (isClicked && selectedSeat.id === id && selectedSeat.type === type) {
+    if (isClicked && selectedType.id === seat.seat_id) {
       setIsClicked(prev => !prev);
     }
 
-    setSeletedSeat({
-      type,
-      id,
+    setSelectedSeat(seat);
+
+    setSelectedType({
+      type: 'seat',
+      id: seat.seat_id,
     });
   };
+
+  const roomClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    room: RoomsTypes,
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isClicked) {
+      setIsClicked(prev => !prev);
+    }
+
+    if (isClicked && selectedType.id === room.room_id) {
+      setIsClicked(prev => !prev);
+    }
+
+    setSelectedRoom(room);
+
+    setSelectedType({
+      type: 'room',
+      id: room.room_id,
+    });
+  };
+
+  console.log(isClicked);
 
   useEffect(() => {
     const handleFocus = (e: MouseEvent) => {
@@ -103,14 +131,12 @@ const StudycafeBookingPage: React.FC = () => {
             {seats.map(seat => (
               <button
                 key={seat.seat_number}
-                onClick={e =>
-                  seatClick(e, seat.seat_id, SEAT_TYPE.SEAT, seat.is_available)
-                }
+                onClick={e => seatClick(e, seat)}
                 style={{
                   top: `${SEATINGCHART[cafeId][seat.seat_number].y}px`,
                   left: `${SEATINGCHART[cafeId][seat.seat_number].x}px`,
                 }}
-                className={`absolute w-50 h-50 text-16 border-[1px] ${(isClicked && selectedSeat.id === seat.seat_id && selectedSeat.type === SEAT_TYPE.SEAT) || !seat.is_available ? 'bg-dark-gray' : ''}`}
+                className={`absolute w-50 h-50 text-16 border-[1px] ${(isClicked && selectedType.id === seat.seat_id && selectedType.type === SEAT_TYPE.SEAT) || !seat.is_available ? 'bg-dark-gray' : ''}`}
               >
                 {seat.seat_number} {seat.is_available}
                 {!seat.is_available ? <p className='text-12'>사용중</p> : ''}
@@ -120,25 +146,41 @@ const StudycafeBookingPage: React.FC = () => {
             {rooms.map(room => (
               <button
                 key={room.room_name}
-                onClick={e => seatClick(e, room.room_id, SEAT_TYPE.ROOM, true)}
+                onClick={e => roomClick(e, { ...room })}
                 style={{
                   top: `${SEATINGCHART[cafeId][room.room_name].y}px`,
                   left: `${SEATINGCHART[cafeId][room.room_name].x}px`,
                 }}
-                className={`absolute w-180 h-80 text-16 border-[1px] ${isClicked && selectedSeat.id === room.room_id && selectedSeat.type === SEAT_TYPE.ROOM ? 'bg-dark-gray' : ''}`}
+                className={`absolute w-180 h-80 text-16 border-[1px] ${isClicked && selectedRoom && selectedRoom.room_id === room.room_id ? 'bg-dark-gray' : ''}`}
               >
                 {room.room_name}
               </button>
             ))}
 
-            <BookingModal
-              isOpen={isClicked}
-              closeModal={closeModal}
-              selectedSeat={selectedSeat}
-              usageFee={usageFee}
-              rooms={rooms}
-              studycafeInfo={{ cafeId, cafeName }}
-            />
+            {selectedType.type === SEAT_TYPE.ROOM && selectedRoom ? (
+              <BookingRoomModal
+                isOpen={isClicked}
+                closeModal={closeModal}
+                selectedType={selectedType}
+                selectedRoom={selectedRoom}
+                studycafeInfo={{ cafeId, cafeName }}
+              />
+            ) : (
+              ''
+            )}
+
+            {selectedType.type === SEAT_TYPE.SEAT && selectedSeat ? (
+              <BookingSeatModal
+                isOpen={isClicked}
+                closeModal={closeModal}
+                selectedType={selectedType}
+                usageFee={usageFee}
+                studycafeInfo={{ cafeId, cafeName }}
+                selectedSeat={selectedSeat}
+              />
+            ) : (
+              ''
+            )}
           </div>
         </div>
       </div>
