@@ -2,7 +2,7 @@ import { useState } from 'react';
 import CityFilter from '../../components/CityFilter/CityFilter';
 import StudyCafeList from '../../components/StudyCafeList/StudyCafeList';
 import Topbar from '../../components/Topbar/Topbar';
-import { CityFilterTypes } from '../../types/interfaces';
+import { CityFilterTypes, StudycafeTypes } from '../../types/interfaces';
 import StudyCafeInfoModal from '../../components/StudyCafeInfoModal/StudyCafeInfoModal';
 
 const MainPage: React.FC = () => {
@@ -12,7 +12,8 @@ const MainPage: React.FC = () => {
     town: '동',
   });
   const [isOpen, setIsOpen] = useState(false);
-  const [clickedStudycafe, setClickedStudycafe] = useState<number | null>(null);
+  const [clickedStudycafe, setClickedStudycafe] =
+    useState<StudycafeTypes | null>(null);
 
   const filterChange = (newFilter: CityFilterTypes) => {
     setFilter(newFilter);
@@ -25,11 +26,12 @@ const MainPage: React.FC = () => {
 
   const studycafeClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    id: number,
+    cafeId: number,
+    cafeName: string,
   ) => {
     e.preventDefault();
     setIsOpen(true);
-    setClickedStudycafe(id);
+    setClickedStudycafe({ cafeId, cafeName });
   };
 
   const closeModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

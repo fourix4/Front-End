@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE, SEAT_TYPE } from '../../config/constants';
-import { RoomsTypes, SeatPriceTypes } from '../../types/interfaces';
+import {
+  RoomsTypes,
+  SeatPriceTypes,
+  StudycafeTypes,
+} from '../../types/interfaces';
 import BookingRoomModal from '../BookingRoomModal/BookingRoomModal';
 import BookingSeatModal from '../BookingSeatModal/BookingSeatModal';
 import { getRoomTimeInfo } from '../../apis/api/studycafe';
@@ -17,6 +21,7 @@ interface BookingModalPropTypes {
   usageFee: SeatPriceTypes[];
   closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   rooms: RoomsTypes[];
+  studycafeInfo: StudycafeTypes;
 }
 
 const BookingModal: React.FC<BookingModalPropTypes> = ({
@@ -25,9 +30,11 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   usageFee,
   closeModal,
   rooms,
+  studycafeInfo,
 }) => {
   const navigate = useNavigate();
-  const [selectedPrice, setSelectedPrice] = useState(0);
+  const [seatPrice, setseatPrice] = useState(0);
+  const [selectedSeatHours, setSeletedSeatHours] = useState(0);
   const [roomDate, setRoomDate] = useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
@@ -36,14 +43,17 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   const [roomTime, setRoomTime] = useState(1);
   const [availableTime, setAvailableTime] = useState<string[]>([]);
   const [selectedStartTime, setSelectedStartTime] = useState('시작 시간');
+  const [roomTotalPrice, setTotalPrice] = useState(0);
 
   const priceClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     price: number,
+    hours: number,
   ) => {
     e.preventDefault();
 
-    setSelectedPrice(price);
+    setseatPrice(price);
+    setSeletedSeatHours(hours);
   };
 
   const yearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -64,6 +74,11 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   const timeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedStartTime('시작 시간');
     setRoomTime(+e.target.value);
+    const room = rooms.find(r => r.room_id === selectedSeat.id);
+
+    if (room) {
+      setTotalPrice(room.price * +e.target.value);
+    }
   };
 
   const startTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -73,18 +88,27 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    console.log(selectedSeat, selectedPrice, selectedStartTime);
-    console.log(!selectedPrice || selectedStartTime === '');
-
-    if (!selectedPrice && selectedStartTime === '시작 시간') {
+    if (!seatPrice && selectedStartTime === '시작 시간') {
       alert('시간을 선택해주세요');
       return;
     }
-    navigate(ROUTE.PAYMENT);
+
+    const key = {
+      ...studycafeInfo,
+      type: selectedSeat.type,
+      id: selectedSeat.id,
+      seatPrice,
+      selectedSeatHours,
+      roomPrice: roomTotalPrice,
+      roomTime,
+      roomStartTime: selectedStartTime,
+    };
+
+    navigate(ROUTE.PAYMENT, { state: { key } });
   };
 
   useEffect(() => {
-    setSelectedPrice(0);
+    setseatPrice(0);
   }, [selectedSeat]);
 
   useEffect(() => {
@@ -118,7 +142,7 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
               <BookingSeatModal
                 usageFee={usageFee}
                 priceClick={priceClick}
-                selectedPrice={selectedPrice}
+                seatPrice={seatPrice}
               />
             ) : (
               <BookingRoomModal
@@ -129,7 +153,7 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
                 startTimeChange={startTimeChange}
                 availableTime={availableTime}
                 selectedStartTime={selectedStartTime}
-                room={rooms.find(room => room.room_id === selectedSeat.id)}
+                room={rooms.find(r => r.room_id === selectedSeat.id)}
                 roomTime={roomTime}
               />
             )}

@@ -5,7 +5,7 @@ import time from '../../assets/time.svg';
 import phone from '../../assets/phone.svg';
 import { getStudycafeInfo } from '../../apis/api/studycafe';
 import { getStudycafeInfoData } from '../../apis/services/studycafe';
-import { StudycafeInfoDataTypes } from '../../types/interfaces';
+import { StudycafeInfoDataTypes, StudycafeTypes } from '../../types/interfaces';
 import SlideImage from '../SlideImage/SlideImage';
 import test1 from '../../assets/test1.png';
 import test2 from '../../assets/test2.png';
@@ -15,7 +15,7 @@ import { ROUTE } from '../../config/constants';
 
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
-  clickedStudycafe: number | null;
+  clickedStudycafe: StudycafeTypes | null;
   closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
@@ -48,7 +48,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
       return;
     }
     (async () => {
-      const rawData = await getStudycafeInfo(clickedStudycafe);
+      const rawData = await getStudycafeInfo(clickedStudycafe.cafeId);
       const data = getStudycafeInfoData(rawData);
 
       if (data) {
@@ -60,10 +60,11 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   const bookingClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     cafeId: number,
+    cafeName: string,
   ) => {
     e.preventDefault();
     closeModal(e);
-    navigate(ROUTE.STUDYCAFE_BOOKING, { state: { key: { cafeId } } });
+    navigate(ROUTE.STUDYCAFE_BOOKING, { state: { key: { cafeId, cafeName } } });
   };
 
   return (
@@ -116,7 +117,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
         </div>
       </div>
       <button
-        onClick={e => bookingClick(e, info.cafe_id)}
+        onClick={e => bookingClick(e, info.cafe_id, info.cafe_name)}
         className={`w-full h-60 text-24 font-bold text-white bg-blue`}
       >
         예약하기

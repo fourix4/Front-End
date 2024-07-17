@@ -95,6 +95,11 @@ export interface RoomTimeInfoResponseTypes extends ResponseTypes {
   };
 }
 
+export interface StudycafeTypes {
+  cafeId: number;
+  cafeName: string;
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes

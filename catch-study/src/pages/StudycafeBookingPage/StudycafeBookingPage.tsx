@@ -11,10 +11,11 @@ import SEATINGCHART from '../../config/seatingchart';
 
 const StudycafeBookingPage: React.FC = () => {
   const location = useLocation();
-  const { cafeId } = location.state.key;
+  const { cafeId, cafeName } = location.state.key;
   const [seats, setSeats] = useState<SeatsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
   const [usageFee, setUsageFee] = useState<SeatPriceTypes[]>([]);
+  const [_, setSeatingChart] = useState('');
   const [selectedSeat, setSeletedSeat] = useState({
     type: '',
     id: -1,
@@ -31,6 +32,7 @@ const StudycafeBookingPage: React.FC = () => {
         setSeats(data.seats);
         setRooms(data.rooms);
         setUsageFee(data.usage_fee);
+        setSeatingChart(data.seating_chart);
       }
     })();
   }, []);
@@ -91,6 +93,7 @@ const StudycafeBookingPage: React.FC = () => {
         <div className='relative w-800 h-full box-border'>
           <div>
             <img
+              // src={seatingChart? seatingChart : ''}
               src={seatingchart}
               className='min-w-800 w-full h-full object-none'
             />
@@ -109,7 +112,7 @@ const StudycafeBookingPage: React.FC = () => {
                 }}
                 className={`absolute w-50 h-50 text-16 border-[1px] ${(isClicked && selectedSeat.id === seat.seat_id && selectedSeat.type === SEAT_TYPE.SEAT) || !seat.is_available ? 'bg-dark-gray' : ''}`}
               >
-                {seat.seat_number}
+                {seat.seat_number} {seat.is_available}
                 {!seat.is_available ? <p className='text-12'>사용중</p> : ''}
               </button>
             ))}
@@ -134,6 +137,7 @@ const StudycafeBookingPage: React.FC = () => {
               selectedSeat={selectedSeat}
               usageFee={usageFee}
               rooms={rooms}
+              studycafeInfo={{ cafeId, cafeName }}
             />
           </div>
         </div>

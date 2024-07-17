@@ -67,55 +67,55 @@ export const getStudycafeSeatData = (
 ): StudycafeSeatTypes | null => {
   if (rawData.data) {
     return rawData.data.result;
+    return {
+      seating_chart: '좌석 배치도 이미지 주소',
+      seats: Object.keys(SEATINGCHART[1])
+        .filter(key => `${key}`.length === 2)
+        .map((key, i) => {
+          console.log(key);
+
+          return {
+            seat_id: i + 1,
+            seat_number: key,
+            is_available: i % 2 === 0,
+          };
+        }),
+      rooms: [
+        {
+          room_id: 1,
+          room_name: '4인용 스터디룸',
+          capacity: 4,
+          cancel_available_time: 360, // 분 단위
+          price: 5000,
+        },
+      ],
+      usage_fee: [
+        {
+          hours: 1,
+          price: 2000,
+        },
+        {
+          hours: 2,
+          price: 3000,
+        },
+        {
+          hours: 5,
+          price: 4000,
+        },
+      ],
+    };
   }
 
-  return {
-    seating_chart: '좌석 배치도 이미지 주소',
-    seats: Object.keys(SEATINGCHART[1])
-      .filter(key => `${key}`.length === 2)
-      .map((key, i) => {
-        return {
-          seat_id: i + 1,
-          seat_number: key,
-          is_available: i % 2 === 0,
-        };
-      }),
-    rooms: [
-      {
-        room_id: 1,
-        room_name: '4인용 스터디룸',
-        capacity: 4,
-        cancel_available_time: 360, // 분 단위
-        price: 5000,
-      },
-    ],
-    usage_fee: [
-      {
-        hours: 1,
-        price: 2000,
-      },
-      {
-        hours: 2,
-        price: 3000,
-      },
-      {
-        hours: 5,
-        price: 4000,
-      },
-    ],
-  };
-
-  // return null;
+  return null;
 };
 
 export const getRoomTimetable = (
   rawData: RoomTimeInfoResponseTypes | ResponseTypes,
 ) => {
   if (rawData.data) {
-    return rawData.data.result;
+    return ['13:00', '15:00', '23:00'];
+    // return rawData.data.result.available_start_time;
   }
 
-  return ['13:00', '15:00', '23:00'];
-
-  // return [];
+  return [];
 };
