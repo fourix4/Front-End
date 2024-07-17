@@ -1,28 +1,25 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 
-const ImageForm: React.FC = () => {
-  const [thumbnail, setThumbnail] = useState<File | null>(null);
-  const [storeImages, setStoreImages] = useState<File[]>([]);
+interface ImageFormPropTypes {
+  thumbnail: File | null;
+  storeImages: File[];
+  onChangeThumailImage: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeStoreImage: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-  const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setThumbnail(e.target.files[0]);
-    }
-  };
-
-  const handleStoreImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setStoreImages(Array.from(e.target.files));
-    }
-  };
-
+const ImageForm: React.FC<ImageFormPropTypes> = ({
+  thumbnail,
+  storeImages,
+  onChangeStoreImage,
+  onChangeThumailImage,
+}) => {
   return (
     <div className='flex flex-col gap-20'>
       <div className='flex flex-col justify-start gap-10 mb-4'>
         <label className='block mb-2'>썸네일 사진 (선택)</label>
         <input
           type='file'
-          onChange={handleThumbnailChange}
+          onChange={e => onChangeThumailImage(e)}
           className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
         />
 
@@ -42,7 +39,7 @@ const ImageForm: React.FC = () => {
         <input
           type='file'
           multiple
-          onChange={handleStoreImagesChange}
+          onChange={e => onChangeStoreImage(e)}
           className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
         />
         {storeImages.length > 0 && (

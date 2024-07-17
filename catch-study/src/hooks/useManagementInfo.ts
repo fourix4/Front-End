@@ -9,6 +9,8 @@ const useManagementInfo = () => {
   const [roomInfos, setRoomInfos] = useState<RoomInfoTypes[]>([]);
   const [cancelTime, setCancelTime] = useState(0);
   const [usageFees, setUsageFees] = useState<UsageFeeTypes[]>([]);
+  const [thumbnail, setThumbnail] = useState<File | null>(null);
+  const [storeImages, setStoreImages] = useState<File[]>([]);
 
   const [formData, setFormData] = useState<FormDataTypes>({
     cafe_name: '',
@@ -29,8 +31,8 @@ const useManagementInfo = () => {
       },
     ],
     usage_fee: usageFees,
-    title_image: '',
-    multiple_images: [],
+    title_image: thumbnail,
+    multiple_images: storeImages,
     seatChart_image: '',
     cafe_phone: '',
   });
@@ -133,6 +135,18 @@ const useManagementInfo = () => {
     );
   };
 
+  const handleThumbnailChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setThumbnail(e.target.files[0]);
+    }
+  };
+
+  const handleStoreImagesChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setStoreImages(Array.from(e.target.files));
+    }
+  };
+
   useEffect(() => {
     setFormData(prevFormData => ({
       ...prevFormData,
@@ -143,14 +157,18 @@ const useManagementInfo = () => {
         },
       ],
       usage_fee: usageFees,
+      title_image: thumbnail,
+      multiple_images: storeImages,
     }));
-  }, [roomInfos, usageFees, cancelTime]);
+  }, [roomInfos, usageFees, cancelTime, thumbnail, storeImages]);
 
   return {
     roomInfos,
     cancelTime,
     usageFees,
     formData,
+    thumbnail,
+    storeImages,
     setUsageFees,
     setRoomInfos,
     setFormData,
@@ -165,6 +183,8 @@ const useManagementInfo = () => {
     handleAddFee,
     handleRemoveFee,
     handleFeeChange,
+    handleThumbnailChange,
+    handleStoreImagesChange,
   };
 };
 

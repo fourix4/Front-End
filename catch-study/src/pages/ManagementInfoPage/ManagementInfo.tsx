@@ -15,6 +15,8 @@ const ManagementInfo: React.FC = () => {
     roomInfos,
     usageFees,
     formData,
+    thumbnail,
+    storeImages,
     setFormData,
     setCancelTime,
     handleInputChange,
@@ -27,6 +29,8 @@ const ManagementInfo: React.FC = () => {
     handleAddFee,
     handleRemoveFee,
     handleFeeChange,
+    handleThumbnailChange,
+    handleStoreImagesChange,
   } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
@@ -145,7 +149,12 @@ const ManagementInfo: React.FC = () => {
           onRoomNameChange={handleRoomNameChange}
         />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <ImageForm />
+        <ImageForm
+          thumbnail={thumbnail}
+          storeImages={storeImages}
+          onChangeThumailImage={handleThumbnailChange}
+          onChangeStoreImage={handleStoreImagesChange}
+        />
         <div className='w-full pt-50'>
           <button
             type='submit'
