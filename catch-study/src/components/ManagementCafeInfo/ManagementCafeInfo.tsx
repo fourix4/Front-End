@@ -33,6 +33,8 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
     handleAddFee,
     handleRemoveFee,
     handleFeeChange,
+    handleThumbnailChange,
+    handleStoreImagesChange,
   } = useManagementInfo();
 
   const [isEdit, setIsEdit] = useState(false);
@@ -99,6 +101,8 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
           handleRemoveRoom={handleRemoveRoom}
           handleRoomChange={handleRoomChange}
           handleRoomNameChange={handleRoomNameChange}
+          handleThumbnailChange={handleThumbnailChange}
+          handleStoreImagesChange={handleStoreImagesChange}
         />
       ) : (
         <ManagementCafeInfoDisplay

@@ -20,7 +20,7 @@ const ImageForm: React.FC<ImageFormPropTypes> = ({
         <input
           type='file'
           onChange={e => onChangeThumailImage(e)}
-          className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
+          className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-light-gray'
         />
 
         {thumbnail && (
@@ -40,12 +40,12 @@ const ImageForm: React.FC<ImageFormPropTypes> = ({
           type='file'
           multiple
           onChange={e => onChangeStoreImage(e)}
-          className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100'
+          className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-light-gray'
         />
         {storeImages.length > 0 && (
           <div className='mt-4'>
             <p className='text-sm font-medium'>미리보기:</p>
-            <div className='flex flex-wrap max-w-full gap-2 mt-2 max-w-'>
+            <div className='flex flex-wrap max-w-full gap-2 mt-2'>
               {storeImages.map((image, index) => (
                 <img
                   key={index}
