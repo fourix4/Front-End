@@ -80,6 +80,13 @@ const ManagementInfo: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
+        <input
+          name='cafe_phone'
+          placeholder='전화번호 (02-0000-0000)'
+          value={formData.cafe_phone}
+          onChange={handleInputChange}
+          className='input-box'
+        />
         <AddressForm
           address={formData.address}
           onInputChange={e =>

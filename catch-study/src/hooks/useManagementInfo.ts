@@ -59,7 +59,6 @@ const useManagementInfo = () => {
     }));
   };
 
-  // select로 바꿔야됨
   const handleNestedInputChange = (
     e: ChangeEvent<HTMLInputElement>,
     field: string,
