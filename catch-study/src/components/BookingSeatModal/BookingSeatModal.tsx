@@ -53,7 +53,8 @@ const BookingSeatModal: React.FC<BookingSeatModalPropTypes> = ({
 
     const key = {
       ...studycafeInfo,
-      ...selectedSeat,
+      id: selectedSeat.seat_id,
+      name: selectedSeat.seat_number,
       type: SEAT_TYPE.SEAT,
       time: selectedSeatHours,
       price: seatPrice,

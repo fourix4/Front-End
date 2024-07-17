@@ -98,7 +98,8 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
 
     const key = {
       ...studycafeInfo,
-      ...selectedRoom,
+      id: selectedRoom.room_id,
+      name: selectedRoom.room_name,
       type: SEAT_TYPE.ROOM,
       time: roomTime,
       startTime: selectedStartTime,
