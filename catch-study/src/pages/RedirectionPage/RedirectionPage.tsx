@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postLogin } from '../../apis/api/user';
-import isSuccessLogin from '../../apis/services/user';
+import { isSuccessLogin } from '../../apis/services/user';
 import { ROUTE } from '../../config/constants';
 
 const RedirectionPage = () => {

@@ -23,3 +23,15 @@ export const postLogout = async () => {
     return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
   }
 };
+
+export const deleteUser = async () => {
+  try {
+    const { data } = await instance.post<ResponseTypes>(
+      API_ADDRESS.DELETE_USER,
+    );
+
+    return data;
+  } catch (error) {
+    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+  }
+};
