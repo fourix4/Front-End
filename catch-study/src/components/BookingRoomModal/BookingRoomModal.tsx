@@ -37,6 +37,11 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
   const [roomTotalPrice, setTotalPrice] = useState(selectedRoom.price);
 
   useEffect(() => {
+    setSelectedStartTime('시작 시간');
+    setRoomTime(1);
+  }, [selectedRoom]);
+
+  useEffect(() => {
     if (/[0-9]{2}:[0-9]{2}/.test(selectedStartTime)) {
       setEndTime(getEndTime(selectedStartTime, roomTime));
       return;
@@ -74,9 +79,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
     setSelectedStartTime('시작 시간');
     setRoomTime(+e.target.value);
 
-    if (selectedRoom) {
-      setTotalPrice(selectedRoom.price * +e.target.value);
-    }
+    setTotalPrice(selectedRoom.price * +e.target.value);
   };
 
   const startTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -88,10 +91,10 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
 
     console.log('click');
 
-    // if (!seatPrice && selectedStartTime === '시작 시간') {
-    //   alert('시간을 선택해주세요');
-    //   return;
-    // }
+    if (selectedStartTime === '시작 시간') {
+      alert('시간을 선택해주세요');
+      return;
+    }
 
     const key = {
       ...studycafeInfo,
@@ -102,17 +105,6 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
       price: roomTotalPrice,
       date: roomDate,
     };
-
-    // const key = {
-    //   ...studycafeInfo,
-    //   ...selectedSeat,
-    //   seatPrice,
-    //   seatTime: selectedSeatHours,
-    //   roomPrice: roomTotalPrice,
-    //   roomTime,
-    //   roomStartTime: selectedStartTime,
-    //   date: roomDate,
-    // };
 
     navigate(ROUTE.PAYMENT, { state: { key } });
   };
@@ -135,7 +127,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
         <div className='flex w-full max-h-[85%] overflow-auto flex-wrap'>
           <div className='w-full max-h-[85%]'>
             <div className='mb-10 text-16'>
-              {selectedRoom ? selectedRoom.capacity : 1}인실 스터디룸
+              {selectedRoom.capacity}인실 스터디룸
             </div>
             <div className='flex justify-between w-full mb-10 h-60'>
               <select
@@ -176,7 +168,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
               </select>
               <select
                 onChange={timeChange}
-                defaultValue={1}
+                value={roomTime}
                 className='px-10 w-1/4 h-60 select cursor-pointer rounded-sm border-[1px] border-dark-gray text-16 text-center'
               >
                 {Array(12)
@@ -211,10 +203,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
               </div>
             </div>
             <div className='text-24 font-bold text-right'>
-              {selectedRoom
-                ? (selectedRoom.price * roomTime).toLocaleString()
-                : 0}
-              원
+              {(selectedRoom.price * roomTime).toLocaleString()}원
             </div>
           </div>
         </div>

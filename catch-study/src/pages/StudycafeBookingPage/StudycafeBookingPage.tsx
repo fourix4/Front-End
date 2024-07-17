@@ -21,8 +21,8 @@ const StudycafeBookingPage: React.FC = () => {
     type: '',
     id: -1,
   });
-  const [selectedSeat, setSelectedSeat] = useState<SeatsTypes>();
-  const [selectedRoom, setSelectedRoom] = useState<RoomsTypes>();
+  const [selectedSeat, setSelectedSeat] = useState<SeatsTypes | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<RoomsTypes | null>(null);
   const [isClicked, setIsClicked] = useState(false);
   const seatsRef = useRef<HTMLDivElement>(null);
 
@@ -47,16 +47,20 @@ const StudycafeBookingPage: React.FC = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    // if (!isAvailable) {
-    //   return;
-    // }
-
-    if (!isClicked) {
-      setIsClicked(prev => !prev);
+    if (!seat.is_available) {
+      return;
     }
 
-    if (isClicked && selectedType.id === seat.seat_id) {
-      setIsClicked(prev => !prev);
+    if (!isClicked) {
+      setIsClicked(true);
+    }
+
+    if (
+      isClicked &&
+      selectedType.id === seat.seat_id &&
+      selectedType.type === SEAT_TYPE.SEAT
+    ) {
+      setIsClicked(false);
     }
 
     setSelectedSeat(seat);
@@ -75,11 +79,15 @@ const StudycafeBookingPage: React.FC = () => {
     e.stopPropagation();
 
     if (!isClicked) {
-      setIsClicked(prev => !prev);
+      setIsClicked(true);
     }
 
-    if (isClicked && selectedType.id === room.room_id) {
-      setIsClicked(prev => !prev);
+    if (
+      isClicked &&
+      selectedType.id === room.room_id &&
+      selectedType.type === SEAT_TYPE.ROOM
+    ) {
+      setIsClicked(false);
     }
 
     setSelectedRoom(room);
@@ -89,8 +97,6 @@ const StudycafeBookingPage: React.FC = () => {
       id: room.room_id,
     });
   };
-
-  console.log(isClicked);
 
   useEffect(() => {
     const handleFocus = (e: MouseEvent) => {
@@ -112,6 +118,7 @@ const StudycafeBookingPage: React.FC = () => {
   const closeModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     setIsClicked(false);
+    setSelectedType({ type: '', id: -1 });
   };
 
   return (
@@ -151,7 +158,7 @@ const StudycafeBookingPage: React.FC = () => {
                   top: `${SEATINGCHART[cafeId][room.room_name].y}px`,
                   left: `${SEATINGCHART[cafeId][room.room_name].x}px`,
                 }}
-                className={`absolute w-180 h-80 text-16 border-[1px] ${isClicked && selectedRoom && selectedRoom.room_id === room.room_id ? 'bg-dark-gray' : ''}`}
+                className={`absolute w-180 h-80 text-16 border-[1px] ${isClicked && selectedRoom && selectedType.type === SEAT_TYPE.ROOM && selectedRoom.room_id === room.room_id ? 'bg-dark-gray' : ''}`}
               >
                 {room.room_name}
               </button>
@@ -173,10 +180,9 @@ const StudycafeBookingPage: React.FC = () => {
               <BookingSeatModal
                 isOpen={isClicked}
                 closeModal={closeModal}
-                selectedType={selectedType}
                 usageFee={usageFee}
-                studycafeInfo={{ cafeId, cafeName }}
                 selectedSeat={selectedSeat}
+                studycafeInfo={{ cafeId, cafeName }}
               />
             ) : (
               ''

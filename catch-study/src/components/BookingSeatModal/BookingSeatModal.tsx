@@ -1,37 +1,34 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   SeatPriceTypes,
   SeatsTypes,
   StudycafeTypes,
 } from '../../types/interfaces';
+import { ROUTE, SEAT_TYPE } from '../../config/constants';
 
 interface BookingSeatModalPropTypes {
   isOpen: boolean;
-  selectedType: {
-    type: string;
-    id: number;
-  };
   closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-  studycafeInfo: StudycafeTypes;
   usageFee: SeatPriceTypes[];
+  studycafeInfo: StudycafeTypes;
   selectedSeat: SeatsTypes;
 }
 
 const BookingSeatModal: React.FC<BookingSeatModalPropTypes> = ({
   isOpen,
-  usageFee,
-  selectedType,
   closeModal,
+  usageFee,
+  studycafeInfo,
   selectedSeat,
 }) => {
+  const navigate = useNavigate();
   const [seatPrice, setseatPrice] = useState(0);
   const [selectedSeatHours, setSeletedSeatHours] = useState(0);
 
-  console.log(selectedSeatHours, selectedSeat);
-
   useEffect(() => {
     setseatPrice(0);
-  }, [selectedType]);
+  }, [selectedSeat]);
 
   const priceClick = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -47,23 +44,27 @@ const BookingSeatModal: React.FC<BookingSeatModalPropTypes> = ({
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    // if (!seatPrice && selectedStartTime === '시작 시간') {
-    //   alert('시간을 선택해주세요');
-    //   return;
-    // }
+    if (!seatPrice) {
+      alert('시간을 선택해주세요');
+      return;
+    }
 
-    // const key = {
-    //   ...studycafeInfo,
-    //   ...selectedSeat,
-    //   seatPrice,
-    //   seatTime: selectedSeatHours,
-    //   roomPrice: roomTotalPrice,
-    //   roomTime,
-    //   roomStartTime: selectedStartTime,
-    //   date: roomDate,
-    // };
+    const date = new Date();
 
-    // navigate(ROUTE.PAYMENT, { state: { key } });
+    const key = {
+      ...studycafeInfo,
+      ...selectedSeat,
+      type: SEAT_TYPE.SEAT,
+      time: selectedSeatHours,
+      price: seatPrice,
+      date: {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1,
+        date: date.getDate(),
+      },
+    };
+
+    navigate(ROUTE.PAYMENT, { state: { key } });
   };
 
   return (
