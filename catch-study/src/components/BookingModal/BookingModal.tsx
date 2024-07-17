@@ -100,6 +100,7 @@ const BookingModal: React.FC<BookingModalPropTypes> = ({
       seatPrice,
       selectedSeatHours,
       roomPrice: roomTotalPrice,
+      roomDate,
       roomTime,
       roomStartTime: selectedStartTime,
     };
