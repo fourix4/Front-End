@@ -106,6 +106,36 @@ export interface PaymentKakaoResponseTypes extends ResponseTypes {
   };
 }
 
+interface CurrentBookingTypes {
+  booking_id: number;
+  cafe_name: string;
+  status: '이용 전' | '이용 중'; //이용 전, 이용 중
+  amount: number;
+  address: string;
+  code: number;
+  payment_time: string;
+  start_time: string;
+  end_time: string;
+}
+
+export interface CurrentBookingSeatsTypes extends CurrentBookingTypes {
+  seat_number: string;
+  start_available_time: string; // 입실 가능 시간
+}
+
+export interface CurrentBookingRoomsTypes extends CurrentBookingTypes {
+  room_name: string;
+}
+
+export interface BookingResponseTypes extends ResponseTypes {
+  data: {
+    result: {
+      seat_list: CurrentBookingSeatsTypes[];
+      room_list: CurrentBookingRoomsTypes[];
+    };
+  };
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes
