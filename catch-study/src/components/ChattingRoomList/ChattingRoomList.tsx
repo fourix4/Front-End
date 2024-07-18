@@ -1,11 +1,26 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CHATTING_ROOM_LISTS } from '../../config/constants';
+import { getChattingRoom } from '../../apis/api/chatting';
+import getChattingRoomData from '../../apis/services/chatting';
+import { ChattingRoomTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
+  const [chattingRooms, setChattingRooms] = useState<ChattingRoomTypes[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const rawData = await getChattingRoom();
+      const data = getChattingRoomData(rawData);
+
+      setChattingRooms(data);
+      console.log(data);
+    })();
+  }, [chattingRooms]);
+
   return (
     <ul>
-      {CHATTING_ROOM_LISTS.map(chattingRoom => (
+      {chattingRooms.map(chattingRoom => (
         <li
           key={chattingRoom.chat_room_id}
           className='relative w-full p-20 border-b-2 cursor-pointer border-light-gray'

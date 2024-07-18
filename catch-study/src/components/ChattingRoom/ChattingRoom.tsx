@@ -1,7 +1,8 @@
 import { Client, Frame } from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
-import { MESSAGES } from '../../config/constants';
+
+import { MESSAGES } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
