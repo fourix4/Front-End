@@ -136,6 +136,21 @@ export interface BookingResponseTypes extends ResponseTypes {
   };
 }
 
+export interface BookingTypes {
+  type: 'seat' | 'room';
+  id: number;
+  cafeName: string;
+  status: '이용 전' | '이용 중';
+  amount: number;
+  address: string;
+  name: string;
+  code: number;
+  paymentTime: string;
+  startTime: string;
+  endTime: string;
+  availableTime?: string;
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes
