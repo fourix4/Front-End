@@ -95,6 +95,17 @@ export interface RoomTimeInfoResponseTypes extends ResponseTypes {
   };
 }
 
+export interface StudycafeTypes {
+  cafeId: number;
+  cafeName: string;
+}
+
+export interface PaymentKakaoResponseTypes extends ResponseTypes {
+  data: {
+    result: { next_redirct_pc_url: string };
+  };
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes

@@ -1,20 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postLogin } from '../../apis/api/user';
-import { isSuccessLogin } from '../../apis/services/user';
-import { ROUTE } from '../../config/constants';
+import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 
 const RedirectionPage = () => {
   const navigate = useNavigate();
+  const accessToken = new URL(document.location.toString()).searchParams.get(
+    ACCESS_TOKEN,
+  );
 
   useEffect(() => {
-    (async () => {
-      const rawData = await postLogin();
-
-      if (!isSuccessLogin(rawData)) {
-        alert('로그인 실패');
-      }
-    })();
+    if (!accessToken) {
+      alert('로그인 실패');
+    } else {
+      localStorage.setItem(ACCESS_TOKEN, accessToken);
+    }
 
     navigate(ROUTE.HOME);
   }, []);

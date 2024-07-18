@@ -35,6 +35,7 @@ export const ROUTE = {
   MANAGEMENT_INFO: '/management/info',
   STUDYCAFE_BOOKING: '/studycafe/booking',
   PAYMENT: '/payment',
+  PAYMENT_SUCCESS: '/payment-success',
 };
 
 interface MenuTypes {
@@ -68,6 +69,8 @@ export const TIME_TABLE = Array.from({ length: 48 }, (_, i) => {
 
   return result;
 });
+
+export const PAYMENT_TYPE = ['카카오페이'];
 
 export interface ChattingRoomType {
   chat_room_id: number;

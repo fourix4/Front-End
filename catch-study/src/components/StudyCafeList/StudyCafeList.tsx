@@ -9,6 +9,7 @@ interface StudyCafeListPropTypes {
   studycafeClick: (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
     id: number,
+    name: string,
   ) => void;
 }
 
@@ -81,7 +82,7 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
         ) => (
           <div
             key={i}
-            onClick={e => studycafeClick(e, id)}
+            onClick={e => studycafeClick(e, id, cafeName)}
             className='flex items-center p-20 border-b studycafe h-140 border-light-gray'
           >
             <img className='mr-20 w-100 h-100' src={cafeImage} />

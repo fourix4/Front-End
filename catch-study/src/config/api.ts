@@ -8,6 +8,7 @@ export const API_ADDRESS = {
   STUDYCAFE_SEATING_CHART: '/seatingchart',
   ROOM_TIME_INFO: '/studycafes/timeinfo',
   DELETE_USER: '/user',
+  PAYMENT_KAKAO: '/studycafes/seats',
 };
 
 export const STATUS = {
