@@ -89,8 +89,6 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
   const paymentClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    console.log('click');
-
     if (selectedStartTime === '시작 시간') {
       alert('시간을 선택해주세요');
       return;

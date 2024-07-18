@@ -100,6 +100,12 @@ export interface StudycafeTypes {
   cafeName: string;
 }
 
+export interface PaymentKakaoResponseTypes extends ResponseTypes {
+  data: {
+    result: { next_redirct_pc_url: string };
+  };
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes

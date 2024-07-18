@@ -10,6 +10,7 @@ import MyPage from './pages/MyPage/MyPage';
 import RedirectionPage from './pages/RedirectionPage/RedirectionPage';
 import StudycafeBookingPage from './pages/StudycafeBookingPage/StudycafeBookingPage';
 import PaymentPage from './pages/PaymentPage/PaymentPage';
+import PaymentSuccessPage from './pages/PaymentSuccessPage/PaymentSuccessPage';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +29,7 @@ const App: React.FC = () => {
           element={<StudycafeBookingPage />}
         />
         <Route path={ROUTE.PAYMENT} element={<PaymentPage />} />
+        <Route path={ROUTE.PAYMENT_SUCCESS} element={<PaymentSuccessPage />} />
       </Routes>
     </>
   );

@@ -1,5 +1,8 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Topbar from '../../components/Topbar/Topbar';
+import postPayment from '../../apis/api/payment';
+import getRedirectPCURL from '../../apis/services/payment';
+import { ROUTE } from '../../config/constants';
 
 interface PaymentInfoTypes {
   cafeId: number;
@@ -14,9 +17,40 @@ interface PaymentInfoTypes {
 }
 
 const PaymentPage: React.FC = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  const { cafeName, name, time, price, date }: PaymentInfoTypes =
-    location.state.key;
+  const {
+    cafeId,
+    cafeName,
+    id,
+    name,
+    type,
+    time,
+    startTime,
+    price,
+    date,
+  }: PaymentInfoTypes = location.state.key;
+
+  const paymentClick = async () => {
+    const rawData = await postPayment(
+      cafeId,
+      'kakaopay',
+      id,
+      type,
+      time * 60,
+      price,
+      startTime,
+    );
+    const result = getRedirectPCURL(rawData);
+
+    if (result) {
+      navigate(result);
+      return;
+    }
+
+    navigate(ROUTE.PAYMENT_SUCCESS);
+    // alert('결제 실패');
+  };
 
   return (
     <>
@@ -39,6 +73,7 @@ const PaymentPage: React.FC = () => {
         </div>
       </div>
       <button
+        onClick={paymentClick}
         className={`fixed bottom-0 w-full h-60 text-24 font-bold text-white bg-blue`}
       >
         결제하기

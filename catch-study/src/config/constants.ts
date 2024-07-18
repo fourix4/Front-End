@@ -35,6 +35,7 @@ export const ROUTE = {
   MANAGEMENT_INFO: '/management/info',
   STUDYCAFE_BOOKING: '/studycafe/booking',
   PAYMENT: '/payment',
+  PAYMENT_SUCCESS: '/payment-success',
 };
 
 interface MenuTypes {
