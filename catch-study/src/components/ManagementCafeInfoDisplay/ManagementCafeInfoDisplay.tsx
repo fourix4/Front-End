@@ -84,6 +84,33 @@ const ManagementCafeInfoDisplay: React.FC<
           )}
         </div>
       </div>
+
+      <div className='flex flex-col items-start justify-center w-full gap-10 py-10 mt-10 border-t-2 md:flex-row border-light-gray'>
+        <div className='flex-1'>
+          <h2 className='font-semibold text-17'>썸네일 사진</h2>
+          {cafeInfo.title_image && (
+            <img
+              src={URL.createObjectURL(cafeInfo.title_image)}
+              className='object-cover w-64 h-64 mt-4'
+            />
+          )}
+        </div>
+        <div className='flex-1'>
+          <h2 className='font-semibold text-17'>매장 사진</h2>
+          {cafeInfo.multiple_images.length > 0 ? (
+            cafeInfo.multiple_images.map((image, index) => (
+              <img
+                key={index}
+                src={URL.createObjectURL(image)}
+                className='object-cover w-64 h-64 mt-4'
+                alt={`Store Image ${index + 1}`}
+              />
+            ))
+          ) : (
+            <p>매장 사진이 없습니다.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

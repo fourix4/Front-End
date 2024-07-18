@@ -1,6 +1,7 @@
 import { postManagementInfo } from '../../apis/api/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
 import FeeForm from '../../components/FeeForm/FeeForm';
+import ImageForm from '../../components/ImangeForm/ImageForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
 import {
@@ -14,6 +15,8 @@ const ManagementInfo: React.FC = () => {
     roomInfos,
     usageFees,
     formData,
+    thumbnail,
+    storeImages,
     setFormData,
     setCancelTime,
     handleInputChange,
@@ -26,6 +29,8 @@ const ManagementInfo: React.FC = () => {
     handleAddFee,
     handleRemoveFee,
     handleFeeChange,
+    handleThumbnailChange,
+    handleStoreImagesChange,
   } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
@@ -76,6 +81,13 @@ const ManagementInfo: React.FC = () => {
           name='cafe_name'
           placeholder='스터디 카페 이름'
           value={formData.cafe_name}
+          onChange={handleInputChange}
+          className='input-box'
+        />
+        <input
+          name='cafe_phone'
+          placeholder='전화번호 (02-0000-0000)'
+          value={formData.cafe_phone}
           onChange={handleInputChange}
           className='input-box'
         />
@@ -135,6 +147,13 @@ const ManagementInfo: React.FC = () => {
           onRemoveRoom={handleRemoveRoom}
           onRoomChange={handleRoomChange}
           onRoomNameChange={handleRoomNameChange}
+        />
+        <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
+        <ImageForm
+          thumbnail={thumbnail}
+          storeImages={storeImages}
+          onChangeThumailImage={handleThumbnailChange}
+          onChangeStoreImage={handleStoreImagesChange}
         />
         <div className='w-full pt-50'>
           <button

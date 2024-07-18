@@ -30,8 +30,8 @@ export interface FormDataTypes {
     },
   ];
   usage_fee: UsageFeeTypes[];
-  title_image: string;
-  multiple_images: string[];
+  title_image: File | null;
+  multiple_images: File[];
   seatChart_image: string;
   cafe_phone: string;
 }

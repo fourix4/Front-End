@@ -39,6 +39,8 @@ interface ManagementCafeInfoFormPropsTypes {
     e: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => void;
+  handleThumbnailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleStoreImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
@@ -57,6 +59,8 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
   handleRemoveRoom,
   handleRoomChange,
   handleRoomNameChange,
+  handleThumbnailChange,
+  handleStoreImagesChange,
 }) => {
   return (
     <form
@@ -283,6 +287,46 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
               onClick={handleAddRoom}
               className='w-24 h-24 bg-white bg-center bg-no-repeat border-2 rounded-full bg-add border-light-gray'
             ></button>
+          </div>
+        </div>
+      </div>
+
+      <div className='flex flex-col items-start justify-center w-full gap-10 py-10 mt-10 border-t-2 md:flex-row border-light-gray'>
+        <div className='flex-1'>
+          <h2 className='font-semibold text-17'>썸네일 사진</h2>
+          <input
+            type='file'
+            onChange={handleThumbnailChange}
+            className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-white'
+          />
+          {formData.title_image && (
+            <img
+              src={URL.createObjectURL(formData.title_image)}
+              className='object-cover w-64 h-64 mt-4 md:w-128 md:h-128'
+            />
+          )}
+        </div>
+        <div className='flex-1'>
+          <h2 className='font-semibold text-17'>매장 사진</h2>
+          <input
+            type='file'
+            multiple
+            onChange={handleStoreImagesChange}
+            className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-white'
+          />
+          <div className='flex flex-wrap max-w-full gap-2 mt-2'>
+            {formData.multiple_images.length > 0 ? (
+              formData.multiple_images.map((image, index) => (
+                <img
+                  key={index}
+                  src={URL.createObjectURL(image)}
+                  className='object-cover w-64 h-64 mt-4 md:w-128 md:h-128'
+                  alt={`Store Image ${index + 1}`}
+                />
+              ))
+            ) : (
+              <p>매장 사진이 없습니다.</p>
+            )}
           </div>
         </div>
       </div>

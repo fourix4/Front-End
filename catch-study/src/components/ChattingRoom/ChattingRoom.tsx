@@ -22,7 +22,7 @@ const ChattingRoom = () => {
   };
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/ws');
+    const socket = new SockJS('http://3.39.182.9:8080/ws');
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
@@ -35,11 +35,11 @@ const ChattingRoom = () => {
     client.onConnect = (frame: Frame) => {
       console.log('connect success', frame);
 
-      client.subscribe('/topic/connection-status', message => {
-        const statusMessage = JSON.parse(message.body);
+      // client.subscribe('/topic/connection-status', message => {
+      //   const statusMessage = JSON.parse(message.body);
 
-        console.log(statusMessage.message);
-      });
+      //   console.log(statusMessage.message);
+      // });
     };
 
     // client.onConnect = frame => {
