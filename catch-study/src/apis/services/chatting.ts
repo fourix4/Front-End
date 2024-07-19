@@ -1,10 +1,10 @@
-import { CHATTING_ROOM_LISTS } from '../../types/chatting';
+import { CHATTING_ROOM_LISTS, MESSAGES } from '../../types/chatting';
 import {
   ChattingRoomResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
 
-const getChattingRoomData = (
+export const getChattingRoomData = (
   rawData: ChattingRoomResponseTypes | ResponseTypes,
 ) => {
   if (rawData.data) {
@@ -18,4 +18,15 @@ const getChattingRoomData = (
   );
 };
 
-export default getChattingRoomData;
+export const getChattingData = (
+  rawData: ChattingRoomResponseTypes | ResponseTypes,
+) => {
+  if (rawData.data) {
+    return rawData.data.result;
+  }
+
+  return MESSAGES.sort(
+    (a, b) =>
+      new Date(b.create_date).getTime() - new Date(a.create_date).getTime(),
+  );
+};

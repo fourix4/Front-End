@@ -1,5 +1,6 @@
 import { API_ADDRESS, STATUS } from '../../config/api';
 import {
+  CHattingResponseTypes,
   ChattingRoomResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
@@ -17,4 +18,14 @@ export const getChattingRoom = async () => {
   }
 };
 
-export const a = null;
+export const getChatting = async (chattingRoomId: string) => {
+  try {
+    const { data } = await instance.get<CHattingResponseTypes | ResponseTypes>(
+      `${API_ADDRESS.CHATTING}/${chattingRoomId}`,
+    );
+
+    return data;
+  } catch (error) {
+    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+  }
+};

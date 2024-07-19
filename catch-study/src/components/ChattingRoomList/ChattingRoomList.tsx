@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getChattingRoom } from '../../apis/api/chatting';
-import getChattingRoomData from '../../apis/services/chatting';
+import { getChattingRoomData } from '../../apis/services/chatting';
 import { ChattingRoomTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 

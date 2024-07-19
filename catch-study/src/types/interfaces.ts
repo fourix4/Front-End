@@ -62,3 +62,9 @@ export interface ChattingRoomResponseTypes extends ResponseTypes {
     result: ChattingRoomTypes[];
   };
 }
+
+export interface CHattingResponseTypes extends ResponseTypes {
+  data: {
+    result: ChattingRoomTypes[];
+  };
+}
