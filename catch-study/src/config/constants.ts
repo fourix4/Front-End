@@ -49,7 +49,7 @@ export const MENU: MenuTypes = {
   채팅: ROUTE.CHATTING,
 };
 
-export const SEAT_TYPE = {
+export const SEAT_TYPE: { [key: string]: 'seat' | 'room' } = {
   SEAT: 'seat',
   ROOM: 'room',
 };

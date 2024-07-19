@@ -1,3 +1,4 @@
+import { SEAT_TYPE } from '../../config/constants';
 import {
   BookingResponseTypes,
   BookingTypes,
@@ -7,18 +8,44 @@ import {
 const getBookingList = (
   rawData: BookingResponseTypes | ResponseTypes,
 ): BookingTypes[] => {
-  //   if (rawData.data) {
-  //     const list = [
-  //       ...rawData.data.result.seat_list,
-  //       ...rawData.data.result.room_list,
-  //     ];
+  if (rawData.data) {
+    const list = [
+      ...rawData.data.result.seat_list,
+      ...rawData.data.result.room_list,
+    ];
 
-  //     if (!list.length) {
-  //       return [];
-  //     }
-  //   }
+    if (!list.length) {
+      return [];
+    }
 
-  console.log(rawData);
+    return list.map(booking => {
+      const result: BookingTypes = {
+        type: SEAT_TYPE.SEAT,
+        id: booking.booking_id,
+        cafeName: booking.cafe_name,
+        status: booking.status,
+        amount: booking.amount,
+        address: booking.address,
+        name: '',
+        code: booking.code,
+        paymentTime: booking.payment_time,
+        startTime: booking.start_time,
+        endTime: booking.end_time,
+        availableTime: '',
+      };
+
+      if (booking.start_available_time) {
+        result.type = SEAT_TYPE.SEAT;
+        result.name = booking.seat_number;
+        result.availableTime = booking.start_available_time;
+      } else {
+        result.type = SEAT_TYPE.ROOM;
+        result.name = booking.room_name;
+      }
+
+      return result;
+    });
+  }
 
   return [
     {
@@ -37,7 +64,7 @@ const getBookingList = (
     },
     {
       type: 'room',
-      id: 1,
+      id: 2,
       cafeName: '이지 스터디 카페',
       status: '이용 전',
       amount: 10000,
