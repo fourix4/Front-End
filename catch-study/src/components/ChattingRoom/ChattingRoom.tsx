@@ -2,9 +2,10 @@ import { Client, Frame } from '@stomp/stompjs';
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 
-import { useParams } from 'react-router-dom';
+import { useAtom } from 'jotai';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
+import chattingRoomId from '../../atoms/chatting';
 import { MessageTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 
@@ -12,17 +13,19 @@ const MY_USER_ID = 1;
 // const RECIPIENT_ID = 2;
 
 const ChattingRoom = () => {
-  const param = useParams();
-
   const [chatting, setChatting] = useState('');
   const [stompClient, setStompClient] = useState<Client | null>(null);
-  const [chatRoomId, setChatRoomId] = useState('');
+
   const [prevChatting, setPrevChatting] = useState<MessageTypes[]>();
+
+  const [roomId] = useAtom(chattingRoomId);
+
+  console.log(roomId);
 
   const handleSendMessage = () => {
     if (stompClient) {
       stompClient.publish({
-        destination: '/app/chat.sendMessage',
+        destination: `/sub/${roomId}/chat`,
         body: JSON.stringify('hi'),
       });
       setChatting('');
@@ -30,21 +33,19 @@ const ChattingRoom = () => {
   };
 
   useEffect(() => {
-    if (!param.chattingId) return;
-    const id = param.chattingId;
-
-    setChatRoomId(id);
     // id로 채팅 가져오기
 
+    if (!roomId) return;
+
     (async () => {
-      const rawData = await getChatting(id);
+      const rawData = await getChatting(roomId);
       const data = getChattingData(rawData);
 
       setPrevChatting(data);
 
       console.log(data);
     })();
-  }, [param, prevChatting, chatRoomId]);
+  }, [roomId, getChatting, getChattingData, setPrevChatting]);
 
   useEffect(() => {
     const socket = new SockJS('http://3.39.182.9:8080/ws');
@@ -56,9 +57,8 @@ const ChattingRoom = () => {
       },
     });
 
-    // 연결 상태 메시지 구독
     client.onConnect = (frame: Frame) => {
-      console.log('connect success', frame);
+      console.log(`/sub/${roomId}/chat`, frame);
 
       // client.subscribe('/topic/connection-status', message => {
       //   const statusMessage = JSON.parse(message.body);

@@ -7,6 +7,8 @@ import {
 export const getChattingRoomData = (
   rawData: ChattingRoomResponseTypes | ResponseTypes,
 ) => {
+  console.log('채팅 목록', rawData);
+
   if (rawData.data) {
     return rawData.data.result;
   }

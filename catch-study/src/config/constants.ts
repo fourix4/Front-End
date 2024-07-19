@@ -28,7 +28,7 @@ export const ROUTE = {
   LOGIN: '/login',
   KAKAO_REDIRECT: '/oauthkakao',
   CHATTING: '/chatting',
-  CHATTING_ROOM: '/chatting/:chattingId',
+  CHATTING_ROOM: '/chatting/room',
   MYPAGE: '/mypage',
   BOOKING: '/booking',
   MANAGEMENT: '/management',
