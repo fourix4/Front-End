@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
-import getCurrentBooking from '../../apis/api/booking';
-import getBookingList from '../../apis/services/booking';
+import { getCurrentBooking, patchCheckout } from '../../apis/api/booking';
+import { getBookingList, isSuccessCheckout } from '../../apis/services/booking';
 import { BookingTypes } from '../../types/interfaces';
 import { SEAT_TYPE } from '../../config/constants';
 
@@ -16,6 +16,28 @@ const BookingPage: React.FC = () => {
       setBookingList(data);
     })();
   }, []);
+
+  const checkoutClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    bookingId: number,
+  ) => {
+    e.preventDefault();
+
+    if (window.confirm('퇴실하시겠습니까?')) {
+      (async () => {
+        const rawData = await patchCheckout(bookingId);
+
+        if (isSuccessCheckout(rawData)) {
+          setBookingList(prev =>
+            prev.filter(booking => booking.id !== bookingId),
+          );
+          alert('퇴실되었습니다.');
+          return;
+        }
+        alert('입실 중인 좌석이 존재하지 않습니다.');
+      })();
+    }
+  };
 
   return (
     <>
@@ -48,7 +70,12 @@ const BookingPage: React.FC = () => {
           </div>
           <div className='flex w-full justify-between [&>*]:w-1/2 [&>*]:rounded-sm'>
             <button className='h-40 bg-blue mr-15 text-white'>연장하기</button>
-            <button className='h-40 border border-dark-gray'>퇴실하기</button>
+            <button
+              onClick={e => checkoutClick(e, booking.id)}
+              className='h-40 border border-dark-gray'
+            >
+              퇴실하기
+            </button>
           </div>
           <button className='w-full block h-40 bg-blue text-white rounded-sm'>
             관리자 1:1 문의

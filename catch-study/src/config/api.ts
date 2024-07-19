@@ -10,6 +10,7 @@ export const API_ADDRESS = {
   DELETE_USER: '/user',
   PAYMENT_KAKAO: '/studycafes/seats',
   BOOKING: '/booking',
+  CHECKOUT: '/booking/checkout',
 };
 
 export const STATUS = {

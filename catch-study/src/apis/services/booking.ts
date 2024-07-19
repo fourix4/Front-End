@@ -1,3 +1,4 @@
+import { STATUS } from '../../config/api';
 import { SEAT_TYPE } from '../../config/constants';
 import {
   BookingResponseTypes,
@@ -5,7 +6,7 @@ import {
   ResponseTypes,
 } from '../../types/interfaces';
 
-const getBookingList = (
+export const getBookingList = (
   rawData: BookingResponseTypes | ResponseTypes,
 ): BookingTypes[] => {
   if (rawData.data) {
@@ -80,4 +81,9 @@ const getBookingList = (
   // return []
 };
 
-export default getBookingList;
+export const isSuccessCheckout = (rawData: ResponseTypes) => {
+  if (rawData.code === STATUS.SUCCESS) {
+    return true;
+  }
+  return false;
+};
