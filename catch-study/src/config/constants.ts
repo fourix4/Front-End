@@ -49,10 +49,10 @@ export const MENU: MenuTypes = {
   채팅: ROUTE.CHATTING,
 };
 
-export const SEAT_TYPE: { [key: string]: 'seat' | 'room' } = {
+export const SEAT_TYPE = {
   SEAT: 'seat',
   ROOM: 'room',
-};
+} as const;
 
 export const TIME_TABLE = Array.from({ length: 48 }, (_, i) => {
   if (i === 0) {
