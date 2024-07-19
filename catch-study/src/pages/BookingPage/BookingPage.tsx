@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
-import { getCurrentBooking, patchCheckout } from '../../apis/api/booking';
-import { getBookingList, isSuccessCheckout } from '../../apis/services/booking';
+import {
+  getCurrentBooking,
+  patchCancelRoom,
+  patchCheckout,
+} from '../../apis/api/booking';
+import {
+  getBookingList,
+  isSuccessCancel,
+  isSuccessCheckout,
+} from '../../apis/services/booking';
 import { BookingTypes } from '../../types/interfaces';
 import { SEAT_TYPE } from '../../config/constants';
 
@@ -39,6 +47,28 @@ const BookingPage: React.FC = () => {
     }
   };
 
+  const bookingCancelClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    bookingId: number,
+  ) => {
+    e.preventDefault();
+
+    if (window.confirm('예약을 취소하시겠습니까?')) {
+      (async () => {
+        const rawData = await patchCancelRoom(bookingId);
+
+        if (isSuccessCancel(rawData)) {
+          setBookingList(prev =>
+            prev.filter(booking => booking.id !== bookingId),
+          );
+          alert('예약이 취소되었습니다.');
+          return;
+        }
+        alert('취소 가능한 시간이 지났습니다.');
+      })();
+    }
+  };
+
   return (
     <>
       <Topbar />
@@ -58,7 +88,11 @@ const BookingPage: React.FC = () => {
           <div>
             좌석 : {booking.name} (인증번호 : {booking.code})
           </div>
-          {booking.type === SEAT_TYPE.SEAT ? <div>입실 가능 시간 : </div> : ''}
+          {booking.type === SEAT_TYPE.SEAT ? (
+            <div>입실 가능 시간 : {booking.availableTime} </div>
+          ) : (
+            ''
+          )}
           <div>
             입실 시간 :{' '}
             {booking.startTime !== ''
@@ -69,7 +103,7 @@ const BookingPage: React.FC = () => {
             퇴실 시간 : {booking.startTime !== '' ? booking.endTime : '-'}
           </div>
           <div className='flex w-full justify-between [&>*]:w-1/2 [&>*]:rounded-sm'>
-            <button className='h-40 bg-blue mr-15 text-white'>연장하기</button>
+            <button className='h-40 text-white bg-blue mr-15'>연장하기</button>
             <button
               onClick={e => checkoutClick(e, booking.id)}
               className='h-40 border border-dark-gray'
@@ -77,11 +111,14 @@ const BookingPage: React.FC = () => {
               퇴실하기
             </button>
           </div>
-          <button className='w-full block h-40 bg-blue text-white rounded-sm'>
+          <button className='block w-full h-40 text-white rounded-sm bg-blue'>
             관리자 1:1 문의
           </button>
           {booking.type === SEAT_TYPE.ROOM ? (
-            <button className='w-full block h-40 border border-dark-gray rounded-sm'>
+            <button
+              onClick={e => bookingCancelClick(e, booking.id)}
+              className='block w-full h-40 border rounded-sm border-dark-gray'
+            >
               예약 취소하기
             </button>
           ) : (

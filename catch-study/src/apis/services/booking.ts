@@ -87,3 +87,10 @@ export const isSuccessCheckout = (rawData: ResponseTypes) => {
   }
   return false;
 };
+
+export const isSuccessCancel = (rawData: ResponseTypes) => {
+  if (rawData.code === STATUS.SUCCESS) {
+    return true;
+  }
+  return false;
+};

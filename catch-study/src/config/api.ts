@@ -11,6 +11,7 @@ export const API_ADDRESS = {
   PAYMENT_KAKAO: '/studycafes/seats',
   BOOKING: '/booking',
   CHECKOUT: '/booking/checkout',
+  ROOM_CANCEL: '/booking/rooms/cancel',
 };
 
 export const STATUS = {
