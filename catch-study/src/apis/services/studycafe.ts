@@ -1,6 +1,7 @@
+import { STATUS } from '../../config/api';
 import SEATINGCHART from '../../config/seatingchart';
 import {
-  ResponseTypes,
+  ErrorResponseTypes,
   RoomTimeInfoResponseTypes,
   StudycafeInfoDataTypes,
   StudycafeInfoResponseTypes,
@@ -11,9 +12,9 @@ import {
 } from '../../types/interfaces';
 
 export const getStudycafeListData = (
-  rawData: StudyCafeListResponseTypes | ResponseTypes,
+  rawData: StudyCafeListResponseTypes | ErrorResponseTypes,
 ): StudyCafeListTypes[] => {
-  if (rawData.data) {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     return Array(20)
       .fill(0)
       .map((_, i) => ({
@@ -37,9 +38,9 @@ export const getStudycafeListData = (
 };
 
 export const getStudycafeInfoData = (
-  rawData: StudycafeInfoResponseTypes | ResponseTypes,
+  rawData: StudycafeInfoResponseTypes | ErrorResponseTypes,
 ): StudycafeInfoDataTypes | null => {
-  if (rawData.data) {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     return rawData.data.result;
   }
 
@@ -63,9 +64,9 @@ export const getStudycafeInfoData = (
 };
 
 export const getStudycafeSeatData = (
-  rawData: StudycafeSeatResponseTypes | ResponseTypes,
+  rawData: StudycafeSeatResponseTypes | ErrorResponseTypes,
 ): StudycafeSeatTypes | null => {
-  if (rawData.data) {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     return rawData.data.result;
     return {
       seating_chart: '좌석 배치도 이미지 주소',
@@ -110,9 +111,9 @@ export const getStudycafeSeatData = (
 };
 
 export const getRoomTimetable = (
-  rawData: RoomTimeInfoResponseTypes | ResponseTypes,
+  rawData: RoomTimeInfoResponseTypes | ErrorResponseTypes,
 ) => {
-  if (rawData.data) {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     return ['13:00', '15:00', '23:00'];
     // return rawData.data.result.available_start_time;
   }
