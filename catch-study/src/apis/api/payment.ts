@@ -3,7 +3,6 @@ import { SEAT_TYPE } from '../../config/constants';
 import {
   ErrorResponseTypes,
   PaymentKakaoResponseTypes,
-  ResponseTypes,
 } from '../../types/interfaces';
 import instance from '../utils/axios';
 
@@ -28,11 +27,12 @@ const postPayment = async (
   };
 
   try {
-    const { data } = await instance.post<
-      PaymentKakaoResponseTypes | ResponseTypes
-    >(API_ADDRESS.PAYMENT_KAKAO, {
-      params,
-    });
+    const { data } = await instance.post<PaymentKakaoResponseTypes>(
+      API_ADDRESS.PAYMENT_KAKAO,
+      {
+        params,
+      },
+    );
 
     return data;
   } catch (error) {
