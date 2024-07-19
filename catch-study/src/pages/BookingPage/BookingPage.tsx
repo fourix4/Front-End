@@ -7,6 +7,8 @@ import {
 } from '../../apis/api/booking';
 import {
   getBookingList,
+  getCancelErrorMessage,
+  getCheckoutErrorMessage,
   isSuccessCancel,
   isSuccessCheckout,
 } from '../../apis/services/booking';
@@ -42,7 +44,7 @@ const BookingPage: React.FC = () => {
           alert('퇴실되었습니다.');
           return;
         }
-        alert('입실 중인 좌석이 존재하지 않습니다.');
+        alert(getCheckoutErrorMessage(rawData));
       })();
     }
   };
@@ -64,7 +66,7 @@ const BookingPage: React.FC = () => {
           alert('예약이 취소되었습니다.');
           return;
         }
-        alert('취소 가능한 시간이 지났습니다.');
+        alert(getCancelErrorMessage(rawData));
       })();
     }
   };

@@ -3,13 +3,14 @@ import { SEAT_TYPE } from '../../config/constants';
 import {
   BookingResponseTypes,
   BookingTypes,
+  ErrorResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
 
 export const getBookingList = (
-  rawData: BookingResponseTypes | ResponseTypes,
+  rawData: BookingResponseTypes | ErrorResponseTypes,
 ): BookingTypes[] => {
-  if (rawData.data) {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     const list = [
       ...rawData.data.result.seat_list,
       ...rawData.data.result.room_list,
@@ -35,7 +36,7 @@ export const getBookingList = (
         availableTime: '',
       };
 
-      if (booking.start_available_time) {
+      if ('start_available_time' in booking) {
         result.type = SEAT_TYPE.SEAT;
         result.name = booking.seat_number;
         result.availableTime = booking.start_available_time;
@@ -88,9 +89,17 @@ export const isSuccessCheckout = (rawData: ResponseTypes) => {
   return false;
 };
 
+export const getCheckoutErrorMessage = (rawData: ErrorResponseTypes) => {
+  return rawData.message;
+};
+
 export const isSuccessCancel = (rawData: ResponseTypes) => {
   if (rawData.code === STATUS.SUCCESS) {
     return true;
   }
   return false;
+};
+
+export const getCancelErrorMessage = (rawData: ErrorResponseTypes) => {
+  return rawData.message;
 };
