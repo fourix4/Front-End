@@ -1,10 +1,10 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
-import postPayment from '../../apis/api/payment';
-import getRedirectPCURL from '../../apis/services/payment';
 import { PAYMENT_TYPE, ROUTE } from '../../config/constants';
 import kakaoPayment from '../../assets/kakao_payment.svg';
+import postPayment from '../../apis/api/payment';
+import getRedirectPCURL from '../../apis/services/payment';
 
 interface PaymentInfoTypes {
   cafeId: number;

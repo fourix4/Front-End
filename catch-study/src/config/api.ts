@@ -9,6 +9,9 @@ export const API_ADDRESS = {
   ROOM_TIME_INFO: '/studycafes/timeinfo',
   DELETE_USER: '/user',
   PAYMENT_KAKAO: '/studycafes/seats',
+  BOOKING: '/booking',
+  CHECKOUT: '/booking/checkout',
+  ROOM_CANCEL: '/booking/rooms/cancel',
 };
 
 export const STATUS = {
