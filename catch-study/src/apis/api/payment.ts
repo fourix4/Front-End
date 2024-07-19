@@ -1,6 +1,7 @@
-import { API_ADDRESS, STATUS } from '../../config/api';
+import { API_ADDRESS } from '../../config/api';
 import { SEAT_TYPE } from '../../config/constants';
 import {
+  ErrorResponseTypes,
   PaymentKakaoResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
@@ -35,7 +36,9 @@ const postPayment = async (
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
