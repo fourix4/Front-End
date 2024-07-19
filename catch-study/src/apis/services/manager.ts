@@ -2,7 +2,7 @@ import { STATUS } from '../../config/api';
 import { ResponseTypes } from '../../types/interfaces';
 
 const isExistCafeInfo = (rawData: ResponseTypes) => {
-  if (rawData.code >= STATUS.SUCCESS && rawData.code < STATUS.REDIRECTION) {
+  if (rawData.code === STATUS.SUCCESS) {
     return true;
   }
 
