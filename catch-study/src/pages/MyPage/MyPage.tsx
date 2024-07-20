@@ -12,6 +12,7 @@ import { BookingHistoryTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
 import loading from '../../assets/loading.svg';
 import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 interface UserInfoTypes {
   userName: string;
@@ -44,27 +45,7 @@ const MyPage: React.FC = () => {
     setPage(prev => prev + 1);
   };
 
-  const observerCallback = (entries: Array<IntersectionObserverEntry>) => {
-    const firstEntry = entries[0];
-
-    if (firstEntry.isIntersecting && hasMore) {
-      fetchGetHistory();
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(observerCallback);
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
-      }
-    };
-  }, [hasMore, page]);
+  useInfiniteScroll(elementRef, fetchGetHistory, page, hasMore);
 
   useEffect(() => {
     (async () => {
