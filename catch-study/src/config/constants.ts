@@ -32,7 +32,7 @@ export const ROUTE = {
   MYPAGE: '/mypage',
   BOOKING: '/booking',
   MANAGEMENT: '/management',
-  MANAGEMENT_INFO: '/management/info',
+  MANAGEMENT_FORM: '/management/form',
   STUDYCAFE_BOOKING: '/studycafe/booking',
   PAYMENT: '/payment',
   PAYMENT_SUCCESS: '/payment-success',

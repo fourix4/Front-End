@@ -10,7 +10,7 @@ import {
 } from '../../config/error';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
-const ManagementInfo: React.FC = () => {
+const ManagementForm: React.FC = () => {
   const { formData, handleInputChange } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
@@ -125,4 +125,4 @@ const ManagementInfo: React.FC = () => {
   );
 };
 
-export default ManagementInfo;
+export default ManagementForm;
