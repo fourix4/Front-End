@@ -78,6 +78,7 @@ export const getBookingHistoryRecent = async () => {
 export const getBookingHistorySelectDate = async (
   startTime: { year: number; month: number; date: number },
   endTime: { year: number; month: number; date: number },
+  page: number,
 ) => {
   const params = {
     start_date: getInputFormatTime(
@@ -86,6 +87,7 @@ export const getBookingHistorySelectDate = async (
       startTime.date,
     ),
     end_date: getInputFormatTime(endTime.year, endTime.month, endTime.date),
+    page,
   };
 
   try {

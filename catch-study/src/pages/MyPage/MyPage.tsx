@@ -34,7 +34,7 @@ const MyPage: React.FC = () => {
   const elementRef = useRef(null);
 
   const fetchGetHistory = async () => {
-    const rawData = await getBookingHistorySelectDate(startTime, endTime);
+    const rawData = await getBookingHistorySelectDate(startTime, endTime, page);
     const data = getDateHistory(rawData);
 
     if (data.length === 0) {
@@ -109,7 +109,7 @@ const MyPage: React.FC = () => {
       return;
     }
 
-    const rawData = await getBookingHistorySelectDate(startTime, endTime);
+    const rawData = await getBookingHistorySelectDate(startTime, endTime, page);
     const data = getDateHistory(rawData);
 
     setHistory(data);
