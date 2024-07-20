@@ -11,7 +11,7 @@ import {
 } from '../atoms/management';
 import { RoomInfoTypes, UsageFeeTypes } from '../types/management';
 
-type ManagementChangeTypes = 'room' | 'usage';
+type ManagementChangeTypes = 'room' | 'fee';
 
 const useManagementInfo = () => {
   const [roomInfos, setRoomInfos] = useAtom(roomInfosAtom);
@@ -133,8 +133,10 @@ const useManagementInfo = () => {
         },
       ],
       usage_fee: usageFees,
+      title_image: thumbnail,
+      multiple_images: storeImages,
     }));
-  }, [roomInfos, usageFees, cancelTime]);
+  }, [roomInfos, usageFees, cancelTime, thumbnail, storeImages]);
 
   return {
     roomInfos,

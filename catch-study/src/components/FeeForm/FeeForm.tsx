@@ -10,7 +10,7 @@ const FeeForm: React.FC = () => {
         <p>좌석 사용 요금</p>
         <button
           type='button'
-          onClick={() => handleAddItem('usage')}
+          onClick={() => handleAddItem('fee')}
           className='px-8 py-4 border-2 text-dark-gray text-12 border-light-gray rounded-default'
         >
           추가하기
@@ -26,7 +26,7 @@ const FeeForm: React.FC = () => {
               type='string'
               value={fee.hours}
               onChange={e =>
-                handleArrayChange(index, 'hours', e.target.value, 'usage')
+                handleArrayChange(index, 'hours', e.target.value, 'fee')
               }
               className='input-box'
             />
@@ -35,7 +35,7 @@ const FeeForm: React.FC = () => {
               type='string'
               value={fee.price}
               onChange={e =>
-                handleArrayChange(index, 'price', e.target.value, 'usage')
+                handleArrayChange(index, 'price', e.target.value, 'fee')
               }
               className='input-box'
             />
@@ -43,7 +43,7 @@ const FeeForm: React.FC = () => {
           </div>
           <button
             type='button'
-            onClick={() => handleRemoveItem(index, 'usage')}
+            onClick={() => handleRemoveItem(index, 'fee')}
             className='w-24 h-24 p-12 bg-center bg-no-repeat bg-close'
           ></button>
         </div>

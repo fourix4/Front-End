@@ -11,19 +11,7 @@ import {
 import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementInfo: React.FC = () => {
-  const {
-    // roomInfos,
-    formData,
-    thumbnail,
-    storeImages,
-    // setFormData,
-    // setCancelTime,
-    handleInputChange,
-    // handleSelectChange,
-    // handleRoomNameChange,
-    handleThumbnailChange,
-    handleStoreImagesChange,
-  } = useManagementInfo();
+  const { formData, handleInputChange } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
@@ -123,12 +111,7 @@ const ManagementInfo: React.FC = () => {
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         <RoomForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <ImageForm
-          thumbnail={thumbnail}
-          storeImages={storeImages}
-          onChangeThumailImage={handleThumbnailChange}
-          onChangeStoreImage={handleStoreImagesChange}
-        />
+        <ImageForm />
         <div className='w-full pt-50'>
           <button
             type='submit'
