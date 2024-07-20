@@ -1,8 +1,6 @@
 import { postManagementInfo } from '../../apis/api/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
-import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
-import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
 import {
   MANAGEMENT_INFO_ERROR,
@@ -12,23 +10,16 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementInfo: React.FC = () => {
   const {
-    roomInfos,
-    usageFees,
+    // roomInfos,
+    // usageFees,
     formData,
     thumbnail,
     storeImages,
-    setFormData,
-    setCancelTime,
+    // setFormData,
+    // setCancelTime,
     handleInputChange,
-    handleNestedInputChange,
-    handleSelectChange,
-    handleRoomChange,
-    handleRoomNameChange,
-    handleAddRoom,
-    handleRemoveRoom,
-    handleAddFee,
-    handleRemoveFee,
-    handleFeeChange,
+    // handleSelectChange,
+    // handleRoomNameChange,
     handleThumbnailChange,
     handleStoreImagesChange,
   } = useManagementInfo();
@@ -91,13 +82,7 @@ const ManagementInfo: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
-        <AddressForm
-          address={formData.address}
-          onInputChange={e =>
-            handleNestedInputChange(e, 'address', setFormData)
-          }
-          onSelectChange={e => handleSelectChange(e, 'address')}
-        />
+        <AddressForm address={formData.address} />
         <div className='flex items-center justify-center gap-10'>
           <input
             name='opening_hours'
@@ -133,21 +118,21 @@ const ManagementInfo: React.FC = () => {
             className='input-box'
           />
         </div>
-        <FeeForm
+        {/* <FeeForm
           usageFees={usageFees}
           onAddFee={handleAddFee}
           onRemoveFee={handleRemoveFee}
           onFeeChange={handleFeeChange}
-        />
+        /> */}
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <RoomForm
+        {/* <RoomForm
           roomInfos={roomInfos}
           setCancelTime={setCancelTime}
           onAddRoom={handleAddRoom}
           onRemoveRoom={handleRemoveRoom}
           onRoomChange={handleRoomChange}
           onRoomNameChange={handleRoomNameChange}
-        />
+        /> */}
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         <ImageForm
           thumbnail={thumbnail}

@@ -21,13 +21,26 @@ const useManagementInfo = () => {
   const [storeImages, setStoreImages] = useAtom(storeImagesAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    field?: 'address',
+  ) => {
     const { name, value } = e.target;
 
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    if (field) {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        [field]: {
+          ...prevFormData[field],
+          [name]: value,
+        },
+      }));
+    } else {
+      setFormData(prevFormData => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSelectChange = (
@@ -128,6 +141,8 @@ const useManagementInfo = () => {
     cancelTime,
     usageFees,
     formData,
+    thumbnail,
+    storeImages,
     setUsageFees,
     setRoomInfos,
     setFormData,
