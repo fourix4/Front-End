@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { API_ADDRESS, STATUS } from '../../config/api';
 import { ACCESS_TOKEN } from '../../config/constants';
-import { LoginResponseTypes } from '../../types/interfaces';
+import { ErrorResponseTypes, LoginResponseTypes } from '../../types/interfaces';
 
 const instance = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
@@ -9,6 +9,12 @@ const instance = axios.create({
     withCredentials: true,
   },
 });
+
+const onError = (status: number, message: string) => {
+  const error = { status, message };
+
+  throw error;
+};
 
 instance.interceptors.request.use(
   config => {
@@ -53,24 +59,52 @@ const refreshAccessToken = async () => {
 instance.interceptors.response.use(
   response => response,
   async (error: AxiosError) => {
-    if (
-      !error.config ||
-      !error.response ||
-      error.response.status !== STATUS.ACCESS_TOKEN_EXPIRATION_ERROR
-    ) {
-      return Promise.reject(error);
+    if (axios.isAxiosError<ErrorResponseTypes>(error) && error.response) {
+      const { code, message } = error.response.data;
+      const status = +code;
+
+      switch (status) {
+        case STATUS.IMAGE_ERROR:
+          onError(status, message);
+          break;
+        case STATUS.ACCESS_TOKEN_EXPIRATION_ERROR:
+          if (error.config) {
+            try {
+              const newAccessToken = await refreshAccessToken();
+
+              error.config.headers.Authorization = `Bearer ${newAccessToken}`;
+
+              return instance(error.config);
+            } catch (refreshError) {
+              if (
+                axios.isAxiosError<ErrorResponseTypes>(refreshError) &&
+                error.response
+              ) {
+                onError(+error.response.data.code, error.response.data.message);
+              }
+            }
+          }
+          break;
+        case STATUS.REFRESH_TOKEN_EXPIRATION_ERROR:
+          onError(status, message);
+          break;
+        case STATUS.UNAUTHORIZED_USER_ERROR:
+          onError(status, message);
+          break;
+        case STATUS.METHOD_NOT_ALLOWED_ERROR:
+          onError(status, message);
+          break;
+        case STATUS.BOOKING_ERROR:
+          onError(status, message);
+          break;
+        case STATUS.SERVER_ERROR:
+          onError(status, '서버 에러');
+          break;
+        default:
+          onError(status, error.message);
+      }
     }
-
-    try {
-      const newAccessToken = await refreshAccessToken();
-
-      error.config.headers.Authorization = `Bearer ${newAccessToken}`;
-
-      return instance(error.config);
-    } catch (refreshError) {
-      console.log(refreshError);
-      return Promise.reject(refreshError);
-    }
+    return Promise.reject(error);
   },
 );
 

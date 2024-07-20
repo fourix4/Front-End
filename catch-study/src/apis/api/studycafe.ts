@@ -1,6 +1,7 @@
-import { API_ADDRESS, STATUS } from '../../config/api';
+import { API_ADDRESS } from '../../config/api';
 import {
   CityFilterTypes,
+  ErrorResponseTypes,
   RoomTimeInfoResponseTypes,
   StudyCafeListResponseTypes,
   StudycafeSeatResponseTypes,
@@ -23,7 +24,9 @@ export const getStudycafeList = async (
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -35,7 +38,9 @@ export const getStudycafeInfo = async (studycafeId: number) => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -47,7 +52,9 @@ export const getStudycafeSeatingChart = async (studycafeId: number) => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -68,6 +75,8 @@ export const getRoomTimeInfo = async (
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };

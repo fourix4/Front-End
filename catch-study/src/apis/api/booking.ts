@@ -1,19 +1,22 @@
-import axios from 'axios';
-import { API_ADDRESS, STATUS } from '../../config/api';
-import { BookingResponseTypes, ResponseTypes } from '../../types/interfaces';
+import { API_ADDRESS } from '../../config/api';
+import {
+  BookingResponseTypes,
+  ErrorResponseTypes,
+  ResponseTypes,
+} from '../../types/interfaces';
 import instance from '../utils/axios';
 
 export const getCurrentBooking = async () => {
   try {
-    const { data } = await instance.get<BookingResponseTypes | ResponseTypes>(
+    const { data } = await instance.get<BookingResponseTypes>(
       API_ADDRESS.BOOKING,
     );
 
-    console.log(data);
-
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -29,14 +32,9 @@ export const patchCheckout = async (bookingId: number) => {
 
     return data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      return {
-        code: error.response.status,
-        message: '입실 중인 좌석이 존재하지 않습니다.',
-      };
-    }
+    const errorObj = error as ErrorResponseTypes;
 
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    return errorObj;
   }
 };
 
@@ -55,6 +53,8 @@ export const patchCancelRoom = async (bookingId: number) => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };

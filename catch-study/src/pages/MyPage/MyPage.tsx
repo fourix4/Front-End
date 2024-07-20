@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { deleteUser } from '../../apis/api/user';
-import { isSuccessDelete } from '../../apis/services/user';
+import isSuccessDelete from '../../apis/services/user';
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate();

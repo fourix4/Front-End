@@ -6,6 +6,11 @@ export interface ResponseTypes {
   };
 }
 
+export interface ErrorResponseTypes {
+  code: number;
+  message: string;
+}
+
 export interface LoginResponseTypes extends ResponseTypes {
   data: {
     result: {
