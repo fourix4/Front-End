@@ -156,6 +156,15 @@ export interface BookingTypes {
   availableTime?: string;
 }
 
+export interface UserResponseTypes extends ResponseTypes {
+  data: {
+    result: {
+      user_name: string;
+      email: string;
+    };
+  };
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes

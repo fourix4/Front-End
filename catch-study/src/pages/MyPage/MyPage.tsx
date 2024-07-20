@@ -1,12 +1,31 @@
 import { useNavigate } from 'react-router';
+import { useEffect, useState } from 'react';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
-import { deleteUser } from '../../apis/api/user';
-import isSuccessDelete from '../../apis/services/user';
+import { deleteUser, getUser } from '../../apis/api/user';
+import isSuccessDelete, { getUserInfo } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import BookingHistory from '../../components/BookingHistory/BookingHistory';
 
+interface UserInfoTypes {
+  userName: string;
+  email: string;
+}
+
 const MyPage: React.FC = () => {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState<UserInfoTypes>({
+    userName: '',
+    email: '',
+  });
+
+  useEffect(() => {
+    (async () => {
+      const rawData = await getUser();
+      const data = getUserInfo(rawData);
+
+      setUserInfo(data);
+    })();
+  }, []);
 
   const logoutClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -37,8 +56,8 @@ const MyPage: React.FC = () => {
       <div>
         <div className=''>
           <div className='p-20 border-b border-light-gray'>
-            <p className='mb-10 text-20'>이름</p>
-            <p className='text-dark-gray'>이메일</p>
+            <p className='mb-10 text-20'>{userInfo.userName}</p>
+            <p className='text-dark-gray'>{userInfo.email}</p>
           </div>
           <div className='p-20 border-b border-light-gray bg-bright-gray'>
             <p className='text-20 font-bold mb-10'>예약 내역</p>
