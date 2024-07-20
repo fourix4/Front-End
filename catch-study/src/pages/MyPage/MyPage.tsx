@@ -1,8 +1,6 @@
-import { useNavigate } from 'react-router';
 import { useEffect, useRef, useState } from 'react';
-import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
-import { deleteUser, getUser } from '../../apis/api/user';
-import { isSuccessDelete, getUserInfo } from '../../apis/services/user';
+import { getUser } from '../../apis/api/user';
+import { getUserInfo } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import BookingHistory from '../../components/BookingHistory/BookingHistory';
 import {
@@ -13,6 +11,7 @@ import { getDateHistory, getRecentHistory } from '../../apis/services/booking';
 import { BookingHistoryTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
 import loading from '../../assets/loading.svg';
+import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
 
 interface UserInfoTypes {
   userName: string;
@@ -20,7 +19,6 @@ interface UserInfoTypes {
 }
 
 const MyPage: React.FC = () => {
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserInfoTypes>({
     userName: '',
     email: '',
@@ -117,29 +115,6 @@ const MyPage: React.FC = () => {
     setHasMore(true);
   };
 
-  const logoutClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    localStorage.removeItem(ACCESS_TOKEN);
-    navigate(ROUTE.HOME);
-  };
-
-  const deleteClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    if (window.confirm('정말 탈퇴하시겠습니까?')) {
-      (async () => {
-        const rawData = await deleteUser();
-
-        if (isSuccessDelete(rawData)) {
-          localStorage.removeItem(ACCESS_TOKEN);
-          alert('삭제되었습니다.');
-          navigate('/');
-          return;
-        }
-        alert('오류가 발생했습니다. 다시 시도해주세요.');
-      })();
-    }
-  };
-
   return (
     <>
       <Topbar />
@@ -186,20 +161,7 @@ const MyPage: React.FC = () => {
           )}
         </div>
         <div className='flex h-50'>
-          <div className='flex m-middle items-center'>
-            <button
-              onClick={logoutClick}
-              className='mr-100 align-middle items-center'
-            >
-              로그아웃
-            </button>
-            <button
-              onClick={deleteClick}
-              className='align-middle text-dark-gray'
-            >
-              회원탈퇴
-            </button>
-          </div>
+          <LogoutDelete />
         </div>
       </div>
     </>
