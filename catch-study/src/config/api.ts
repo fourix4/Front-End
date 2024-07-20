@@ -13,6 +13,7 @@ export const API_ADDRESS = {
   CHECKOUT: '/booking/checkout',
   ROOM_CANCEL: '/booking/rooms/cancel',
   HISTORY: '/users/history',
+  HISTORY_DATE: '/users/history/date',
 };
 
 export const STATUS = {

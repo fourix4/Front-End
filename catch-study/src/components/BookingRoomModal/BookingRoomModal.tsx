@@ -2,7 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE, SEAT_TYPE, TIME_TABLE } from '../../config/constants';
 import { RoomsTypes, StudycafeTypes } from '../../types/interfaces';
-import { dateTo8Digit, getEndTime } from '../../utils/time.utils';
+import {
+  dateTo8Digit,
+  getCurrentTime,
+  getEndTime,
+} from '../../utils/time.utils';
 import { getRoomTimeInfo } from '../../apis/api/studycafe';
 import { getRoomTimetable } from '../../apis/services/studycafe';
 
@@ -26,11 +30,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
 }) => {
   const navigate = useNavigate();
   const [endTime, setEndTime] = useState('');
-  const [roomDate, setRoomDate] = useState({
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1,
-    date: new Date().getDate(),
-  });
+  const [roomDate, setRoomDate] = useState(getCurrentTime());
   const [roomTime, setRoomTime] = useState(1);
   const [availableTime, setAvailableTime] = useState<string[]>([]);
   const [selectedStartTime, setSelectedStartTime] = useState('시작 시간');

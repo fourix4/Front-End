@@ -154,3 +154,24 @@ export const getRecentHistory = (
 
   // return [];
 };
+
+export const getDateHistory = (
+  rawData: BookingHistoryResponseTypes | ErrorResponseTypes,
+): BookingHistoryTypes[] => {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
+    return rawData.data.result.booking_list;
+  }
+
+  return Array(10).fill({
+    booking_id: 2,
+    cafe_id: 1,
+    cafe_name: '이지 스터디 카페',
+    type: 'room',
+    address: '인천시 부평구 ---',
+    payment_time: '2024-01-04 19:34',
+    start_time: '2024-01-04 19:44',
+    end_time: '2024-01-04 20:44',
+    amount: 3000,
+    status: '입실 중',
+  });
+};

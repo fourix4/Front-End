@@ -5,9 +5,13 @@ import { deleteUser, getUser } from '../../apis/api/user';
 import { isSuccessDelete, getUserInfo } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import BookingHistory from '../../components/BookingHistory/BookingHistory';
-import { getBookingHistoryRecent } from '../../apis/api/booking';
-import { getRecentHistory } from '../../apis/services/booking';
+import {
+  getBookingHistoryRecent,
+  getBookingHistorySelectDate,
+} from '../../apis/api/booking';
+import { getDateHistory, getRecentHistory } from '../../apis/services/booking';
 import { BookingHistoryTypes } from '../../types/interfaces';
+import { getInputFormatTime } from '../../utils/time.utils';
 
 interface UserInfoTypes {
   userName: string;
@@ -21,6 +25,9 @@ const MyPage: React.FC = () => {
     email: '',
   });
   const [history, setHistory] = useState<BookingHistoryTypes[]>([]);
+  const [startTime, setStartTime] = useState({ year: 0, month: 0, date: 0 });
+  const [endTime, setEndTime] = useState({ year: 0, month: 0, date: 0 });
+  const [isDateSearch, setIsDateSearch] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -33,6 +40,42 @@ const MyPage: React.FC = () => {
       setHistory(historyData);
     })();
   }, []);
+
+  const startTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const [year, month, date] = e.target.value.split('-').map(Number);
+
+    setStartTime({ year, month, date });
+  };
+
+  const endTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const [year, month, date] = e.target.value.split('-').map(Number);
+
+    setEndTime({ year, month, date });
+  };
+
+  const dateSearchClick = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+
+    if (!startTime.year || !endTime.year) {
+      return;
+    }
+
+    if (
+      +`${startTime.year}${startTime.month}${startTime.date}` >
+      +`${endTime.year}${endTime.month}${endTime.date}`
+    ) {
+      alert('유효한 범위를 입력해주세요');
+      return;
+    }
+
+    const rawData = await getBookingHistorySelectDate(startTime, endTime);
+    const data = getDateHistory(rawData);
+
+    setHistory(data);
+    setIsDateSearch(true);
+  };
 
   const logoutClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -65,19 +108,36 @@ const MyPage: React.FC = () => {
           <p className='mb-10 text-20'>{userInfo.userName}</p>
           <p className='text-dark-gray'>{userInfo.email}</p>
         </div>
-        <div className='p-20 border-b border-light-gray bg-bright-gray'>
+        <div className='p-20 pb-10 border-b border-light-gray bg-bright-gray'>
           <p className='text-20 font-bold mb-10'>예약 내역</p>
-          <div className='flex justify-between items-end'>
-            <p className='text-12'>최근 30개</p>
-            <input className='border border-light-gray rounded-[5px]' />
+          <div className='mb-10'>
+            <input
+              onChange={startTimeChange}
+              type='date'
+              className='h-40 p-10 border border-light-gray rounded-[5px] focus:border-blue'
+            />
+            <span> ~ </span>
+            <input
+              onChange={endTimeChange}
+              type='date'
+              className='h-40 p-10 border border-light-gray rounded-[5px] focus:border-blue'
+            />
+            <button
+              onClick={dateSearchClick}
+              className='ml-10 w-50 h-40 bg-blue rounded-sm text-white'
+            >
+              검색
+            </button>
           </div>
+          <p className='text-12'>
+            {!isDateSearch
+              ? '최근 30개'
+              : `${getInputFormatTime(startTime.year, startTime.month, startTime.date)} ~ ${getInputFormatTime(endTime.year, endTime.month, endTime.date)}`}
+          </p>
         </div>
         <div className='min-h-300 h-600 overflow-y-auto'>
-          {history.map(historyData => (
-            <BookingHistory
-              key={historyData.booking_id}
-              historyData={historyData}
-            />
+          {history.map((historyData, i) => (
+            <BookingHistory key={i} historyData={historyData} />
           ))}
         </div>
         <div className='flex h-50'>
