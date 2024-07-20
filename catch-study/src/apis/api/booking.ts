@@ -1,5 +1,6 @@
 import { API_ADDRESS } from '../../config/api';
 import {
+  BookingHistoryResponseTypes,
   BookingResponseTypes,
   ErrorResponseTypes,
   ResponseTypes,
@@ -49,6 +50,20 @@ export const patchCancelRoom = async (bookingId: number) => {
       {
         params,
       },
+    );
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};
+
+export const getBookingHistoryRecent = async () => {
+  try {
+    const { data } = await instance.get<BookingHistoryResponseTypes>(
+      API_ADDRESS.HISTORY,
     );
 
     return data;

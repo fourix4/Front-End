@@ -5,7 +5,7 @@ import {
   UserResponseTypes,
 } from '../../types/interfaces';
 
-const isSuccessDelete = (rawPost: ResponseTypes) => {
+export const isSuccessDelete = (rawPost: ResponseTypes) => {
   return rawPost.code === STATUS.SUCCESS;
 };
 
@@ -24,5 +24,3 @@ export const getUserInfo = (
   return { userName: '조현정', email: 'abc123@naver.com' };
   // return { userName: '', email: '' };
 };
-
-export default isSuccessDelete;

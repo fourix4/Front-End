@@ -2,9 +2,12 @@ import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { deleteUser, getUser } from '../../apis/api/user';
-import isSuccessDelete, { getUserInfo } from '../../apis/services/user';
+import { isSuccessDelete, getUserInfo } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import BookingHistory from '../../components/BookingHistory/BookingHistory';
+import { getBookingHistoryRecent } from '../../apis/api/booking';
+import { getRecentHistory } from '../../apis/services/booking';
+import { BookingHistoryTypes } from '../../types/interfaces';
 
 interface UserInfoTypes {
   userName: string;
@@ -17,13 +20,17 @@ const MyPage: React.FC = () => {
     userName: '',
     email: '',
   });
+  const [history, setHistory] = useState<BookingHistoryTypes[]>([]);
 
   useEffect(() => {
     (async () => {
-      const rawData = await getUser();
-      const data = getUserInfo(rawData);
+      const userRawData = await getUser();
+      const historyRawData = await getBookingHistoryRecent();
+      const userData = getUserInfo(userRawData);
+      const historyData = getRecentHistory(historyRawData);
 
-      setUserInfo(data);
+      setUserInfo(userData);
+      setHistory(historyData);
     })();
   }, []);
 
@@ -54,21 +61,24 @@ const MyPage: React.FC = () => {
     <>
       <Topbar />
       <div>
-        <div className=''>
-          <div className='p-20 border-b border-light-gray'>
-            <p className='mb-10 text-20'>{userInfo.userName}</p>
-            <p className='text-dark-gray'>{userInfo.email}</p>
+        <div className='p-20 border-b border-light-gray'>
+          <p className='mb-10 text-20'>{userInfo.userName}</p>
+          <p className='text-dark-gray'>{userInfo.email}</p>
+        </div>
+        <div className='p-20 border-b border-light-gray bg-bright-gray'>
+          <p className='text-20 font-bold mb-10'>예약 내역</p>
+          <div className='flex justify-between items-end'>
+            <p className='text-12'>최근 30개</p>
+            <input className='border border-light-gray rounded-[5px]' />
           </div>
-          <div className='p-20 border-b border-light-gray bg-bright-gray'>
-            <p className='text-20 font-bold mb-10'>예약 내역</p>
-            <div className='flex justify-between items-end'>
-              <p className='text-12'>최근 30개</p>
-              <input className='border border-light-gray rounded-[5px]' />
-            </div>
-          </div>
-          <div className='min-h-300 h-600 overflow-y-auto'>
-            <BookingHistory />
-          </div>
+        </div>
+        <div className='min-h-300 h-600 overflow-y-auto'>
+          {history.map(historyData => (
+            <BookingHistory
+              key={historyData.booking_id}
+              historyData={historyData}
+            />
+          ))}
         </div>
         <div className='flex h-50'>
           <div className='flex m-middle items-center'>
