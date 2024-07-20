@@ -1,67 +1,68 @@
 import React from 'react';
+import { patchManagementInfo } from '../../apis/api/manager';
 import {
-  FormDataTypes,
-  RoomInfoTypes,
-  UsageFeeTypes,
-} from '../../types/management';
+  MANAGEMENT_INFO_ERROR,
+  ManagementErrorTypes,
+} from '../../config/error';
+import useManagementInfo from '../../hooks/useManagementInfo';
 
-interface ManagementCafeInfoFormPropsTypes {
-  formData: FormDataTypes;
-  setFormData: React.Dispatch<React.SetStateAction<FormDataTypes>>;
-  handleEditSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleNestedInputChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: string,
-    setData: React.Dispatch<React.SetStateAction<FormDataTypes>>,
-  ) => void;
-  handleSelectChange: (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    field: string,
-  ) => void;
-  usageFees: UsageFeeTypes[];
-  handleAddFee: () => void;
-  handleRemoveFee: (index: number) => void;
-  handleFeeChange: (
-    index: number,
-    field: keyof UsageFeeTypes,
-    value: string,
-  ) => void;
-  roomInfos: RoomInfoTypes[];
-  handleAddRoom: () => void;
-  handleRemoveRoom: (index: number) => void;
-  handleRoomChange: (
-    index: number,
-    field: keyof RoomInfoTypes,
-    value: string,
-  ) => void;
-  handleRoomNameChange: (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void;
-  handleThumbnailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleStoreImagesChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+interface ManagementCafeInfoFormPropTypes {
+  setIsEdit: (value: boolean) => void;
 }
 
-const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
-  formData,
-  setFormData,
-  handleEditSubmit,
-  handleInputChange,
-  handleNestedInputChange,
-  handleSelectChange,
-  usageFees,
-  handleAddFee,
-  handleRemoveFee,
-  handleFeeChange,
-  roomInfos,
-  handleAddRoom,
-  handleRemoveRoom,
-  handleRoomChange,
-  handleRoomNameChange,
-  handleThumbnailChange,
-  handleStoreImagesChange,
+const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropTypes> = ({
+  setIsEdit,
 }) => {
+  const {
+    formData,
+    usageFees,
+    roomInfos,
+    handleInputChange,
+    handleSelectChange,
+    handleRoomNameChange,
+    handleArrayChange,
+    handleAddItem,
+    handleRemoveItem,
+    handleStoreImagesChange,
+    handleThumbnailChange,
+  } = useManagementInfo();
+  const getErrorMessage = (errorType: ManagementErrorTypes): string => {
+    return MANAGEMENT_INFO_ERROR[errorType];
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+
+    let errorType: ManagementErrorTypes | null = null;
+
+    if (formData.cafe_name === '') {
+      errorType = 'CAFE_NAME_ERROR';
+    } else if (formData.seats === 0) {
+      errorType = 'SEATS_ERROR';
+    } else {
+      const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+      if (!timePattern.test(formData.opening_hours)) {
+        errorType = 'OPENING_HOURS_ERROR';
+      } else if (!timePattern.test(formData.closed_hours)) {
+        errorType = 'CLOSED_HOURS_ERROR';
+      }
+    }
+
+    if (errorType !== null) {
+      alert(getErrorMessage(errorType));
+      return;
+    }
+
+    const rawData = await patchManagementInfo(formData);
+
+    // 올바른 요청일 때
+    setIsEdit(false);
+
+    console.log(rawData);
+  };
+
   return (
     <form
       onSubmit={handleEditSubmit}
@@ -135,7 +136,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
               name='etc'
               placeholder='기타 주소'
               value={formData.address.etc}
-              onChange={e => handleNestedInputChange(e, 'address', setFormData)}
+              onChange={e => handleInputChange(e, 'address')}
               className='w-full p-4 mt-10'
             />
           </div>
@@ -192,7 +193,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
                       type='string'
                       value={fee.hours}
                       onChange={e =>
-                        handleFeeChange(index, 'hours', e.target.value)
+                        handleArrayChange(index, 'hours', e.target.value, 'fee')
                       }
                       className='w-full p-4'
                     />
@@ -201,7 +202,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
                       type='string'
                       value={fee.price}
                       onChange={e =>
-                        handleFeeChange(index, 'price', e.target.value)
+                        handleArrayChange(index, 'price', e.target.value, 'fee')
                       }
                       className='w-full p-4'
                     />
@@ -209,7 +210,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
                   </div>
                   <button
                     type='button'
-                    onClick={() => handleRemoveFee(index)}
+                    onClick={() => handleRemoveItem(index, 'fee')}
                     className='w-24 h-24 bg-center bg-no-repeat bg-close'
                   ></button>
                 </div>
@@ -218,7 +219,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
             <div className='flex items-center justify-center w-full p-10'>
               <button
                 type='button'
-                onClick={handleAddFee}
+                onClick={() => handleAddItem('fee')}
                 className='w-24 h-24 bg-white bg-center bg-no-repeat border-2 rounded-full bg-add border-light-gray'
               ></button>
             </div>
@@ -252,7 +253,12 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
                         type='text'
                         value={room.capacity}
                         onChange={e =>
-                          handleRoomChange(index, 'capacity', e.target.value)
+                          handleArrayChange(
+                            index,
+                            'capacity',
+                            e.target.value,
+                            'room',
+                          )
                         }
                         className='w-full p-4'
                       />
@@ -264,7 +270,12 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
                         type='text'
                         value={room.price}
                         onChange={e =>
-                          handleRoomChange(index, 'price', e.target.value)
+                          handleArrayChange(
+                            index,
+                            'price',
+                            e.target.value,
+                            'room',
+                          )
                         }
                         className='w-full p-4'
                       />
@@ -274,7 +285,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
 
                   <button
                     type='button'
-                    onClick={() => handleRemoveRoom(index)}
+                    onClick={() => handleRemoveItem(index, 'room')}
                     className='w-24 h-24 bg-center bg-no-repeat bg-close'
                   ></button>
                 </div>
@@ -284,7 +295,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropsTypes> = ({
           <div className='flex items-center justify-center w-full p-10'>
             <button
               type='button'
-              onClick={handleAddRoom}
+              onClick={() => handleAddItem('room')}
               className='w-24 h-24 bg-white bg-center bg-no-repeat border-2 rounded-full bg-add border-light-gray'
             ></button>
           </div>

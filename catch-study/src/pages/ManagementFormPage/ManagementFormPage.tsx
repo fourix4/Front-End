@@ -10,28 +10,8 @@ import {
 } from '../../config/error';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
-const ManagementInfo: React.FC = () => {
-  const {
-    roomInfos,
-    usageFees,
-    formData,
-    thumbnail,
-    storeImages,
-    setFormData,
-    setCancelTime,
-    handleInputChange,
-    handleNestedInputChange,
-    handleSelectChange,
-    handleRoomChange,
-    handleRoomNameChange,
-    handleAddRoom,
-    handleRemoveRoom,
-    handleAddFee,
-    handleRemoveFee,
-    handleFeeChange,
-    handleThumbnailChange,
-    handleStoreImagesChange,
-  } = useManagementInfo();
+const ManagementForm: React.FC = () => {
+  const { formData, handleInputChange } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
@@ -91,13 +71,7 @@ const ManagementInfo: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
-        <AddressForm
-          address={formData.address}
-          onInputChange={e =>
-            handleNestedInputChange(e, 'address', setFormData)
-          }
-          onSelectChange={e => handleSelectChange(e, 'address')}
-        />
+        <AddressForm address={formData.address} />
         <div className='flex items-center justify-center gap-10'>
           <input
             name='opening_hours'
@@ -133,28 +107,11 @@ const ManagementInfo: React.FC = () => {
             className='input-box'
           />
         </div>
-        <FeeForm
-          usageFees={usageFees}
-          onAddFee={handleAddFee}
-          onRemoveFee={handleRemoveFee}
-          onFeeChange={handleFeeChange}
-        />
+        <FeeForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <RoomForm
-          roomInfos={roomInfos}
-          setCancelTime={setCancelTime}
-          onAddRoom={handleAddRoom}
-          onRemoveRoom={handleRemoveRoom}
-          onRoomChange={handleRoomChange}
-          onRoomNameChange={handleRoomNameChange}
-        />
+        <RoomForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <ImageForm
-          thumbnail={thumbnail}
-          storeImages={storeImages}
-          onChangeThumailImage={handleThumbnailChange}
-          onChangeStoreImage={handleStoreImagesChange}
-        />
+        <ImageForm />
         <div className='w-full pt-50'>
           <button
             type='submit'
@@ -168,4 +125,4 @@ const ManagementInfo: React.FC = () => {
   );
 };
 
-export default ManagementInfo;
+export default ManagementForm;
