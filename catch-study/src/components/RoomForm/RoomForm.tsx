@@ -1,27 +1,16 @@
 import { ChangeEvent, useState } from 'react';
-import { RoomInfoTypes } from '../../types/management';
+import useManagementInfo from '../../hooks/useManagementInfo';
 
-interface RoomFormPropTypes {
-  roomInfos: RoomInfoTypes[];
-  setCancelTime: (value: number) => void;
-  onAddRoom: () => void;
-  onRemoveRoom: (index: number) => void;
-  onRoomChange: (
-    index: number,
-    field: keyof RoomInfoTypes,
-    value: string,
-  ) => void;
-  onRoomNameChange: (e: ChangeEvent<HTMLInputElement>, index: number) => void;
-}
+const RoomForm: React.FC = () => {
+  const {
+    roomInfos,
+    handleAddItem,
+    setCancelTime,
+    handleRoomNameChange,
+    handleArrayChange,
+    handleRemoveItem,
+  } = useManagementInfo();
 
-const RoomForm: React.FC<RoomFormPropTypes> = ({
-  roomInfos,
-  setCancelTime,
-  onAddRoom,
-  onRemoveRoom,
-  onRoomChange,
-  onRoomNameChange,
-}) => {
   const [timeType, setTimeType] = useState<'분' | '시간'>('분');
   const [time, setTime] = useState('');
 
@@ -53,7 +42,7 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
         <p>스터디룸 정보 입력 (선택)</p>
         <button
           type='button'
-          onClick={onAddRoom}
+          onClick={() => handleAddItem('room')}
           className='px-8 py-4 border-2 text-dark-gray text-12 border-light-gray rounded-default'
         >
           추가하기
@@ -86,14 +75,16 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
                 name='name'
                 placeholder='이름'
                 value={room.name}
-                onChange={e => onRoomNameChange(e, index)}
+                onChange={e => handleRoomNameChange(e, index)}
                 className='input-box'
               />
               <div className='whitespace-nowrap'>스터디룸</div>
               <input
                 type='text'
                 value={room.capacity}
-                onChange={e => onRoomChange(index, 'capacity', e.target.value)}
+                onChange={e =>
+                  handleArrayChange(index, 'capacity', e.target.value, 'room')
+                }
                 className='input-box'
               />
               <div className='whitespace-nowrap'>인실</div>
@@ -103,7 +94,9 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
               <input
                 type='text'
                 value={room.price}
-                onChange={e => onRoomChange(index, 'price', e.target.value)}
+                onChange={e =>
+                  handleArrayChange(index, 'price', e.target.value, 'room')
+                }
                 className='input-box'
               />
               <div className='whitespace-nowrap'>원</div>
@@ -111,7 +104,7 @@ const RoomForm: React.FC<RoomFormPropTypes> = ({
           </div>
           <button
             type='button'
-            onClick={() => onRemoveRoom(index)}
+            onClick={() => handleRemoveItem(index, 'room')}
             className='w-24 h-24 p-12 bg-center bg-no-repeat bg-close'
           ></button>
         </div>
