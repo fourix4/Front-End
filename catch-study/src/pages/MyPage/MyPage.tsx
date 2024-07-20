@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { deleteUser } from '../../apis/api/user';
 import isSuccessDelete from '../../apis/services/user';
+import Topbar from '../../components/Topbar/Topbar';
+import BookingHistory from '../../components/BookingHistory/BookingHistory';
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate();
@@ -30,10 +32,43 @@ const MyPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <button onClick={logoutClick}>로그아웃</button>
-      <button onClick={deleteClick}>회원탈퇴</button>
-    </div>
+    <>
+      <Topbar />
+      <div>
+        <div className=''>
+          <div className='p-20 border-b border-light-gray'>
+            <p className='mb-10 text-20'>이름</p>
+            <p className='text-dark-gray'>이메일</p>
+          </div>
+          <div className='p-20 border-b border-light-gray bg-bright-gray'>
+            <p className='text-20 font-bold mb-10'>예약 내역</p>
+            <div className='flex justify-between items-end'>
+              <p className='text-12'>최근 30개</p>
+              <input className='border border-light-gray rounded-[5px]' />
+            </div>
+          </div>
+          <div className='min-h-300 h-600 overflow-y-auto'>
+            <BookingHistory />
+          </div>
+        </div>
+        <div className='flex h-50'>
+          <div className='flex m-middle items-center'>
+            <button
+              onClick={logoutClick}
+              className='mr-100 align-middle items-center'
+            >
+              로그아웃
+            </button>
+            <button
+              onClick={deleteClick}
+              className='align-middle text-dark-gray'
+            >
+              회원탈퇴
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
