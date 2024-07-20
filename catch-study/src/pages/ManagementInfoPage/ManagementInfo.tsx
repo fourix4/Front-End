@@ -1,5 +1,6 @@
 import { postManagementInfo } from '../../apis/api/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
+import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
 import Topbar from '../../components/Topbar/Topbar';
 import {
@@ -11,7 +12,6 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 const ManagementInfo: React.FC = () => {
   const {
     // roomInfos,
-    // usageFees,
     formData,
     thumbnail,
     storeImages,
@@ -118,12 +118,7 @@ const ManagementInfo: React.FC = () => {
             className='input-box'
           />
         </div>
-        {/* <FeeForm
-          usageFees={usageFees}
-          onAddFee={handleAddFee}
-          onRemoveFee={handleRemoveFee}
-          onFeeChange={handleFeeChange}
-        /> */}
+        <FeeForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         {/* <RoomForm
           roomInfos={roomInfos}
