@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { deleteUser, getUser } from '../../apis/api/user';
 import { isSuccessDelete, getUserInfo } from '../../apis/services/user';
@@ -12,6 +12,7 @@ import {
 import { getDateHistory, getRecentHistory } from '../../apis/services/booking';
 import { BookingHistoryTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
+import loading from '../../assets/loading.svg';
 
 interface UserInfoTypes {
   userName: string;
@@ -28,6 +29,44 @@ const MyPage: React.FC = () => {
   const [startTime, setStartTime] = useState({ year: 0, month: 0, date: 0 });
   const [endTime, setEndTime] = useState({ year: 0, month: 0, date: 0 });
   const [isDateSearch, setIsDateSearch] = useState(false);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(false);
+  const elementRef = useRef(null);
+
+  const fetchGetHistory = async () => {
+    const rawData = await getBookingHistorySelectDate(startTime, endTime);
+    const data = getDateHistory(rawData);
+
+    if (data.length === 0) {
+      setHasMore(false);
+      return;
+    }
+
+    setHistory(prev => [...prev, ...data]);
+    setPage(prev => prev + 1);
+  };
+
+  const observerCallback = (entries: Array<IntersectionObserverEntry>) => {
+    const firstEntry = entries[0];
+
+    if (firstEntry.isIntersecting && hasMore) {
+      fetchGetHistory();
+    }
+  };
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(observerCallback);
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+
+    return () => {
+      if (elementRef.current) {
+        observer.unobserve(elementRef.current);
+      }
+    };
+  }, [hasMore, page]);
 
   useEffect(() => {
     (async () => {
@@ -75,6 +114,7 @@ const MyPage: React.FC = () => {
 
     setHistory(data);
     setIsDateSearch(true);
+    setHasMore(true);
   };
 
   const logoutClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -108,7 +148,7 @@ const MyPage: React.FC = () => {
           <p className='mb-10 text-20'>{userInfo.userName}</p>
           <p className='text-dark-gray'>{userInfo.email}</p>
         </div>
-        <div className='p-20 pb-10 border-b border-light-gray bg-bright-gray'>
+        <div className='px-20 py-10 border-b border-light-gray bg-bright-gray'>
           <p className='text-20 font-bold mb-10'>예약 내역</p>
           <div className='mb-10'>
             <input
@@ -139,6 +179,11 @@ const MyPage: React.FC = () => {
           {history.map((historyData, i) => (
             <BookingHistory key={i} historyData={historyData} />
           ))}
+          {hasMore && (
+            <div ref={elementRef}>
+              <img src={loading} className='w-50 h-50 m-middle'></img>
+            </div>
+          )}
         </div>
         <div className='flex h-50'>
           <div className='flex m-middle items-center'>
