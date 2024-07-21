@@ -99,8 +99,6 @@ const ChattingRoom = () => {
       },
     });
 
-    console.log(client);
-
     client.onConnect = (frame: Frame) => {
       console.log(`/sub/${roomId}/chat`, frame);
 
@@ -143,28 +141,35 @@ const ChattingRoom = () => {
               <div className='w-full h-2 bg-dark-gray'></div>
             </div>
 
-            {groupedChattings[date].map(chat => (
-              <div key={chat.createDate.toString()}>
-                {chat.userId === MY_USER_ID ? (
-                  <div className='relative px-20 py-16 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
-                    {chat.chat}
-                    <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
-                      {getTime(chat.createDate)}
-                    </span>
-                  </div>
-                ) : (
-                  <div>
-                    <span className='font-medium text-16'>카페 이름</span>
-                    <div className='relative px-20 py-16 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
+            {groupedChattings[date].map((chat, index, chatsArray) => {
+              const showCafeName =
+                index === 0 || chatsArray[index - 1].userId !== chat.userId;
+
+              return (
+                <div key={chat.messageId + chat.createDate.toString()}>
+                  {chat.userId === MY_USER_ID ? (
+                    <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}
-                      <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                      <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
                         {getTime(chat.createDate)}
                       </span>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  ) : (
+                    <div>
+                      {showCafeName && (
+                        <span className='font-medium text-16'>카페 이름</span>
+                      )}
+                      <div className='relative px-20 py-16 mt-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
+                        {chat.chat}
+                        <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                          {getTime(chat.createDate)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
         <div ref={messagesEndRef} />

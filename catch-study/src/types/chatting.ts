@@ -105,4 +105,25 @@ export const CHATTINGS: ChattingTypes[] = [
     createDate: new Date('2024-06-27 18:09'),
     messageImage: '이미지 링크 10',
   },
+  {
+    userId: 2,
+    messageId: 11,
+    chat: '메시지 내용11',
+    createDate: new Date('2024-06-27 18:09'),
+    messageImage: '이미지 링크 10',
+  },
+  {
+    userId: 2,
+    messageId: 12,
+    chat: '메시지 내용12',
+    createDate: new Date('2024-06-27 18:09'),
+    messageImage: '이미지 링크 10',
+  },
+  {
+    userId: 2,
+    messageId: 13,
+    chat: '메시지 내용13',
+    createDate: new Date('2024-06-27 18:09'),
+    messageImage: '이미지 링크 10',
+  },
 ];
