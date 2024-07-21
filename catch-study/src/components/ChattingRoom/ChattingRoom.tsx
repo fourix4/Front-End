@@ -146,7 +146,7 @@ const ChattingRoom = () => {
             {groupedChattings[date].map(chat => (
               <div key={chat.createDate.toString()}>
                 {chat.userId === MY_USER_ID ? (
-                  <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm max-w-240 w-max text-start bg-blue text-12'>
+                  <div className='relative px-20 py-16 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                     {chat.chat}
                     <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
                       {getTime(chat.createDate)}
@@ -155,7 +155,7 @@ const ChattingRoom = () => {
                 ) : (
                   <div>
                     <span className='font-medium text-16'>카페 이름</span>
-                    <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-max max-w-240 text-start border-light-gray text-12'>
+                    <div className='relative px-20 py-16 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                       {chat.chat}
                       <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
                         {getTime(chat.createDate)}

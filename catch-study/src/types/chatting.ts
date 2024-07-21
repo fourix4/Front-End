@@ -38,7 +38,7 @@ export const CHATTINGS: ChattingTypes[] = [
   {
     userId: 1,
     messageId: 1,
-    chat: '메시지 내용1',
+    chat: '메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 ',
     createDate: new Date('2024-06-27 18:00'),
     messageImage: '이미지 링크 1',
   },
