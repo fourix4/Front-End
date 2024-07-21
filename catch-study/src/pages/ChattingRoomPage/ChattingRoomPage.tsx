@@ -3,10 +3,10 @@ import Topbar from '../../components/Topbar/Topbar';
 
 const ChattingRoomPage: React.FC = () => {
   return (
-    <>
+    <div className='w-screen h-screen overflow-hidden'>
       <Topbar />
       <ChattingRoom />
-    </>
+    </div>
   );
 };
 

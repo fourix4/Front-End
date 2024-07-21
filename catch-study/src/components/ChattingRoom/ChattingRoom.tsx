@@ -1,6 +1,6 @@
 import { Client, Frame } from '@stomp/stompjs';
 import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
@@ -11,22 +11,35 @@ import getTime from '../../utils/time.utils';
 const MY_USER_ID = 1;
 
 const ChattingRoom = () => {
-  const [chatting, setChatting] = useState('');
-  const [stompClient, setStompClient] = useState<Client | null>(null);
-  const [prevChatting, setPrevChatting] = useState<MessageTypes[]>(MESSAGES);
-  const [roomId] = useAtom(chattingRoomId);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  console.log(roomId);
+  const [stompClient, setStompClient] = useState<Client | null>(null);
+  const [chatting, setChatting] = useState<MessageTypes[]>(MESSAGES);
+  const [roomId] = useAtom(chattingRoomId);
+  const [sendChat, setSencChat] = useState('');
 
   const handleSendMessage = () => {
+    console.log(sendChat);
+
     if (stompClient) {
       stompClient.publish({
         destination: `/pub/${roomId}/chat`,
-        body: JSON.stringify('hi'),
+        body: JSON.stringify({ chat: sendChat }),
       });
-      setChatting('');
+      setSencChat('');
     }
   };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatting]);
 
   useEffect(() => {
     // id로 채팅 가져오기
@@ -36,11 +49,11 @@ const ChattingRoom = () => {
       const rawData = await getChatting(roomId);
       const data = getChattingData(rawData);
 
-      setPrevChatting(prev => [...prev, ...data]);
+      setChatting(prev => [...prev, ...data]);
 
-      console.log('데이터', data);
+      console.log('이전 채팅', data);
     })();
-  }, [roomId, getChatting, getChattingData, setPrevChatting]);
+  }, [roomId, getChatting, getChattingData, setChatting]);
 
   useEffect(() => {
     if (!roomId) return;
@@ -63,7 +76,16 @@ const ChattingRoom = () => {
       console.log(`/sub/${roomId}/chat`, frame);
 
       client.subscribe(`/sub/${roomId}/chat`, message => {
-        console.log(JSON.parse(message.body));
+        const body = JSON.parse(message.body);
+        const newChat: MessageTypes = {
+          userId: body.userId,
+          messageId: body.messageId,
+          chat: body.chat,
+          createDate: new Date(body.createDate),
+          messageImage: body.messageImage,
+        };
+
+        setChatting(prev => [...prev, newChat]);
       });
     };
 
@@ -85,51 +107,53 @@ const ChattingRoom = () => {
     client.activate();
     setStompClient(client);
 
-    // return () => {
-    //   client.deactivate();
-    // };
+    // client.deactivate();
   }, [roomId]);
 
   return (
-    <div className='flex flex-col py-20'>
-      <div className='flex flex-col px-20 pt-20 overflow-y-scroll gap-30'>
-        <div className='flex items-center justify-between flex-grow gap-10'>
+    <div className='flex flex-col'>
+      <div
+        ref={scrollContainerRef}
+        className='flex flex-col px-20 pt-20 overflow-y-scroll pb-80 h-chat gap-30'
+      >
+        {/* <div className='flex items-center justify-between flex-grow gap-10'>
           <div className='w-full h-2 bg-dark-gray'></div>
           <p className='flex-shrink-0 font-normal text-dark-gray text-12'>
             {'6월 26일'}
           </p>
           <div className='w-full h-2 bg-dark-gray'></div>
-        </div>
-        {prevChatting &&
-          prevChatting.map(message => (
-            <div key={message.messageId}>
-              {message.userId === MY_USER_ID ? (
-                <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm w-240 text-start bg-blue text-16'>
-                  {message.chat}
-                  <span className='absolute bottom-0 font-normal text-black -left-50 text-12 text-dark-gray'>
-                    {getTime(message.createDate)}
+        </div> */}
+        {chatting &&
+          chatting.map(chat => (
+            <div key={chat.createDate.toString()}>
+              {chat.userId === MY_USER_ID ? (
+                <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm max-w-240 w-max text-start bg-blue text-12'>
+                  {chat.chat}
+                  <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
+                    {getTime(chat.createDate)}
                   </span>
                 </div>
               ) : (
                 <div>
                   <span className='font-medium text-16'>카페 이름</span>
-                  <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-240 text-start border-light-gray text-16'>
-                    {message.chat}
-                    <span className='absolute bottom-0 font-normal text-black -right-50 text-12 text-dark-gray'>
-                      {getTime(message.createDate)}
+                  <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-max max-w-240 text-start border-light-gray text-12'>
+                    {chat.chat}
+                    <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                      {getTime(chat.createDate)}
                     </span>
                   </div>
                 </div>
               )}
             </div>
           ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white left-1/2 bottom-20 drop-shadow-xl rounded-default'>
         <input
           type='text'
-          value={chatting}
-          onChange={e => setChatting(e.target.value)}
+          value={sendChat}
+          onChange={e => setSencChat(e.target.value)}
           className='w-full h-full p-10'
         />
         <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>
