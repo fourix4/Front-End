@@ -102,12 +102,12 @@ const ChattingRoom = () => {
         </div>
         {prevChatting &&
           prevChatting.map(message => (
-            <div key={message.message_id}>
-              {message.user_id === MY_USER_ID ? (
+            <div key={message.messageId}>
+              {message.userId === MY_USER_ID ? (
                 <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm w-240 text-start bg-blue text-16'>
                   {message.chat}
                   <span className='absolute bottom-0 font-normal text-black -left-50 text-12 text-dark-gray'>
-                    {getTime(message.create_date)}
+                    {getTime(message.createDate)}
                   </span>
                 </div>
               ) : (
@@ -116,7 +116,7 @@ const ChattingRoom = () => {
                   <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-240 text-start border-light-gray text-16'>
                     {message.chat}
                     <span className='absolute bottom-0 font-normal text-black -right-50 text-12 text-dark-gray'>
-                      {getTime(message.create_date)}
+                      {getTime(message.createDate)}
                     </span>
                   </div>
                 </div>
