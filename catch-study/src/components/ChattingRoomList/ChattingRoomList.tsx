@@ -3,16 +3,17 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getChattingRoom } from '../../apis/api/chatting';
 import { getChattingRoomData } from '../../apis/services/chatting';
-import chattingRoomId from '../../atoms/chatting';
+import { setChattingRoomId } from '../../atoms/chatting';
 import { ChattingRoomTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
-  const [, setChattingRoomId] = useAtom(chattingRoomId);
+  const [, setChattingRoomIdAtom] = useAtom(setChattingRoomId);
+
   const [chattingRooms, setChattingRooms] = useState<ChattingRoomTypes[]>([]);
 
-  const handleSelectChattingRoom = (id: string) => {
-    setChattingRoomId(id);
+  const handleSelectChattingRoom = (id: number) => {
+    setChattingRoomIdAtom(id);
   };
 
   useEffect(() => {
@@ -30,9 +31,7 @@ const ChattingRoomList: React.FC = () => {
       {chattingRooms.map(chattingRoom => (
         <li
           key={chattingRoom.chatRoomId}
-          onClick={() =>
-            handleSelectChattingRoom(chattingRoom.chatRoomId.toString())
-          }
+          onClick={() => handleSelectChattingRoom(chattingRoom.chatRoomId)}
           className='relative w-full p-20 border-b-2 cursor-pointer border-light-gray'
         >
           <Link to={`/chatting/room`} className='block w-full h-full'>

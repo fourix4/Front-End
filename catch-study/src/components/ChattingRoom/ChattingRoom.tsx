@@ -1,23 +1,19 @@
 import { Client, Frame } from '@stomp/stompjs';
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
-
-import { useAtom } from 'jotai';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
-import chattingRoomId from '../../atoms/chatting';
-import { MessageTypes } from '../../types/chatting';
+import { chattingRoomId } from '../../atoms/chatting';
+import { MESSAGES, MessageTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
-// const RECIPIENT_ID = 2;
 
 const ChattingRoom = () => {
   const [chatting, setChatting] = useState('');
   const [stompClient, setStompClient] = useState<Client | null>(null);
-
-  const [prevChatting, setPrevChatting] = useState<MessageTypes[]>();
-
+  const [prevChatting, setPrevChatting] = useState<MessageTypes[]>(MESSAGES);
   const [roomId] = useAtom(chattingRoomId);
 
   console.log(roomId);
@@ -25,7 +21,7 @@ const ChattingRoom = () => {
   const handleSendMessage = () => {
     if (stompClient) {
       stompClient.publish({
-        destination: `/sub/${roomId}/chat`,
+        destination: `/pub/${roomId}/chat`,
         body: JSON.stringify('hi'),
       });
       setChatting('');
@@ -34,37 +30,41 @@ const ChattingRoom = () => {
 
   useEffect(() => {
     // id로 채팅 가져오기
-
     if (!roomId) return;
 
     (async () => {
       const rawData = await getChatting(roomId);
       const data = getChattingData(rawData);
 
-      setPrevChatting(data);
+      setPrevChatting(prev => [...prev, ...data]);
 
-      console.log(data);
+      console.log('데이터', data);
     })();
   }, [roomId, getChatting, getChattingData, setPrevChatting]);
 
   useEffect(() => {
+    if (!roomId) return;
+
     const socket = new SockJS('http://3.39.182.9:8080/ws');
     const client = new Client({
       webSocketFactory: () => socket,
-      reconnectDelay: 5000,
+      reconnectDelay: 1000,
       debug: (str: string) => {
         console.log(str);
       },
+      connectHeaders: {
+        chatRoodID: roomId.toString(),
+      },
     });
+
+    console.log(client);
 
     client.onConnect = (frame: Frame) => {
       console.log(`/sub/${roomId}/chat`, frame);
 
-      // client.subscribe('/topic/connection-status', message => {
-      //   const statusMessage = JSON.parse(message.body);
-
-      //   console.log(statusMessage.message);
-      // });
+      client.subscribe(`/sub/${roomId}/chat`, message => {
+        console.log(JSON.parse(message.body));
+      });
     };
 
     // client.onConnect = frame => {
@@ -85,10 +85,10 @@ const ChattingRoom = () => {
     client.activate();
     setStompClient(client);
 
-    return () => {
-      client.deactivate();
-    };
-  }, []);
+    // return () => {
+    //   client.deactivate();
+    // };
+  }, [roomId]);
 
   return (
     <div className='flex flex-col py-20'>

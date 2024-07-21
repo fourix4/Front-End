@@ -18,7 +18,7 @@ export const getChattingRoom = async () => {
   }
 };
 
-export const getChatting = async (chattingRoomId: string) => {
+export const getChatting = async (chattingRoomId: number) => {
   try {
     const { data } = await instance.get<CHattingResponseTypes | ResponseTypes>(
       `${API_ADDRESS.CHATTING}/${chattingRoomId}`,
