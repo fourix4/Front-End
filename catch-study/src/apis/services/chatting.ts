@@ -1,4 +1,4 @@
-import { CHATTING_ROOM_LISTS, MESSAGES } from '../../types/chatting';
+import { CHATTING_ROOM_LISTS, CHATTINGS } from '../../types/chatting';
 import {
   ChattingRoomResponseTypes,
   ResponseTypes,
@@ -24,7 +24,7 @@ export const getChattingData = (
     return rawData.data.result;
   }
 
-  return MESSAGES.sort(
+  return CHATTINGS.sort(
     (a, b) =>
       new Date(b.createDate).getTime() - new Date(a.createDate).getTime(),
   );

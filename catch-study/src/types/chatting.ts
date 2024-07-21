@@ -7,7 +7,7 @@ export interface ChattingRoomTypes {
   status: boolean;
 }
 
-export interface MessageTypes {
+export interface ChattingTypes {
   userId: number;
   messageId: number;
   chat: string;
@@ -34,7 +34,7 @@ export const CHATTING_ROOM_LISTS: ChattingRoomTypes[] = [
   },
 ];
 
-export const MESSAGES: MessageTypes[] = [
+export const CHATTINGS: ChattingTypes[] = [
   {
     userId: 1,
     messageId: 1,
@@ -74,28 +74,28 @@ export const MESSAGES: MessageTypes[] = [
     userId: 2,
     messageId: 6,
     chat: '메시지 내용6',
-    createDate: new Date('2024-06-27 18:05'),
+    createDate: new Date('2024-06-30 18:05'),
     messageImage: '이미지 링크 6',
   },
   {
     userId: 1,
     messageId: 7,
     chat: '메시지 내용7',
-    createDate: new Date('2024-06-27 18:06'),
+    createDate: new Date('2024-06-29 18:06'),
     messageImage: '이미지 링크 7',
   },
   {
     userId: 2,
     messageId: 8,
     chat: '메시지 내용8',
-    createDate: new Date('2024-06-27 18:07'),
+    createDate: new Date('2024-06-28 18:07'),
     messageImage: '이미지 링크 8',
   },
   {
     userId: 1,
     messageId: 9,
     chat: '메시지 내용9',
-    createDate: new Date('2024-06-27 18:08'),
+    createDate: new Date('2024-06-28 18:08'),
     messageImage: '이미지 링크 9',
   },
   {

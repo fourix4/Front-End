@@ -1,10 +1,3 @@
-// import { atom } from 'jotai';
-
-// const chattingRoomId = atom<string>('0');
-
-// export default chattingRoomId;
-
-// src/atoms/chatting.ts
 import { atom } from 'jotai';
 
 export const chattingRoomId = atom<number | null>(null);

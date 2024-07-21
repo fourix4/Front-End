@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
 import { chattingRoomId } from '../../atoms/chatting';
-import { MESSAGES, MessageTypes } from '../../types/chatting';
+import { CHATTINGS, ChattingTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
@@ -15,9 +15,12 @@ const ChattingRoom = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
-  const [chatting, setChatting] = useState<MessageTypes[]>(MESSAGES);
+  const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
   const [roomId] = useAtom(chattingRoomId);
   const [sendChat, setSencChat] = useState('');
+  const [groupedChattings, setGroupedChattings] = useState<
+    Record<string, ChattingTypes[]>
+  >({});
 
   const handleSendMessage = () => {
     console.log(sendChat);
@@ -39,6 +42,32 @@ const ChattingRoom = () => {
 
   useEffect(() => {
     scrollToBottom();
+  }, [chatting]);
+
+  useEffect(() => {
+    const groupChattingsByDate = (chattings: ChattingTypes[]) => {
+      return chattings.reduce(
+        (groups: Record<string, ChattingTypes[]>, chat) => {
+          const date = chat.createDate.toLocaleDateString();
+
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+          groups[date].push(chat);
+          return groups;
+        },
+        {},
+      );
+    };
+
+    setGroupedChattings(
+      groupChattingsByDate(
+        chatting.sort(
+          (a, b) =>
+            new Date(a.createDate).getTime() - new Date(b.createDate).getTime(),
+        ),
+      ),
+    );
   }, [chatting]);
 
   useEffect(() => {
@@ -77,7 +106,7 @@ const ChattingRoom = () => {
 
       client.subscribe(`/sub/${roomId}/chat`, message => {
         const body = JSON.parse(message.body);
-        const newChat: MessageTypes = {
+        const newChat: ChattingTypes = {
           userId: body.userId,
           messageId: body.messageId,
           chat: body.chat,
@@ -89,16 +118,6 @@ const ChattingRoom = () => {
       });
     };
 
-    // client.onConnect = frame => {
-    //   console.log('Connection successful', frame);
-
-    //   client.subscribe(`/user/${MY_USER_ID}/queue`, (newMessage: Message) => {
-    //     const chatMessage: ChatMessage = JSON.parse(newMessage.body);
-
-    //     setChattings(prevMessages => [...prevMessages, chatMessage]);
-    //   });
-    // };
-
     client.onStompError = frame => {
       console.error(`Broker reported error: ${frame.headers}`);
       console.error(`Additional details: ${frame.body}`);
@@ -106,8 +125,6 @@ const ChattingRoom = () => {
 
     client.activate();
     setStompClient(client);
-
-    // client.deactivate();
   }, [roomId]);
 
   return (
@@ -116,36 +133,40 @@ const ChattingRoom = () => {
         ref={scrollContainerRef}
         className='flex flex-col px-20 pt-20 overflow-y-scroll pb-80 h-chat gap-30'
       >
-        {/* <div className='flex items-center justify-between flex-grow gap-10'>
-          <div className='w-full h-2 bg-dark-gray'></div>
-          <p className='flex-shrink-0 font-normal text-dark-gray text-12'>
-            {'6월 26일'}
-          </p>
-          <div className='w-full h-2 bg-dark-gray'></div>
-        </div> */}
-        {chatting &&
-          chatting.map(chat => (
-            <div key={chat.createDate.toString()}>
-              {chat.userId === MY_USER_ID ? (
-                <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm max-w-240 w-max text-start bg-blue text-12'>
-                  {chat.chat}
-                  <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
-                    {getTime(chat.createDate)}
-                  </span>
-                </div>
-              ) : (
-                <div>
-                  <span className='font-medium text-16'>카페 이름</span>
-                  <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-max max-w-240 text-start border-light-gray text-12'>
+        {Object.keys(groupedChattings).map(date => (
+          <div key={date}>
+            <div className='flex items-center justify-between flex-grow gap-10 py-10'>
+              <div className='w-full h-2 bg-dark-gray'></div>
+              <p className='flex-shrink-0 font-normal text-dark-gray text-12'>
+                {date}
+              </p>
+              <div className='w-full h-2 bg-dark-gray'></div>
+            </div>
+
+            {groupedChattings[date].map(chat => (
+              <div key={chat.createDate.toString()}>
+                {chat.userId === MY_USER_ID ? (
+                  <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm max-w-240 w-max text-start bg-blue text-12'>
                     {chat.chat}
-                    <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                    <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
                       {getTime(chat.createDate)}
                     </span>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                ) : (
+                  <div>
+                    <span className='font-medium text-16'>카페 이름</span>
+                    <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-max max-w-240 text-start border-light-gray text-12'>
+                      {chat.chat}
+                      <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                        {getTime(chat.createDate)}
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ))}
         <div ref={messagesEndRef} />
       </div>
 
