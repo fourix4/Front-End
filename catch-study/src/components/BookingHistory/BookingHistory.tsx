@@ -13,7 +13,7 @@ const BookingHistory: React.FC<BookingHistoryPropTypes> = ({ historyData }) => {
           <p>{historyData.cafe_name}</p>
           <p className='text-12 text-dark-gray'>{historyData.address}</p>
           <p>결제 날짜 : {historyData.payment_time}</p>
-          <p>결제 금액 : {historyData.amount}</p>
+          <p>결제 금액 : {historyData.amount.toLocaleString()}원</p>
           <p>입실 시간 : {historyData.start_time}</p>
           <p>퇴실 시간 : {historyData.end_time}</p>
         </div>
