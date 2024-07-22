@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
+import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
 import getTime from '../../utils/time.utils';
@@ -14,9 +15,11 @@ const ChattingRoom = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
+  const [roomId] = useAtom(chattingRoomId);
+  const [cafe] = useAtom(cafeName);
+
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
-  const [roomId] = useAtom(chattingRoomId);
   const [sendChat, setSencChat] = useState('');
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
@@ -157,9 +160,9 @@ const ChattingRoom = () => {
                   ) : (
                     <div>
                       {showCafeName && (
-                        <span className='font-medium text-16'>카페 이름</span>
+                        <span className='font-medium text-12'>{cafe}</span>
                       )}
-                      <div className='relative px-20 py-16 mt-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
+                      <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}
                         <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
                           {getTime(chat.createDate)}
@@ -175,17 +178,17 @@ const ChattingRoom = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white left-1/2 bottom-20 drop-shadow-xl rounded-default'>
+      <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'>
         <input
           type='text'
           value={sendChat}
           onChange={e => setSencChat(e.target.value)}
-          className='w-full h-full p-10'
+          className='w-full h-full px-10'
         />
         <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>
           <button
             onClick={handleSendMessage}
-            className='w-full h-full bg-send-plane'
+            className='w-30 h-30 bg-send-plane'
           ></button>
         </div>
       </div>
