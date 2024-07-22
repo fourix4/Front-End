@@ -1,56 +1,128 @@
 import { Client, Frame } from '@stomp/stompjs';
-import { useEffect, useState } from 'react';
+import { useAtom } from 'jotai';
+import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
-import { MESSAGES } from '../../config/constants';
-import { getTime } from '../../utils/time.utils';
+import { getChatting } from '../../apis/api/chatting';
+import { getChattingData } from '../../apis/services/chatting';
+import { cafeName } from '../../atoms/cafeName';
+import { chattingRoomId } from '../../atoms/chatting';
+import { CHATTINGS, ChattingTypes } from '../../types/chatting';
+import getTime from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
-// const RECIPIENT_ID = 2;
 
 const ChattingRoom = () => {
-  const [chatting, setChatting] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const [roomId] = useAtom(chattingRoomId);
+  const [cafe] = useAtom(cafeName);
+
   const [stompClient, setStompClient] = useState<Client | null>(null);
+  const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
+  const [sendChat, setSencChat] = useState('');
+  const [groupedChattings, setGroupedChattings] = useState<
+    Record<string, ChattingTypes[]>
+  >({});
 
   const handleSendMessage = () => {
+    console.log(sendChat);
+
+    if (!roomId) return;
+
     if (stompClient) {
       stompClient.publish({
-        destination: '/app/chat.sendMessage',
-        body: JSON.stringify('hi'),
+        destination: `/pub/${roomId}/chat`,
+        body: JSON.stringify({ chat: sendChat }),
+        headers: {
+          chatRoodID: roomId.toString(),
+        },
       });
-      setChatting('');
+      setSencChat('');
+    }
+  };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
     }
   };
 
   useEffect(() => {
+    scrollToBottom();
+  }, [chatting]);
+
+  useEffect(() => {
+    const groupChattingsByDate = (chattings: ChattingTypes[]) => {
+      return chattings.reduce(
+        (groups: Record<string, ChattingTypes[]>, chat) => {
+          const date = chat.createDate.toLocaleDateString();
+
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+          groups[date].push(chat);
+          return groups;
+        },
+        {},
+      );
+    };
+
+    setGroupedChattings(
+      groupChattingsByDate(
+        chatting.sort(
+          (a, b) =>
+            new Date(a.createDate).getTime() - new Date(b.createDate).getTime(),
+        ),
+      ),
+    );
+  }, [chatting]);
+
+  useEffect(() => {
+    // id로 채팅 가져오기
+    if (!roomId) return;
+
+    (async () => {
+      const rawData = await getChatting(roomId);
+      const data = getChattingData(rawData);
+
+      setChatting(prev => [...prev, ...data]);
+
+      console.log('이전 채팅', data);
+    })();
+  }, [roomId, getChatting, getChattingData, setChatting]);
+
+  useEffect(() => {
+    if (!roomId) return;
+
     const socket = new SockJS('http://3.39.182.9:8080/ws');
     const client = new Client({
       webSocketFactory: () => socket,
-      reconnectDelay: 5000,
+      reconnectDelay: 1000,
       debug: (str: string) => {
         console.log(str);
       },
+      connectHeaders: {
+        chatRoodID: roomId.toString(),
+      },
     });
 
-    // 연결 상태 메시지 구독
     client.onConnect = (frame: Frame) => {
-      console.log('connect success', frame);
+      console.log(`/sub/${roomId}/chat`, frame);
 
-      // client.subscribe('/topic/connection-status', message => {
-      //   const statusMessage = JSON.parse(message.body);
+      client.subscribe(`/sub/${roomId}/chat`, message => {
+        const body = JSON.parse(message.body);
+        const newChat: ChattingTypes = {
+          userId: body.userId,
+          messageId: body.messageId,
+          chat: body.chat,
+          createDate: new Date(body.createDate),
+          messageImage: body.messageImage,
+        };
 
-      //   console.log(statusMessage.message);
-      // });
+        setChatting(prev => [...prev, newChat]);
+      });
     };
-
-    // client.onConnect = frame => {
-    //   console.log('Connection successful', frame);
-
-    //   client.subscribe(`/user/${MY_USER_ID}/queue`, (newMessage: Message) => {
-    //     const chatMessage: ChatMessage = JSON.parse(newMessage.body);
-
-    //     setChattings(prevMessages => [...prevMessages, chatMessage]);
-    //   });
-    // };
 
     client.onStompError = frame => {
       console.error(`Broker reported error: ${frame.headers}`);
@@ -59,57 +131,69 @@ const ChattingRoom = () => {
 
     client.activate();
     setStompClient(client);
-
-    return () => {
-      client.deactivate();
-    };
-  }, []);
+  }, [roomId, setChatting]);
 
   return (
-    <div className='flex flex-col py-20'>
-      <div className='flex flex-col px-20 pt-20 overflow-y-scroll gap-30'>
-        <div className='flex items-center justify-between flex-grow gap-10'>
-          <div className='w-full h-2 bg-dark-gray'></div>
-          <p className='flex-shrink-0 font-normal text-dark-gray text-12'>
-            {'6월 26일'}
-          </p>
-          <div className='w-full h-2 bg-dark-gray'></div>
-        </div>
-        {MESSAGES.map(message => (
-          <div key={message.message_id}>
-            {message.user_id === MY_USER_ID ? (
-              <div className='relative px-20 py-16 ml-auto font-normal text-white rounded-sm w-240 text-start bg-blue text-16'>
-                {message.chat}
-                <span className='absolute bottom-0 font-normal text-black -left-50 text-12 text-dark-gray'>
-                  {getTime(message.create_date)}
-                </span>
-              </div>
-            ) : (
-              <div>
-                <span className='font-medium text-16'>카페 이름</span>
-                <div className='relative px-20 py-16 mr-auto font-normal bg-white border-2 rounded-sm w-240 text-start border-light-gray text-16'>
-                  {message.chat}
-                  <span className='absolute bottom-0 font-normal text-black -right-50 text-12 text-dark-gray'>
-                    {getTime(message.create_date)}
-                  </span>
+    <div className='flex flex-col'>
+      <div
+        ref={scrollContainerRef}
+        className='flex flex-col px-20 pt-20 overflow-y-scroll pb-80 h-chat gap-30'
+      >
+        {Object.keys(groupedChattings).map(date => (
+          <div key={date}>
+            <div className='flex items-center justify-between flex-grow gap-10 py-10'>
+              <div className='w-full h-2 bg-dark-gray'></div>
+              <p className='flex-shrink-0 font-normal text-dark-gray text-12'>
+                {date}
+              </p>
+              <div className='w-full h-2 bg-dark-gray'></div>
+            </div>
+
+            {groupedChattings[date].map((chat, index, chatsArray) => {
+              const showCafeName =
+                index === 0 || chatsArray[index - 1].userId !== chat.userId;
+
+              return (
+                <div key={chat.messageId + chat.createDate.toString()}>
+                  {chat.userId === MY_USER_ID ? (
+                    <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
+                      {chat.chat}
+                      <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
+                        {getTime(chat.createDate)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div>
+                      {showCafeName && (
+                        <span className='font-medium text-12'>{cafe}</span>
+                      )}
+                      <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
+                        {chat.chat}
+                        <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                          {getTime(chat.createDate)}
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            )}
+              );
+            })}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
-      <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white left-1/2 bottom-20 drop-shadow-xl rounded-default'>
+      <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'>
         <input
           type='text'
-          value={chatting}
-          onChange={e => setChatting(e.target.value)}
-          className='w-full h-full p-10'
+          value={sendChat}
+          onChange={e => setSencChat(e.target.value)}
+          className='w-full h-full px-10'
         />
         <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>
           <button
             onClick={handleSendMessage}
-            className='w-full h-full bg-send-plane'
+            className='w-30 h-30 bg-send-plane'
           ></button>
         </div>
       </div>

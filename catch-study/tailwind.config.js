@@ -3,6 +3,7 @@
 const px0_10 = { ...Array.from(Array(11)).map((_, i) => `${i}px`) };
 const px0_100 = { ...Array.from(Array(101)).map((_, i) => `${i}px`) };
 const px0_200 = { ...Array.from(Array(201)).map((_, i) => `${i}px`) };
+const px0_300 = { ...Array.from(Array(301)).map((_, i) => `${i}px`) };
 const px0_1000 = { ...Array.from(Array(1001)).map((_, i) => `${i}px`) };
 
 module.exports = {
@@ -16,6 +17,10 @@ module.exports = {
         ...px0_1000,
         topbar: '80px',
         modal: '550px',
+        chat: 'calc(100vh - 80px)',
+      },
+      maxWidth: {
+        ...px0_1000,
       },
       backgroundImage: {
         alarm: "url('/src/assets/alarm.svg')",

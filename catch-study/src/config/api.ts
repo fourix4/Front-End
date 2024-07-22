@@ -5,6 +5,8 @@ export const API_ADDRESS = {
   STUDYCAFE_SEARCH_URI: '/studycafes/search',
   MANAGER_INFO_URI: '/manager',
   STUDYCAFE_INFO: '/studycafes',
+  CHATTING: '/chat',
+  CHATTING_ROOM: '/chat/rooms',
   STUDYCAFE_SEATING_CHART: '/seatingchart',
   ROOM_TIME_INFO: '/studycafes/timeinfo',
   USER: '/user',

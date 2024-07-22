@@ -1,3 +1,5 @@
+import { ChattingRoomTypes } from './chatting';
+
 export interface ResponseTypes {
   code: number;
   message: string;
@@ -57,6 +59,18 @@ export interface StudycafeInfoDataTypes {
 export interface StudycafeInfoResponseTypes extends ResponseTypes {
   data: {
     result: StudycafeInfoDataTypes;
+  };
+}
+
+export interface ChattingRoomResponseTypes extends ResponseTypes {
+  data: {
+    result: ChattingRoomTypes[];
+  };
+}
+
+export interface CHattingResponseTypes extends ResponseTypes {
+  data: {
+    result: ChattingRoomTypes[];
   };
 }
 
