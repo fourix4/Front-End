@@ -28,10 +28,15 @@ const ChattingRoom = () => {
   const handleSendMessage = () => {
     console.log(sendChat);
 
+    if (!roomId) return;
+
     if (stompClient) {
       stompClient.publish({
         destination: `/pub/${roomId}/chat`,
         body: JSON.stringify({ chat: sendChat }),
+        headers: {
+          chatRoodID: roomId.toString(),
+        },
       });
       setSencChat('');
     }
@@ -126,7 +131,7 @@ const ChattingRoom = () => {
 
     client.activate();
     setStompClient(client);
-  }, [roomId]);
+  }, [roomId, setChatting]);
 
   return (
     <div className='flex flex-col'>
