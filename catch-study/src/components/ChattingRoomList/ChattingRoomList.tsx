@@ -6,7 +6,7 @@ import { getChattingRoomData } from '../../apis/services/chatting';
 import { setCafeName } from '../../atoms/cafeName';
 import { setChattingRoomId } from '../../atoms/chatting';
 import { ChattingRoomTypes } from '../../types/chatting';
-import getTime from '../../utils/time.utils';
+import { getTime } from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
   const [, setChattingRoomIdAtom] = useAtom(setChattingRoomId);

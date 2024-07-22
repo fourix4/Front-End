@@ -7,7 +7,7 @@ import { getChattingData } from '../../apis/services/chatting';
 import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
-import getTime from '../../utils/time.utils';
+import { getTime } from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
 
