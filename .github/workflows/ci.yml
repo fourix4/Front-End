@@ -47,7 +47,7 @@ jobs:
 
       - name: Merge develop branch
         run: |
-          git merge origin/dev --no-edit
+          git merge origin/develop --no-edit
 
       - name: Push to main branch
         if: success()
