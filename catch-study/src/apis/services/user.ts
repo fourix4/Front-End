@@ -1,14 +1,26 @@
 import { STATUS } from '../../config/api';
-import { ACCESS_TOKEN } from '../../config/constants';
-import { LoginResponseTypes, ResponseTypes } from '../../types/interfaces';
+import {
+  ErrorResponseTypes,
+  ResponseTypes,
+  UserResponseTypes,
+} from '../../types/interfaces';
 
-const isSuccessLogin = (rawPost: LoginResponseTypes | ResponseTypes) => {
-  if (rawPost.code >= STATUS.SUCCESS && rawPost.code < STATUS.REDIRECTION) {
-    localStorage.setItem(ACCESS_TOKEN, `${rawPost.data!.result.accessToken}`);
-    return true;
-  }
-
-  return false;
+export const isSuccessDelete = (rawPost: ResponseTypes) => {
+  return rawPost.code === STATUS.SUCCESS;
 };
 
-export default isSuccessLogin;
+export const getUserInfo = (
+  rawData: UserResponseTypes | ErrorResponseTypes,
+) => {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
+    const result = {
+      userName: rawData.data.result.user_name,
+      email: rawData.data.result.email,
+    };
+
+    return result;
+  }
+
+  return { userName: '조현정', email: 'abc123@naver.com' };
+  // return { userName: '', email: '' };
+};

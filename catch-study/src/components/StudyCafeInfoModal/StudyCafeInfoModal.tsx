@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import mapPin from '../../assets/map-pin.svg';
 import time from '../../assets/time.svg';
+import phone from '../../assets/phone.svg';
 import { getStudycafeInfo } from '../../apis/api/studycafe';
 import { getStudycafeInfoData } from '../../apis/services/studycafe';
-import { StudycafeInfoDataTypes } from '../../types/interfaces';
+import { StudycafeInfoDataTypes, StudycafeTypes } from '../../types/interfaces';
 import SlideImage from '../SlideImage/SlideImage';
 import test1 from '../../assets/test1.png';
 import test2 from '../../assets/test2.png';
 import test3 from '../../assets/test3.png';
 import test4 from '../../assets/test4.png';
+import { ROUTE } from '../../config/constants';
 
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
-  clickedStudycafe: number | null;
+  clickedStudycafe: StudycafeTypes | null;
   closeModal: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
@@ -38,13 +41,14 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   closeModal,
 }) => {
   const [info, setInfo] = useState<StudycafeInfoDataTypes>(defaultInfoData);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (clickedStudycafe === null) {
       return;
     }
     (async () => {
-      const rawData = await getStudycafeInfo(clickedStudycafe);
+      const rawData = await getStudycafeInfo(clickedStudycafe.cafeId);
       const data = getStudycafeInfoData(rawData);
 
       if (data) {
@@ -52,6 +56,16 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
       }
     })();
   }, [clickedStudycafe]);
+
+  const bookingClick = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    cafeId: number,
+    cafeName: string,
+  ) => {
+    e.preventDefault();
+    closeModal(e);
+    navigate(ROUTE.STUDYCAFE_BOOKING, { state: { key: { cafeId, cafeName } } });
+  };
 
   return (
     <div
@@ -90,15 +104,22 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
           <img src={mapPin} className='inline mr-10' />
           <span className='align-middle text-16'>{info.address}</span>
         </div>
-        <div className='mb-20'>
+        <div className='mb-15'>
           <img src={time} className='inline mr-10' />
           <span className='align-middle text-16'>
             {info.opening_hours} ~ {info.closed_hours}
           </span>
         </div>
-        <div className='ml-30 text-16'>휴무일 {info.cloesd_day}</div>
+        <div className='ml-30 text-16 mb-15'>휴무일 {info.cloesd_day}</div>
+        <div>
+          <img src={phone} className='inline mr-10' />
+          <span className='align-middle text-16'>{info.cafe_phone}</span>
+        </div>
       </div>
-      <button className={`w-full h-60 text-24 font-bold text-white bg-blue`}>
+      <button
+        onClick={e => bookingClick(e, info.cafe_id, info.cafe_name)}
+        className={`w-full h-60 text-24 font-bold text-white bg-blue`}
+      >
         예약하기
       </button>
     </div>

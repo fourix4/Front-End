@@ -1,25 +1,21 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
+import useManagementInfo from '../../hooks/useManagementInfo';
 
-interface ImageFormPropTypes {
-  thumbnail: File | null;
-  storeImages: File[];
-  onChangeThumailImage: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChangeStoreImage: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+const ImageForm: React.FC = () => {
+  const {
+    thumbnail,
+    storeImages,
+    handleThumbnailChange,
+    handleStoreImagesChange,
+  } = useManagementInfo();
 
-const ImageForm: React.FC<ImageFormPropTypes> = ({
-  thumbnail,
-  storeImages,
-  onChangeStoreImage,
-  onChangeThumailImage,
-}) => {
   return (
     <div className='flex flex-col gap-20'>
       <div className='flex flex-col justify-start gap-10 mb-4'>
         <label className='block mb-2'>썸네일 사진 (선택)</label>
         <input
           type='file'
-          onChange={e => onChangeThumailImage(e)}
+          onChange={e => handleThumbnailChange(e)}
           className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-light-gray'
         />
 
@@ -39,7 +35,7 @@ const ImageForm: React.FC<ImageFormPropTypes> = ({
         <input
           type='file'
           multiple
-          onChange={e => onChangeStoreImage(e)}
+          onChange={e => handleStoreImagesChange(e)}
           className='block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-light-gray'
         />
         {storeImages.length > 0 && (

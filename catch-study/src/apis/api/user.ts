@@ -1,19 +1,23 @@
-import { LoginResponseTypes, ResponseTypes } from './../../types/interfaces';
+import {
+  ErrorResponseTypes,
+  LoginResponseTypes,
+  ResponseTypes,
+  UserResponseTypes,
+} from './../../types/interfaces';
 import instance from '../utils/axios';
-import { API_ADDRESS, STATUS } from '../../config/api';
+import { API_ADDRESS } from '../../config/api';
 
-export const postLogin = async (authCode: string) => {
+export const postLogin = async () => {
   try {
-    const { data } = await instance.post<LoginResponseTypes | ResponseTypes>(
+    const { data } = await instance.post<LoginResponseTypes>(
       API_ADDRESS.KAKAO_LOGIN_URI,
-      {
-        code: authCode,
-      },
     );
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -23,6 +27,32 @@ export const postLogout = async () => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};
+
+export const deleteUser = async () => {
+  try {
+    const { data } = await instance.delete<ResponseTypes>(API_ADDRESS.USER);
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const { data } = await instance.get<UserResponseTypes>(API_ADDRESS.USER);
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };

@@ -34,6 +34,8 @@ module.exports = {
         loading: "url('/src/assets/loading.svg')",
         'image-arrow-left': "url('/src/assets/image-arrow-left.svg')",
         'image-arrow-right': "url('/src/assets/image-arrow-right.svg')",
+        'seatingchart-test': "url('/src/assets/seatingchart-test.svg')",
+        'kakao-payment': "url('/src/assets/kakao-payment.svg')",
       },
       zIndex: {
         menu: '10',

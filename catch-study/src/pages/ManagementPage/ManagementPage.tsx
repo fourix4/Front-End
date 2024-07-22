@@ -31,7 +31,7 @@ const ManagementPage: React.FC = () => {
           <ManagementCafeInfo cafeInfo={cafeInfo} />
         ) : (
           <div className='w-full'>
-            <Link to={ROUTE.MANAGEMENT_INFO}>
+            <Link to={ROUTE.MANAGEMENT_FORM}>
               <button className='input-box'>스터디 카페 정보 입력</button>
             </Link>
           </div>

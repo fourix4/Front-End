@@ -1,5 +1,5 @@
-import { API_ADDRESS, STATUS } from '../../config/api';
-import { ResponseTypes } from '../../types/interfaces';
+import { API_ADDRESS } from '../../config/api';
+import { ErrorResponseTypes, ResponseTypes } from '../../types/interfaces';
 
 import { FormDataTypes } from '../../types/management';
 import instance from '../utils/axios';
@@ -13,7 +13,9 @@ export const postManagementInfo = async (formData: FormDataTypes) => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -26,7 +28,9 @@ export const patchManagementInfo = async (editFormData: FormDataTypes) => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
 
@@ -36,6 +40,8 @@ export const getManagementInfo = async () => {
 
     return data;
   } catch (error) {
-    return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
