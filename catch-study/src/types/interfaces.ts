@@ -156,6 +156,36 @@ export interface BookingTypes {
   availableTime?: string;
 }
 
+export interface UserResponseTypes extends ResponseTypes {
+  data: {
+    result: {
+      user_name: string;
+      email: string;
+    };
+  };
+}
+
+export interface BookingHistoryTypes {
+  booking_id: number;
+  cafe_id: number;
+  cafe_name: string;
+  type: string;
+  address: string;
+  payment_time: string;
+  start_time: string;
+  end_time: string;
+  amount: number;
+  status: '입실 전' | '입실 중' | '이용 완료' | '취소됨';
+}
+
+export interface BookingHistoryResponseTypes extends ResponseTypes {
+  data: {
+    result: {
+      booking_list: BookingHistoryTypes[];
+    };
+  };
+}
+
 // export interface ManagementResponseTypes extends ResponseTypes {
 //   data: {
 //     result: FormDataTypes

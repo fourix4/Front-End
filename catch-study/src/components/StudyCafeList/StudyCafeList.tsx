@@ -3,6 +3,7 @@ import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
 import { getStudycafeList } from '../../apis/api/studycafe';
 import { getStudycafeListData } from '../../apis/services/studycafe';
 import loading from '../../assets/loading.svg';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 
 interface StudyCafeListPropTypes {
   filter: CityFilterTypes;
@@ -35,27 +36,7 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
     setPage(prev => prev + 1);
   };
 
-  const observerCallback = (entries: Array<IntersectionObserverEntry>) => {
-    const firstEntry = entries[0];
-
-    if (firstEntry.isIntersecting && hasMore) {
-      fetchGetStudycafe();
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(observerCallback);
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      if (elementRef.current) {
-        observer.unobserve(elementRef.current);
-      }
-    };
-  }, [hasMore, page]);
+  useInfiniteScroll(elementRef, fetchGetStudycafe, page, hasMore);
 
   useEffect(() => {
     const { city, country, town } = filter;

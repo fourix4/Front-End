@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    font-size: 16px;
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
 @layer components {
   .button-icon {
     width: 28px;

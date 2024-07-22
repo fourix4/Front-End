@@ -2,6 +2,7 @@ import {
   ErrorResponseTypes,
   LoginResponseTypes,
   ResponseTypes,
+  UserResponseTypes,
 } from './../../types/interfaces';
 import instance from '../utils/axios';
 import { API_ADDRESS } from '../../config/api';
@@ -34,9 +35,19 @@ export const postLogout = async () => {
 
 export const deleteUser = async () => {
   try {
-    const { data } = await instance.post<ResponseTypes>(
-      API_ADDRESS.DELETE_USER,
-    );
+    const { data } = await instance.delete<ResponseTypes>(API_ADDRESS.USER);
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const { data } = await instance.get<UserResponseTypes>(API_ADDRESS.USER);
 
     return data;
   } catch (error) {

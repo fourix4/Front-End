@@ -22,3 +22,28 @@ export const getEndTime = (startTime: string, duration: number) => {
 
   return `${newHour >= 10 ? newHour : `0${newHour}`}:${min}`;
 };
+
+export const getCurrentTime = () => {
+  const date = new Date();
+
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    date: date.getDate(),
+  };
+};
+
+export const getInputFormatTime = (
+  year: number,
+  month: number,
+  date: number,
+) => {
+  let result = `${year}`;
+
+  result += '-';
+  result += `${month < 10 ? '0' : ''}${month}`;
+  result += '-';
+  result += `${date < 10 ? '0' : ''}${date}`;
+
+  return result;
+};

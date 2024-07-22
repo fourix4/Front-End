@@ -1,6 +1,8 @@
 import { STATUS } from '../../config/api';
 import { SEAT_TYPE } from '../../config/constants';
 import {
+  BookingHistoryResponseTypes,
+  BookingHistoryTypes,
   BookingResponseTypes,
   BookingTypes,
   ErrorResponseTypes,
@@ -102,4 +104,74 @@ export const isSuccessCancel = (rawData: ResponseTypes) => {
 
 export const getCancelErrorMessage = (rawData: ErrorResponseTypes) => {
   return rawData.message;
+};
+
+export const getRecentHistory = (
+  rawData: BookingHistoryResponseTypes | ErrorResponseTypes,
+): BookingHistoryTypes[] => {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
+    return rawData.data.result.booking_list;
+  }
+
+  return [
+    {
+      booking_id: 1,
+      cafe_id: 1,
+      cafe_name: '이지 스터디 카페',
+      type: 'seat',
+      address: '인천시 부평구 ---',
+      payment_time: '2024-01-04 19:34',
+      start_time: '2024-01-04 19:44',
+      end_time: '2024-01-04 20:44',
+      amount: 3000,
+      status: '이용 완료',
+    },
+    {
+      booking_id: 2,
+      cafe_id: 1,
+      cafe_name: '이지 스터디 카페',
+      type: 'room',
+      address: '인천시 부평구 ---',
+      payment_time: '2024-01-04 19:34',
+      start_time: '2024-01-04 19:44',
+      end_time: '2024-01-04 20:44',
+      amount: 3000,
+      status: '취소됨',
+    },
+    {
+      booking_id: 2,
+      cafe_id: 1,
+      cafe_name: '이지 스터디 카페',
+      type: 'room',
+      address: '인천시 부평구 ---',
+      payment_time: '2024-01-04 19:34',
+      start_time: '2024-01-04 19:44',
+      end_time: '2024-01-04 20:44',
+      amount: 3000,
+      status: '입실 중',
+    },
+  ];
+
+  // return [];
+};
+
+export const getDateHistory = (
+  rawData: BookingHistoryResponseTypes | ErrorResponseTypes,
+): BookingHistoryTypes[] => {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
+    return rawData.data.result.booking_list;
+  }
+
+  return Array(10).fill({
+    booking_id: 2,
+    cafe_id: 1,
+    cafe_name: '이지 스터디 카페',
+    type: 'room',
+    address: '인천시 부평구 ---',
+    payment_time: '2024-01-04 19:34',
+    start_time: '2024-01-04 19:44',
+    end_time: '2024-01-04 20:44',
+    amount: 3000,
+    status: '입실 중',
+  });
 };
