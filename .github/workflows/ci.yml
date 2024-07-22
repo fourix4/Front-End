@@ -31,34 +31,23 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: 'main'
+          fetch-depth: 3
 
       - name: Use Node.js 18.19.1
         uses: actions/setup-node@v4
         with:
           node-version: '18.19.1'
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - name: cache 적용
-        uses: actions/cache@v4
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: |
-          cd catch-study
-          yarn
-
       - name: Configure Git
         run: |
           git config user.name HyunJungJo98
           git config user.email kchwoonn0827@naver.com
+
+      - name: Merge develop branch
+        run: |
+          git merge origin/dev --no-edit
 
       - name: Push to main branch
         if: success()
