@@ -20,7 +20,7 @@ import { getUserInfo } from '../../apis/services/user';
 import { setCafeName } from '../../atoms/cafeName';
 import { setChattingRoomId } from '../../atoms/chatting';
 import Topbar from '../../components/Topbar/Topbar';
-import { SEAT_TYPE } from '../../config/constants';
+import { ROUTE, SEAT_TYPE } from '../../config/constants';
 import { BookingTypes } from '../../types/interfaces';
 
 const BookingPage: React.FC = () => {
@@ -96,6 +96,8 @@ const BookingPage: React.FC = () => {
 
       setChattingRoomIdAatom(data);
       setCafeNameAtom(cafeName);
+
+      navigate(ROUTE.CHATTING_ROOM);
     })();
   };
 
