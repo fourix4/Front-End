@@ -9,7 +9,7 @@ export const API_ADDRESS = {
   CHATTING_ROOM: '/chat/rooms',
   STUDYCAFE_SEATING_CHART: '/seatingchart',
   ROOM_TIME_INFO: '/studycafes/timeinfo',
-  USER: '/user',
+  USER: '/users',
   PAYMENT_KAKAO: '/studycafes/seats',
   BOOKING: '/booking',
   CHECKOUT: '/booking/checkout',
