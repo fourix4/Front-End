@@ -1,11 +1,11 @@
+import { API_ADDRESS } from '../../config/api';
+import instance from '../utils/axios';
 import {
   ErrorResponseTypes,
   LoginResponseTypes,
   ResponseTypes,
   UserResponseTypes,
 } from './../../types/interfaces';
-import instance from '../utils/axios';
-import { API_ADDRESS } from '../../config/api';
 
 export const postLogin = async () => {
   try {
@@ -48,6 +48,8 @@ export const deleteUser = async () => {
 export const getUser = async () => {
   try {
     const { data } = await instance.get<UserResponseTypes>(API_ADDRESS.USER);
+
+    console.log('raw data', data);
 
     return data;
   } catch (error) {

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Topbar from '../../components/Topbar/Topbar';
 import {
   getCurrentBooking,
   patchCancelRoom,
   patchCheckout,
 } from '../../apis/api/booking';
+import { getUser } from '../../apis/api/user';
 import {
   getBookingList,
   getCancelErrorMessage,
@@ -12,8 +12,9 @@ import {
   isSuccessCancel,
   isSuccessCheckout,
 } from '../../apis/services/booking';
-import { BookingTypes } from '../../types/interfaces';
+import Topbar from '../../components/Topbar/Topbar';
 import { SEAT_TYPE } from '../../config/constants';
+import { BookingTypes } from '../../types/interfaces';
 
 const BookingPage: React.FC = () => {
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
@@ -70,6 +71,14 @@ const BookingPage: React.FC = () => {
       })();
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      const data = await getUser();
+
+      console.log('user data', data);
+    })();
+  }, []);
 
   return (
     <>
