@@ -6,6 +6,7 @@ import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
 import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
+import { ACCESS_TOKEN } from '../../config/constants';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
 import { getTime } from '../../utils/time.utils';
 
@@ -24,11 +25,13 @@ const ChattingRoom = () => {
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
+  const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const handleSendMessage = () => {
     console.log(sendChat);
 
     if (!roomId) return;
+    if (!accessToken) return;
 
     if (stompClient) {
       stompClient.publish({
@@ -36,6 +39,7 @@ const ChattingRoom = () => {
         body: JSON.stringify({ chat: sendChat }),
         headers: {
           chatRoodID: roomId.toString(),
+          accessToken: accessToken,
         },
       });
       setSencChat('');
@@ -94,6 +98,7 @@ const ChattingRoom = () => {
 
   useEffect(() => {
     if (!roomId) return;
+    if (!accessToken) return;
 
     const socket = new SockJS('http://3.39.182.9:8080/ws');
     const client = new Client({
@@ -104,6 +109,7 @@ const ChattingRoom = () => {
       },
       connectHeaders: {
         chatRoomId: roomId.toString(),
+        accessToken: accessToken,
       },
     });
 
