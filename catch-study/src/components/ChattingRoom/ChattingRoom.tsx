@@ -39,7 +39,7 @@ const ChattingRoom = () => {
         body: JSON.stringify({ chat: sendChat }),
         headers: {
           chatRoodID: roomId.toString(),
-          accessToken: accessToken,
+          accessToken,
         },
       });
       setSencChat('');
@@ -109,7 +109,7 @@ const ChattingRoom = () => {
       },
       connectHeaders: {
         chatRoomId: roomId.toString(),
-        accessToken: accessToken,
+        accessToken,
       },
     });
 
