@@ -49,8 +49,6 @@ export const getUser = async () => {
   try {
     const { data } = await instance.get<UserResponseTypes>(API_ADDRESS.USER);
 
-    console.log('raw data', data);
-
     return data;
   } catch (error) {
     const errorObj = error as ErrorResponseTypes;

@@ -176,7 +176,7 @@ export interface UserResponseTypes extends ResponseTypes {
   data: {
     result: {
       author: string;
-      user_name: string;
+      userName: string;
       email: string;
       userId: number;
     };

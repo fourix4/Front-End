@@ -12,12 +12,14 @@ import {
   isSuccessCancel,
   isSuccessCheckout,
 } from '../../apis/services/booking';
+import { getUserInfo } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import { SEAT_TYPE } from '../../config/constants';
 import { BookingTypes } from '../../types/interfaces';
 
 const BookingPage: React.FC = () => {
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
+  const [userId, setUserId] = useState<number>();
 
   useEffect(() => {
     (async () => {
@@ -72,9 +74,16 @@ const BookingPage: React.FC = () => {
     }
   };
 
+  const inquiryClick = (cafeId: number) => {
+    console.log(userId, cafeId);
+  };
+
   useEffect(() => {
     (async () => {
-      const data = await getUser();
+      const rawData = await getUser();
+      const data = getUserInfo(rawData);
+
+      setUserId(data.userId);
 
       console.log('user data', data);
     })();
@@ -122,7 +131,10 @@ const BookingPage: React.FC = () => {
               퇴실하기
             </button>
           </div>
-          <button className='block w-full h-40 text-white rounded-sm bg-blue'>
+          <button
+            onClick={() => inquiryClick(booking.cafeId)}
+            className='block w-full h-40 text-white rounded-sm bg-blue'
+          >
             관리자 1:1 문의
           </button>
           {booking.type === SEAT_TYPE.ROOM ? (
