@@ -12,6 +12,8 @@ import test2 from '../../assets/test2.png';
 import test3 from '../../assets/test3.png';
 import test4 from '../../assets/test4.png';
 import { ROUTE } from '../../config/constants';
+import { getCheckUser } from '../../apis/api/user';
+import { isAuthUser } from '../../apis/services/user';
 
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
@@ -64,7 +66,21 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   ) => {
     e.preventDefault();
     closeModal(e);
-    navigate(ROUTE.STUDYCAFE_BOOKING, { state: { key: { cafeId, cafeName } } });
+
+    (async () => {
+      const rawData = await getCheckUser();
+
+      const { isAuth, message } = isAuthUser(rawData);
+
+      if (!isAuth) {
+        alert(message);
+        return;
+      }
+
+      navigate(ROUTE.STUDYCAFE_BOOKING, {
+        state: { key: { cafeId, cafeName } },
+      });
+    })();
   };
 
   return (

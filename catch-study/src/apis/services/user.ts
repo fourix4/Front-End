@@ -1,5 +1,6 @@
 import { STATUS } from '../../config/api';
 import { ACCESS_TOKEN } from '../../config/constants';
+import { LOGIN_ERROR } from '../../config/error';
 import {
   ErrorResponseTypes,
   ResponseTypes,
@@ -33,14 +34,14 @@ export const isAuthUser = (
     rawData.code === STATUS.UNAUTHORIZED_USER_ERROR ||
     rawData.code === STATUS.SERVER_ERROR
   ) {
-    return { isAuth: false, message: '로그인을 먼저 해주세요.' };
+    return { isAuth: false, message: LOGIN_ERROR.UNAUTHORIZED_USER_ERROR };
   }
 
   if (rawData.code === STATUS.REFRESH_TOKEN_EXPIRATION_ERROR) {
     localStorage.removeItem(ACCESS_TOKEN);
     return {
       isAuth: false,
-      message: '로그인 기간이 만료되었습니다. 다시 로그인해주세요.',
+      message: LOGIN_ERROR.REFRESH_TOKEN_EXPIRATION_ERROR,
     };
   }
 
