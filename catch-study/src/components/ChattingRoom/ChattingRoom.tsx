@@ -103,7 +103,7 @@ const ChattingRoom = () => {
         console.log(str);
       },
       connectHeaders: {
-        chatRoodID: roomId.toString(),
+        chatRoomId: roomId.toString(),
       },
     });
 
