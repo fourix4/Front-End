@@ -32,8 +32,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: 'origin/main'
-          fetch-depth: 3
+          ref: 'main'
 
       - name: Use Node.js 18.19.1
         uses: actions/setup-node@v4
@@ -45,9 +44,9 @@ jobs:
           git config user.name HyunJungJo98
           git config user.email kchwoonn0827@naver.com
 
-      - name: Merge develop branch
+      - name: Pull develop branch
         run: |
-          git merge origin/develop --no-edit
+          git pull origin develop
 
       - name: Push to main branch
         if: success()
