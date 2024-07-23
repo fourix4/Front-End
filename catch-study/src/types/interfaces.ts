@@ -203,3 +203,11 @@ export interface BookingHistoryResponseTypes extends ResponseTypes {
     };
   };
 }
+
+export interface MakeChatting extends ResponseTypes {
+  data: {
+    result: {
+      chatRoomId: number;
+    };
+  };
+}

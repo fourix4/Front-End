@@ -2,6 +2,8 @@ import { API_ADDRESS, STATUS } from '../../config/api';
 import {
   CHattingResponseTypes,
   ChattingRoomResponseTypes,
+  ErrorResponseTypes,
+  MakeChatting,
   ResponseTypes,
 } from '../../types/interfaces';
 import instance from '../utils/axios';
@@ -27,5 +29,23 @@ export const getChatting = async (chattingRoomId: number) => {
     return data;
   } catch (error) {
     return { code: STATUS.SERVER_ERROR, message: 'Server Error' };
+  }
+};
+
+export const postMakeChatting = async (userId: number, cafeId: number) => {
+  try {
+    const { data } = await instance.post<ResponseTypes | MakeChatting>(
+      API_ADDRESS.CHATTING,
+      {
+        user_id: userId,
+        cafe_id: cafeId,
+      },
+    );
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
   }
 };
