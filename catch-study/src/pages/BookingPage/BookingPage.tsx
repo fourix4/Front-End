@@ -1,9 +1,12 @@
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   getCurrentBooking,
   patchCancelRoom,
   patchCheckout,
 } from '../../apis/api/booking';
+import { postMakeChatting } from '../../apis/api/chatting';
 import { getUser } from '../../apis/api/user';
 import {
   getBookingList,
@@ -12,12 +15,20 @@ import {
   isSuccessCancel,
   isSuccessCheckout,
 } from '../../apis/services/booking';
+import { getChattingRoomIdData } from '../../apis/services/chatting';
 import { getUserInfo } from '../../apis/services/user';
+import { setCafeName } from '../../atoms/cafeName';
+import { setChattingRoomId } from '../../atoms/chatting';
 import Topbar from '../../components/Topbar/Topbar';
 import { SEAT_TYPE } from '../../config/constants';
 import { BookingTypes } from '../../types/interfaces';
 
 const BookingPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const [, setChattingRoomIdAatom] = useAtom(setChattingRoomId);
+  const [, setCafeNameAtom] = useAtom(setCafeName);
+
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
   const [userId, setUserId] = useState<number>();
 
@@ -74,8 +85,18 @@ const BookingPage: React.FC = () => {
     }
   };
 
-  const makeChattingClick = (cafeId: number) => {
-    console.log(userId, cafeId);
+  const makeChattingClick = (cafeId: number, cafeName: string) => {
+    if (!userId) return;
+
+    (async () => {
+      const rawData = await postMakeChatting(userId, cafeId);
+      const data = getChattingRoomIdData(rawData);
+
+      if (!data) return;
+
+      setChattingRoomIdAatom(data);
+      setCafeNameAtom(cafeName);
+    })();
   };
 
   useEffect(() => {
@@ -84,8 +105,6 @@ const BookingPage: React.FC = () => {
       const data = getUserInfo(rawData);
 
       setUserId(data.userId);
-
-      console.log('user data', data);
     })();
   }, []);
 
@@ -132,7 +151,7 @@ const BookingPage: React.FC = () => {
             </button>
           </div>
           <button
-            onClick={() => makeChattingClick(booking.cafeId)}
+            onClick={() => makeChattingClick(booking.cafeId, booking.cafeName)}
             className='block w-full h-40 text-white rounded-sm bg-blue'
           >
             관리자 1:1 문의

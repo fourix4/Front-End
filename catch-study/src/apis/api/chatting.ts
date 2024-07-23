@@ -1,9 +1,9 @@
 import { API_ADDRESS, STATUS } from '../../config/api';
 import {
-  CHattingResponseTypes,
+  ChattingResponseTypes,
   ChattingRoomResponseTypes,
   ErrorResponseTypes,
-  MakeChatting,
+  MakeChattingTypes,
   ResponseTypes,
 } from '../../types/interfaces';
 import instance from '../utils/axios';
@@ -22,7 +22,7 @@ export const getChattingRoom = async () => {
 
 export const getChatting = async (chattingRoomId: number) => {
   try {
-    const { data } = await instance.get<CHattingResponseTypes | ResponseTypes>(
+    const { data } = await instance.get<ChattingResponseTypes | ResponseTypes>(
       `${API_ADDRESS.CHATTING}/${chattingRoomId}`,
     );
 
@@ -34,7 +34,7 @@ export const getChatting = async (chattingRoomId: number) => {
 
 export const postMakeChatting = async (userId: number, cafeId: number) => {
   try {
-    const { data } = await instance.post<ResponseTypes | MakeChatting>(
+    const { data } = await instance.post<ResponseTypes | MakeChattingTypes>(
       API_ADDRESS.CHATTING,
       {
         user_id: userId,

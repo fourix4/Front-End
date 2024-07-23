@@ -1,5 +1,6 @@
 import { CHATTING_ROOM_LISTS, CHATTINGS } from '../../types/chatting';
 import {
+  ChattingRoomIdResponseTypes,
   ChattingRoomResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
@@ -28,4 +29,14 @@ export const getChattingData = (
     (a, b) =>
       new Date(b.createDate).getTime() - new Date(a.createDate).getTime(),
   );
+};
+
+export const getChattingRoomIdData = (
+  rawData: ChattingRoomIdResponseTypes | ResponseTypes,
+) => {
+  if (rawData.data) {
+    return rawData.data.result;
+  }
+
+  return null;
 };

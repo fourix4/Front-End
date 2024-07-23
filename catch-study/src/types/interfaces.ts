@@ -68,9 +68,15 @@ export interface ChattingRoomResponseTypes extends ResponseTypes {
   };
 }
 
-export interface CHattingResponseTypes extends ResponseTypes {
+export interface ChattingResponseTypes extends ResponseTypes {
   data: {
     result: ChattingRoomTypes[];
+  };
+}
+
+export interface ChattingRoomIdResponseTypes extends ResponseTypes {
+  data: {
+    result: number;
   };
 }
 
@@ -204,7 +210,7 @@ export interface BookingHistoryResponseTypes extends ResponseTypes {
   };
 }
 
-export interface MakeChatting extends ResponseTypes {
+export interface MakeChattingTypes extends ResponseTypes {
   data: {
     result: {
       chatRoomId: number;
