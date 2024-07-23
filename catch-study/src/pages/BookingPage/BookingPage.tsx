@@ -74,7 +74,7 @@ const BookingPage: React.FC = () => {
     }
   };
 
-  const inquiryClick = (cafeId: number) => {
+  const makeChattingClick = (cafeId: number) => {
     console.log(userId, cafeId);
   };
 
@@ -132,7 +132,7 @@ const BookingPage: React.FC = () => {
             </button>
           </div>
           <button
-            onClick={() => inquiryClick(booking.cafeId)}
+            onClick={() => makeChattingClick(booking.cafeId)}
             className='block w-full h-40 text-white rounded-sm bg-blue'
           >
             관리자 1:1 문의
