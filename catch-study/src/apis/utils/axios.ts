@@ -10,8 +10,8 @@ const instance = axios.create({
   },
 });
 
-const onError = (status: number, message: string) => {
-  const error = { status, message };
+const onError = (code: number, message: string) => {
+  const error = { code, message };
 
   throw error;
 };
