@@ -127,6 +127,7 @@ export interface PaymentKakaoResponseTypes extends ResponseTypes {
 
 interface CurrentBookingTypes {
   booking_id: number;
+  cafe_id: number;
   cafe_name: string;
   status: '이용 전' | '이용 중'; //이용 전, 이용 중
   amount: number;
@@ -158,6 +159,7 @@ export interface BookingResponseTypes extends ResponseTypes {
 export interface BookingTypes {
   type: 'seat' | 'room';
   id: number;
+  cafeId: number;
   cafeName: string;
   status: '이용 전' | '이용 중';
   amount: number;
@@ -173,8 +175,10 @@ export interface BookingTypes {
 export interface UserResponseTypes extends ResponseTypes {
   data: {
     result: {
+      author: string;
       user_name: string;
       email: string;
+      userId: number;
     };
   };
 }
@@ -199,9 +203,3 @@ export interface BookingHistoryResponseTypes extends ResponseTypes {
     };
   };
 }
-
-// export interface ManagementResponseTypes extends ResponseTypes {
-//   data: {
-//     result: FormDataTypes
-//   }
-// }
