@@ -33,11 +33,11 @@ const ChattingRoomList: React.FC = () => {
     <ul>
       {chattingRooms.map(chattingRoom => (
         <li
-          key={chattingRoom.chatRoomId}
+          key={chattingRoom.chat_room_id}
           onClick={() =>
             handleSelectChattingRoom(
-              chattingRoom.chatRoomId,
-              chattingRoom.cafeName,
+              chattingRoom.chat_room_id,
+              chattingRoom.cafe_name,
             )
           }
           className='relative w-full p-20 border-b-2 cursor-pointer border-light-gray'
@@ -47,13 +47,13 @@ const ChattingRoomList: React.FC = () => {
               <span className='absolute rounded-full bottom-20 right-20 w-14 h-14 bg-red'></span>
             )}
             <div className='flex items-end justify-between w-full gap-10'>
-              <p className='font-bold text-20'>{chattingRoom.cafeName}</p>
+              <p className='font-bold text-20'>{chattingRoom.cafe_name}</p>
               <span className='font-normal text-12'>
-                {chattingRoom.lastChatDate &&
-                  getTime(chattingRoom.lastChatDate)}
+                {chattingRoom.last_chat_date &&
+                  getTime(chattingRoom.last_chat_date)}
               </span>
             </div>
-            <p className='font-light text-16'>{chattingRoom.lastChat}</p>
+            <p className='font-light text-16'>{chattingRoom.last_chat}</p>
           </Link>
         </li>
       ))}

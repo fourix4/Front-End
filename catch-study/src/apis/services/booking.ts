@@ -33,9 +33,9 @@ export const getBookingList = (
         address: booking.address,
         name: '',
         code: booking.code,
-        paymentTime: booking.payment_time,
-        startTime: booking.start_time,
-        endTime: booking.end_time,
+        payment_time: booking.payment_time,
+        start_time: booking.start_time,
+        end_time: booking.end_time,
         availableTime: '',
       };
 
@@ -63,9 +63,9 @@ export const getBookingList = (
       address: '서울시 종로구 xxx',
       name: '1A',
       code: 1234,
-      paymentTime: '2024-6-27 12:36',
-      startTime: '2024-6-27 12:50',
-      endTime: '2024-6-27 14:50',
+      payment_time: '2024-6-27 12:36',
+      start_time: '2024-6-27 12:50',
+      end_time: '2024-6-27 14:50',
       availableTime: '2024-6-27 13:06',
     },
     {
@@ -78,9 +78,9 @@ export const getBookingList = (
       address: '서울시 종로구 xxx',
       name: '4인실 스터디룸',
       code: 1234,
-      paymentTime: '2024-6-27 12:36',
-      startTime: '2024-6-27 12:50',
-      endTime: '2024-6-27 14:50',
+      payment_time: '2024-6-27 12:36',
+      start_time: '2024-6-27 12:50',
+      end_time: '2024-6-27 14:50',
     },
   ];
 
