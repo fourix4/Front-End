@@ -29,9 +29,6 @@ const BookingPage: React.FC = () => {
   const setChattingRoomId = useSetAtom(chattingRoomId);
   const setCafeName = useSetAtom(cafeName);
 
-  // const [, setChattingRoomIdAatom] = useAtom(setChattingRoomId);
-  // const [, setCafeNameAtom] = useAtom(setCafeName);
-
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
   const [userId, setUserId] = useState<number>();
 
