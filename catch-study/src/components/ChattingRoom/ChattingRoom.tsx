@@ -116,18 +116,24 @@ const ChattingRoom = () => {
     client.onConnect = (frame: Frame) => {
       console.log(`/sub/${roomId}/chat`, frame);
 
-      client.subscribe(`/sub/${roomId}/chat`, message => {
-        const body = JSON.parse(message.body);
-        const newChat: ChattingTypes = {
-          userId: body.userId,
-          messageId: body.messageId,
-          chat: body.chat,
-          createDate: new Date(body.createDate),
-          messageImage: body.messageImage,
-        };
+      client.subscribe(
+        `/sub/${roomId}/chat`,
+        message => {
+          const body = JSON.parse(message.body);
+          const newChat: ChattingTypes = {
+            userId: body.userId,
+            messageId: body.messageId,
+            chat: body.chat,
+            createDate: new Date(body.createDate),
+            messageImage: body.messageImage,
+          };
 
-        setChatting(prev => [...prev, newChat]);
-      });
+          setChatting(prev => [...prev, newChat]);
+        },
+        {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      );
     };
 
     client.onStompError = frame => {
