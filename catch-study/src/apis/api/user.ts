@@ -56,3 +56,15 @@ export const getUser = async () => {
     return errorObj;
   }
 };
+
+export const getCheckUser = async () => {
+  try {
+    const { data } = await instance.get<ResponseTypes>(API_ADDRESS.USER_CHECK);
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};

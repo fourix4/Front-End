@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Topbar from '../../components/Topbar/Topbar';
 import {
   getCurrentBooking,
@@ -13,14 +14,23 @@ import {
   isSuccessCheckout,
 } from '../../apis/services/booking';
 import { BookingTypes } from '../../types/interfaces';
-import { SEAT_TYPE } from '../../config/constants';
+import { ROUTE, SEAT_TYPE } from '../../config/constants';
+import { isAuthUser } from '../../apis/services/user';
 
 const BookingPage: React.FC = () => {
+  const navigate = useNavigate();
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
 
   useEffect(() => {
     (async () => {
       const rawData = await getCurrentBooking();
+      const { isAuth, message } = isAuthUser(rawData);
+
+      if (!isAuth) {
+        alert(message);
+        navigate(ROUTE.HOME);
+      }
+
       const data = getBookingList(rawData);
 
       setBookingList(data);

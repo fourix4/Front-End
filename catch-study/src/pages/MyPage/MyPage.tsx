@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getUser } from '../../apis/api/user';
-import { getUserInfo } from '../../apis/services/user';
+import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import BookingHistory from '../../components/BookingHistory/BookingHistory';
 import {
@@ -13,6 +14,7 @@ import { getInputFormatTime } from '../../utils/time.utils';
 import loading from '../../assets/loading.svg';
 import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import { ROUTE } from '../../config/constants';
 
 interface UserInfoTypes {
   userName: string;
@@ -20,6 +22,7 @@ interface UserInfoTypes {
 }
 
 const MyPage: React.FC = () => {
+  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState<UserInfoTypes>({
     userName: '',
     email: '',
@@ -50,6 +53,13 @@ const MyPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const userRawData = await getUser();
+      const { isAuth, message } = isAuthUser(userRawData);
+
+      if (!isAuth) {
+        alert(message);
+        navigate(ROUTE.HOME);
+      }
+
       const historyRawData = await getBookingHistoryRecent();
       const userData = getUserInfo(userRawData);
       const historyData = getRecentHistory(historyRawData);
