@@ -1,22 +1,22 @@
-import { useAtom } from 'jotai';
+import { useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getChattingRoom } from '../../apis/api/chatting';
 import { getChattingRoomData } from '../../apis/services/chatting';
-import { setCafeName } from '../../atoms/cafeName';
-import { setChattingRoomId } from '../../atoms/chatting';
+import { cafeName } from '../../atoms/cafeName';
+import { chattingRoomId } from '../../atoms/chatting';
 import { ChattingRoomTypes } from '../../types/chatting';
 import { getTime } from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
-  const [, setChattingRoomIdAtom] = useAtom(setChattingRoomId);
-  const [, setCafeNameAtom] = useAtom(setCafeName);
+  const setChattingRoomId = useSetAtom(chattingRoomId);
+  const setCafeName = useSetAtom(cafeName);
 
   const [chattingRooms, setChattingRooms] = useState<ChattingRoomTypes[]>([]);
 
   const handleSelectChattingRoom = (id: number, name: string) => {
-    setChattingRoomIdAtom(id);
-    setCafeNameAtom(name);
+    setChattingRoomId(id);
+    setCafeName(name);
   };
 
   useEffect(() => {
@@ -25,9 +25,8 @@ const ChattingRoomList: React.FC = () => {
       const data = getChattingRoomData(rawData);
 
       setChattingRooms(data);
-      console.log(data);
     })();
-  }, [getChattingRoomData]);
+  }, []);
 
   return (
     <ul>
