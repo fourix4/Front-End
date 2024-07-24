@@ -35,6 +35,13 @@ const BookingPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const rawData = await getCurrentBooking();
+      const { isAuth, message } = isAuthUser(rawData);
+
+      if (!isAuth) {
+        alert(message);
+        navigate(ROUTE.HOME);
+      }
+
       const data = getBookingList(rawData);
 
       setBookingList(data);

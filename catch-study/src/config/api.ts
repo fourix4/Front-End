@@ -16,6 +16,7 @@ export const API_ADDRESS = {
   ROOM_CANCEL: '/booking/rooms/cancel',
   HISTORY: '/users/history',
   HISTORY_DATE: '/users/history/date',
+  USER_CHECK: '/users/check',
 };
 
 export const STATUS = {

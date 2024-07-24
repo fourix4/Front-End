@@ -31,21 +31,22 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: 'main'
 
       - name: Use Node.js 18.19.1
         uses: actions/setup-node@v4
         with:
           node-version: '18.19.1'
 
-      - name: Install dependencies
-        run: |
-          cd catch-study
-          yarn
-
       - name: Configure Git
         run: |
           git config user.name HyunJungJo98
           git config user.email kchwoonn0827@naver.com
+
+      - name: Pull develop branch
+        run: |
+          git pull origin develop
 
       - name: Push to main branch
         if: success()
