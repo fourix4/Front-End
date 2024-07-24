@@ -1,14 +1,19 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getChattingRoom } from '../../apis/api/chatting';
+import { getCheckUser } from '../../apis/api/user';
 import { getChattingRoomData } from '../../apis/services/chatting';
+import { isAuthUser } from '../../apis/services/user';
 import { setCafeName } from '../../atoms/cafeName';
 import { setChattingRoomId } from '../../atoms/chatting';
+import { ROUTE } from '../../config/constants';
 import { ChattingRoomTypes } from '../../types/chatting';
 import { getTime } from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
+  const navigate = useNavigate();
+
   const [, setChattingRoomIdAtom] = useAtom(setChattingRoomId);
   const [, setCafeNameAtom] = useAtom(setCafeName);
 
@@ -21,13 +26,21 @@ const ChattingRoomList: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const rawData = await getChattingRoom();
-      const data = getChattingRoomData(rawData);
+      const userRawData = await getCheckUser();
+      const { isAuth, message } = isAuthUser(userRawData);
 
-      setChattingRooms(data);
-      console.log(data);
+      if (!isAuth) {
+        alert(message);
+        navigate(ROUTE.HOME);
+        return;
+      }
+
+      const roomRawData = await getChattingRoom();
+      const roomData = getChattingRoomData(roomRawData);
+
+      setChattingRooms(roomData);
     })();
-  }, [getChattingRoomData]);
+  }, []);
 
   return (
     <ul>
