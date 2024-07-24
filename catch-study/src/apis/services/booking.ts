@@ -25,6 +25,7 @@ export const getBookingList = (
     return list.map(booking => {
       const result: BookingTypes = {
         type: SEAT_TYPE.SEAT,
+        cafeId: booking.cafe_id,
         id: booking.booking_id,
         cafeName: booking.cafe_name,
         status: booking.status,
@@ -55,6 +56,7 @@ export const getBookingList = (
     {
       type: 'seat',
       id: 1,
+      cafeId: 1,
       cafeName: '이지 스터디 카페',
       status: '이용 전',
       amount: 10000,
@@ -69,6 +71,7 @@ export const getBookingList = (
     {
       type: 'room',
       id: 2,
+      cafeId: 2,
       cafeName: '이지 스터디 카페',
       status: '이용 전',
       amount: 10000,

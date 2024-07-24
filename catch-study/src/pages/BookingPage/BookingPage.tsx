@@ -1,11 +1,13 @@
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Topbar from '../../components/Topbar/Topbar';
 import {
   getCurrentBooking,
   patchCancelRoom,
   patchCheckout,
 } from '../../apis/api/booking';
+import { postMakeChatting } from '../../apis/api/chatting';
+import { getUser } from '../../apis/api/user';
 import {
   getBookingList,
   getCancelErrorMessage,
@@ -13,13 +15,22 @@ import {
   isSuccessCancel,
   isSuccessCheckout,
 } from '../../apis/services/booking';
-import { BookingTypes } from '../../types/interfaces';
+import { getChattingRoomIdData } from '../../apis/services/chatting';
+import { getUserInfo } from '../../apis/services/user';
+import { setCafeName } from '../../atoms/cafeName';
+import { setChattingRoomId } from '../../atoms/chatting';
+import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE, SEAT_TYPE } from '../../config/constants';
-import { isAuthUser } from '../../apis/services/user';
+import { BookingTypes } from '../../types/interfaces';
 
 const BookingPage: React.FC = () => {
   const navigate = useNavigate();
+
+  const [, setChattingRoomIdAatom] = useAtom(setChattingRoomId);
+  const [, setCafeNameAtom] = useAtom(setCafeName);
+
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
+  const [userId, setUserId] = useState<number>();
 
   useEffect(() => {
     (async () => {
@@ -81,6 +92,31 @@ const BookingPage: React.FC = () => {
     }
   };
 
+  const makeChattingClick = (cafeId: number, cafeName: string) => {
+    if (!userId) return;
+
+    (async () => {
+      const rawData = await postMakeChatting(userId, cafeId);
+      const data = getChattingRoomIdData(rawData);
+
+      if (!data) return;
+
+      setChattingRoomIdAatom(data);
+      setCafeNameAtom(cafeName);
+
+      navigate(ROUTE.CHATTING_ROOM);
+    })();
+  };
+
+  useEffect(() => {
+    (async () => {
+      const rawData = await getUser();
+      const data = getUserInfo(rawData);
+
+      setUserId(data.userId);
+    })();
+  }, []);
+
   return (
     <>
       <Topbar />
@@ -123,7 +159,10 @@ const BookingPage: React.FC = () => {
               퇴실하기
             </button>
           </div>
-          <button className='block w-full h-40 text-white rounded-sm bg-blue'>
+          <button
+            onClick={() => makeChattingClick(booking.cafeId, booking.cafeName)}
+            className='block w-full h-40 text-white rounded-sm bg-blue'
+          >
             관리자 1:1 문의
           </button>
           {booking.type === SEAT_TYPE.ROOM ? (

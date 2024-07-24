@@ -16,14 +16,21 @@ export const getUserInfo = (
 ) => {
   if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     const result = {
-      userName: rawData.data.result.user_name,
+      userName: rawData.data.result.userName,
       email: rawData.data.result.email,
+      author: rawData.data.result.author,
+      userId: rawData.data.result.userId,
     };
 
     return result;
   }
 
-  return { userName: '조현정', email: 'abc123@naver.com' };
+  return {
+    userName: '조현정',
+    email: 'abc123@naver.com',
+    userId: 1,
+    author: 'roleUser',
+  };
   // return { userName: '', email: '' };
 };
 

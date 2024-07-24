@@ -1,11 +1,11 @@
+import { API_ADDRESS } from '../../config/api';
+import instance from '../utils/axios';
 import {
   ErrorResponseTypes,
   LoginResponseTypes,
   ResponseTypes,
   UserResponseTypes,
 } from './../../types/interfaces';
-import instance from '../utils/axios';
-import { API_ADDRESS } from '../../config/api';
 
 export const postLogin = async () => {
   try {
