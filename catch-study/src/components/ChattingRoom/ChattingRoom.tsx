@@ -3,7 +3,9 @@ import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
+import { getUser } from '../../apis/api/user';
 import { getChattingData } from '../../apis/services/chatting';
+import { getUserInfo } from '../../apis/services/user';
 import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
 import { ACCESS_TOKEN } from '../../config/constants';
@@ -25,6 +27,9 @@ const ChattingRoom = () => {
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
+  const [userId, setUserId] = useState<number | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
+
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const handleSendMessage = () => {
@@ -32,6 +37,8 @@ const ChattingRoom = () => {
 
     if (!roomId) return;
     if (!accessToken) return;
+    if (!userId) return;
+    if (!email) return;
 
     if (stompClient) {
       stompClient.publish({
@@ -40,6 +47,8 @@ const ChattingRoom = () => {
         headers: {
           chatRoodID: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
+          email,
+          userId: userId.toString(),
         },
       });
       setSencChat('');
@@ -55,6 +64,18 @@ const ChattingRoom = () => {
   useEffect(() => {
     scrollToBottom();
   }, [chatting]);
+
+  useEffect(() => {
+    (async () => {
+      const rawData = await getUser();
+      const data = getUserInfo(rawData);
+
+      if (data) {
+        setUserId(data.userId);
+        setEmail(data.email);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
@@ -100,6 +121,8 @@ const ChattingRoom = () => {
   useEffect(() => {
     if (!roomId) return;
     if (!accessToken) return;
+    if (!userId) return;
+    if (!email) return;
 
     const socket = new SockJS('http://3.39.182.9:8080/ws');
     const client = new Client({
@@ -111,6 +134,8 @@ const ChattingRoom = () => {
       connectHeaders: {
         chatRoomId: roomId.toString(),
         Authorization: `Bearer ${accessToken}`,
+        email,
+        userId: userId.toString(),
       },
     });
 
@@ -132,7 +157,10 @@ const ChattingRoom = () => {
           setChatting(prev => [...prev, newChat]);
         },
         {
+          chatRoomId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
+          email,
+          userId: userId.toString(),
         },
       );
     };
