@@ -16,7 +16,7 @@ import {
   isSuccessCheckout,
 } from '../../apis/services/booking';
 import { getChattingRoomIdData } from '../../apis/services/chatting';
-import { getUserInfo } from '../../apis/services/user';
+import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import { setCafeName } from '../../atoms/cafeName';
 import { setChattingRoomId } from '../../atoms/chatting';
 import Topbar from '../../components/Topbar/Topbar';
