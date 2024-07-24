@@ -165,16 +165,16 @@ export interface BookingResponseTypes extends ResponseTypes {
 export interface BookingTypes {
   type: 'seat' | 'room';
   id: number;
-  cafeId: number;
-  cafeName: string;
+  cafe_id: number;
+  cafe_name: string;
   status: '이용 전' | '이용 중';
   amount: number;
   address: string;
   name: string;
   code: number;
-  paymentTime: string;
-  startTime: string;
-  endTime: string;
+  payment_time: string;
+  start_time: string;
+  end_time: string;
   availableTime?: string;
 }
 
@@ -182,9 +182,9 @@ export interface UserResponseTypes extends ResponseTypes {
   data: {
     result: {
       author: string;
-      userName: string;
+      user_name: string;
       email: string;
-      userId: number;
+      user_id: number;
     };
   };
 }
@@ -213,7 +213,7 @@ export interface BookingHistoryResponseTypes extends ResponseTypes {
 export interface MakeChattingTypes extends ResponseTypes {
   data: {
     result: {
-      chatRoomId: number;
+      chat_room_id: number;
     };
   };
 }

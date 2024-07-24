@@ -16,7 +16,7 @@ import {
   isSuccessCheckout,
 } from '../../apis/services/booking';
 import { getChattingRoomIdData } from '../../apis/services/chatting';
-import { getUserInfo } from '../../apis/services/user';
+import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import { setCafeName } from '../../atoms/cafeName';
 import { setChattingRoomId } from '../../atoms/chatting';
 import Topbar from '../../components/Topbar/Topbar';
@@ -125,9 +125,9 @@ const BookingPage: React.FC = () => {
           key={booking.id}
           className='w-full p-20 text-16 border-b border-light-gray [&>*]:mb-15'
         >
-          <div className='text-20'>{booking.cafeName}</div>
+          <div className='text-20'>{booking.cafe_name}</div>
           <div className='text-12 text-dark-gray'>{booking.address}</div>
-          <div>결제 시간 : {booking.paymentTime}</div>
+          <div>결제 시간 : {booking.payment_time}</div>
           {booking.availableTime ? (
             <div>이용 가능 시간 : {booking.availableTime}</div>
           ) : (
@@ -143,12 +143,12 @@ const BookingPage: React.FC = () => {
           )}
           <div>
             입실 시간 :{' '}
-            {booking.startTime !== ''
-              ? booking.startTime
+            {booking.start_time !== ''
+              ? booking.start_time
               : '입실 가능 시간 내로 입실해주세요'}
           </div>
           <div>
-            퇴실 시간 : {booking.startTime !== '' ? booking.endTime : '-'}
+            퇴실 시간 : {booking.start_time !== '' ? booking.end_time : '-'}
           </div>
           <div className='flex w-full justify-between [&>*]:w-1/2 [&>*]:rounded-sm'>
             <button className='h-40 text-white bg-blue mr-15'>연장하기</button>
@@ -160,7 +160,9 @@ const BookingPage: React.FC = () => {
             </button>
           </div>
           <button
-            onClick={() => makeChattingClick(booking.cafeId, booking.cafeName)}
+            onClick={() =>
+              makeChattingClick(booking.cafe_id, booking.cafe_name)
+            }
             className='block w-full h-40 text-white rounded-sm bg-blue'
           >
             관리자 1:1 문의

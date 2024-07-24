@@ -1,129 +1,129 @@
 export interface ChattingRoomTypes {
-  chatRoomId: number;
-  cafeId: number;
-  cafeName: string;
-  lastChat: string;
-  lastChatDate: Date;
+  chat_room_id: number;
+  cafe_id: number;
+  cafe_name: string;
+  last_chat: string;
+  last_chat_date: Date;
   status: boolean;
 }
 
 export interface ChattingTypes {
-  userId: number;
-  messageId: number;
+  user_id: number;
+  message_id: number;
   chat: string;
-  createDate: Date;
-  messageImage: string;
+  create_date: Date;
+  message_image: string;
 }
 
 export const CHATTING_ROOM_LISTS: ChattingRoomTypes[] = [
   {
-    chatRoomId: 1,
-    cafeId: 1,
-    cafeName: '이지 스터디 카페',
-    lastChat: '마지막 채팅 내용',
-    lastChatDate: new Date('2024-06-28 11:00'),
+    chat_room_id: 1,
+    cafe_id: 1,
+    cafe_name: '이지 스터디 카페',
+    last_chat: '마지막 채팅 내용',
+    last_chat_date: new Date('2024-06-28 11:00'),
     status: true,
   },
   {
-    chatRoomId: 2,
-    cafeId: 2,
-    cafeName: '초심 스터디 카페',
-    lastChat: '마지막 채팅 내용',
-    lastChatDate: new Date('2024-06-28 11:00'),
+    chat_room_id: 2,
+    cafe_id: 2,
+    cafe_name: '초심 스터디 카페',
+    last_chat: '마지막 채팅 내용',
+    last_chat_date: new Date('2024-06-28 11:00'),
     status: false,
   },
 ];
 
 export const CHATTINGS: ChattingTypes[] = [
   {
-    userId: 1,
-    messageId: 1,
+    user_id: 1,
+    message_id: 1,
     chat: '메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 메시지 내용 ',
-    createDate: new Date('2024-06-27 18:00'),
-    messageImage: '이미지 링크 1',
+    create_date: new Date('2024-06-27 18:00'),
+    message_image: '이미지 링크 1',
   },
   {
-    userId: 2,
-    messageId: 2,
+    user_id: 2,
+    message_id: 2,
     chat: '메시지 내용2',
-    createDate: new Date('2024-06-27 18:01'),
-    messageImage: '이미지 링크 2',
+    create_date: new Date('2024-06-27 18:01'),
+    message_image: '이미지 링크 2',
   },
   {
-    userId: 1,
-    messageId: 3,
+    user_id: 1,
+    message_id: 3,
     chat: '메시지 내용3',
-    createDate: new Date('2024-06-27 18:02'),
-    messageImage: '이미지 링크 3',
+    create_date: new Date('2024-06-27 18:02'),
+    message_image: '이미지 링크 3',
   },
   {
-    userId: 2,
-    messageId: 4,
+    user_id: 2,
+    message_id: 4,
     chat: '메시지 내용4',
-    createDate: new Date('2024-06-27 18:03'),
-    messageImage: '이미지 링크 4',
+    create_date: new Date('2024-06-27 18:03'),
+    message_image: '이미지 링크 4',
   },
   {
-    userId: 1,
-    messageId: 5,
+    user_id: 1,
+    message_id: 5,
     chat: '메시지 내용5',
-    createDate: new Date('2024-06-27 18:04'),
-    messageImage: '이미지 링크 5',
+    create_date: new Date('2024-06-27 18:04'),
+    message_image: '이미지 링크 5',
   },
   {
-    userId: 2,
-    messageId: 6,
+    user_id: 2,
+    message_id: 6,
     chat: '메시지 내용6',
-    createDate: new Date('2024-06-30 18:05'),
-    messageImage: '이미지 링크 6',
+    create_date: new Date('2024-06-30 18:05'),
+    message_image: '이미지 링크 6',
   },
   {
-    userId: 1,
-    messageId: 7,
+    user_id: 1,
+    message_id: 7,
     chat: '메시지 내용7',
-    createDate: new Date('2024-06-29 18:06'),
-    messageImage: '이미지 링크 7',
+    create_date: new Date('2024-06-29 18:06'),
+    message_image: '이미지 링크 7',
   },
   {
-    userId: 2,
-    messageId: 8,
+    user_id: 2,
+    message_id: 8,
     chat: '메시지 내용8',
-    createDate: new Date('2024-06-28 18:07'),
-    messageImage: '이미지 링크 8',
+    create_date: new Date('2024-06-28 18:07'),
+    message_image: '이미지 링크 8',
   },
   {
-    userId: 1,
-    messageId: 9,
+    user_id: 1,
+    message_id: 9,
     chat: '메시지 내용9',
-    createDate: new Date('2024-06-28 18:08'),
-    messageImage: '이미지 링크 9',
+    create_date: new Date('2024-06-28 18:08'),
+    message_image: '이미지 링크 9',
   },
   {
-    userId: 2,
-    messageId: 10,
+    user_id: 2,
+    message_id: 10,
     chat: '메시지 내용10',
-    createDate: new Date('2024-06-27 18:09'),
-    messageImage: '이미지 링크 10',
+    create_date: new Date('2024-06-27 18:09'),
+    message_image: '이미지 링크 10',
   },
   {
-    userId: 2,
-    messageId: 11,
+    user_id: 2,
+    message_id: 11,
     chat: '메시지 내용11',
-    createDate: new Date('2024-06-27 18:09'),
-    messageImage: '이미지 링크 10',
+    create_date: new Date('2024-06-27 18:09'),
+    message_image: '이미지 링크 10',
   },
   {
-    userId: 2,
-    messageId: 12,
+    user_id: 2,
+    message_id: 12,
     chat: '메시지 내용12',
-    createDate: new Date('2024-06-27 18:09'),
-    messageImage: '이미지 링크 10',
+    create_date: new Date('2024-06-27 18:09'),
+    message_image: '이미지 링크 10',
   },
   {
-    userId: 2,
-    messageId: 13,
+    user_id: 2,
+    message_id: 13,
     chat: '메시지 내용13',
-    createDate: new Date('2024-06-27 18:09'),
-    messageImage: '이미지 링크 10',
+    create_date: new Date('2024-06-27 18:09'),
+    message_image: '이미지 링크 10',
   },
 ];

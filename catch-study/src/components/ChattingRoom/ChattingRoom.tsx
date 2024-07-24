@@ -60,7 +60,7 @@ const ChattingRoom = () => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
       return chattings.reduce(
         (groups: Record<string, ChattingTypes[]>, chat) => {
-          const date = chat.createDate.toLocaleDateString();
+          const date = chat.create_date.toLocaleDateString();
 
           if (!groups[date]) {
             groups[date] = [];
@@ -76,7 +76,8 @@ const ChattingRoom = () => {
       groupChattingsByDate(
         chatting.sort(
           (a, b) =>
-            new Date(a.createDate).getTime() - new Date(b.createDate).getTime(),
+            new Date(a.create_date).getTime() -
+            new Date(b.create_date).getTime(),
         ),
       ),
     );
@@ -121,11 +122,11 @@ const ChattingRoom = () => {
         message => {
           const body = JSON.parse(message.body);
           const newChat: ChattingTypes = {
-            userId: body.userId,
-            messageId: body.messageId,
+            user_id: body.user_id,
+            message_id: body.message_id,
             chat: body.chat,
-            createDate: new Date(body.createDate),
-            messageImage: body.messageImage,
+            create_date: new Date(body.create_date),
+            message_image: body.message_image,
           };
 
           setChatting(prev => [...prev, newChat]);
@@ -163,15 +164,15 @@ const ChattingRoom = () => {
 
             {groupedChattings[date].map((chat, index, chatsArray) => {
               const showCafeName =
-                index === 0 || chatsArray[index - 1].userId !== chat.userId;
+                index === 0 || chatsArray[index - 1].user_id !== chat.user_id;
 
               return (
-                <div key={chat.messageId + chat.createDate.toString()}>
-                  {chat.userId === MY_USER_ID ? (
+                <div key={chat.message_id + chat.create_date.toString()}>
+                  {chat.user_id === MY_USER_ID ? (
                     <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}
                       <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
-                        {getTime(chat.createDate)}
+                        {getTime(chat.create_date)}
                       </span>
                     </div>
                   ) : (
@@ -182,7 +183,7 @@ const ChattingRoom = () => {
                       <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}
                         <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
-                          {getTime(chat.createDate)}
+                          {getTime(chat.create_date)}
                         </span>
                       </div>
                     </div>

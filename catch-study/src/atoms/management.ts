@@ -31,6 +31,6 @@ export const formDataAtom = atom<FormDataTypes>({
   usage_fee: [],
   title_image: null,
   multiple_images: [],
-  seatChart_image: '',
+  seat_chart_image: '',
   cafe_phone: '',
 });
