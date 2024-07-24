@@ -165,8 +165,8 @@ export interface BookingResponseTypes extends ResponseTypes {
 export interface BookingTypes {
   type: 'seat' | 'room';
   id: number;
-  cafe_id: number;
-  cafe_name: string;
+  cafeId: number;
+  cafeName: string;
   status: '이용 전' | '이용 중';
   amount: number;
   address: string;

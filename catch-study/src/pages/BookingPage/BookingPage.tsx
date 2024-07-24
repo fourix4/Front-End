@@ -125,7 +125,7 @@ const BookingPage: React.FC = () => {
           key={booking.id}
           className='w-full p-20 text-16 border-b border-light-gray [&>*]:mb-15'
         >
-          <div className='text-20'>{booking.cafe_name}</div>
+          <div className='text-20'>{booking.cafeName}</div>
           <div className='text-12 text-dark-gray'>{booking.address}</div>
           <div>결제 시간 : {booking.payment_time}</div>
           {booking.availableTime ? (
@@ -160,9 +160,7 @@ const BookingPage: React.FC = () => {
             </button>
           </div>
           <button
-            onClick={() =>
-              makeChattingClick(booking.cafe_id, booking.cafe_name)
-            }
+            onClick={() => makeChattingClick(booking.cafeId, booking.cafeName)}
             className='block w-full h-40 text-white rounded-sm bg-blue'
           >
             관리자 1:1 문의
