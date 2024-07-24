@@ -1,14 +1,15 @@
 import { Client, Frame } from '@stomp/stompjs';
 import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
-import { getUser } from '../../apis/api/user';
+import { getCheckUser, getUser } from '../../apis/api/user';
 import { getChattingData } from '../../apis/services/chatting';
-import { getUserInfo } from '../../apis/services/user';
+import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
-import { ACCESS_TOKEN } from '../../config/constants';
+import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
 import { getTime } from '../../utils/time.utils';
 
@@ -17,6 +18,8 @@ const MY_USER_ID = 1;
 const ChattingRoom = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const naviagte = useNavigate();
 
   const [roomId] = useAtom(chattingRoomId);
   const [cafe] = useAtom(cafeName);
@@ -67,15 +70,86 @@ const ChattingRoom = () => {
 
   useEffect(() => {
     (async () => {
-      const rawData = await getUser();
-      const data = getUserInfo(rawData);
+      // 로그인 체크
+      const userCheckRawData = await getCheckUser();
+      const { isAuth, message } = isAuthUser(userCheckRawData);
 
-      if (data) {
-        setUserId(data.userId);
-        setEmail(data.email);
+      if (!isAuth) {
+        alert(message);
+        naviagte(ROUTE.HOME);
+        return;
       }
+
+      // 유저정보 가져오기
+      const userRawData = await getUser();
+      const { userId: id, email: userEmail } = getUserInfo(userRawData);
+
+      setUserId(id);
+      setEmail(userEmail);
+
+      if (!roomId) {
+        alert('채팅방 정보가 없습니다.');
+        naviagte(ROUTE.CHATTING);
+        return;
+      }
+
+      // 이전 채팅 정보 가져오기
+      const chattingRawData = await getChatting(roomId);
+      const chattingData = getChattingData(chattingRawData);
+
+      setChatting(prev => [...prev, ...chattingData]);
+
+      // 소켓 연결
+      const socket = new SockJS('http://3.39.182.9:8080/ws');
+      const client = new Client({
+        webSocketFactory: () => socket,
+        reconnectDelay: 1000,
+        debug: (str: string) => {
+          console.log(str);
+        },
+        connectHeaders: {
+          chatRoomId: roomId.toString(),
+          Authorization: `Bearer ${accessToken}`,
+          email: userEmail,
+          userId: id.toString(),
+        },
+      });
+
+      client.onConnect = (frame: Frame) => {
+        console.log(`/sub/${roomId}/chat`, frame);
+
+        client.subscribe(
+          `/sub/${roomId}/chat`,
+          chat => {
+            const body = JSON.parse(chat.body);
+            const newChat: ChattingTypes = {
+              user_id: body.user_id,
+              message_id: body.message_id,
+              chat: body.chat,
+              create_date: new Date(body.create_date),
+              message_image: body.message_image,
+            };
+
+            setChatting(prev => [...prev, newChat]);
+          },
+          {
+            chatRoomId: roomId.toString(),
+            Authorization: `Bearer ${accessToken}`,
+            email: userEmail,
+            userId: id.toString(),
+          },
+        );
+      };
+
+      client.onStompError = frame => {
+        console.error(`Broker reported error: ${frame.headers}`);
+        console.error(`Additional details: ${frame.body}`);
+      };
+
+      client.activate();
+      setStompClient(client);
     })();
-  }, []);
+  }, [accessToken, naviagte]);
 
   useEffect(() => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
@@ -103,76 +177,6 @@ const ChattingRoom = () => {
       ),
     );
   }, [chatting]);
-
-  useEffect(() => {
-    // id로 채팅 가져오기
-    if (!roomId) return;
-
-    (async () => {
-      const rawData = await getChatting(roomId);
-      const data = getChattingData(rawData);
-
-      setChatting(prev => [...prev, ...data]);
-
-      console.log('이전 채팅', data);
-    })();
-  }, [roomId, getChatting, getChattingData, setChatting]);
-
-  useEffect(() => {
-    if (!roomId) return;
-    if (!accessToken) return;
-    if (!userId) return;
-    if (!email) return;
-
-    const socket = new SockJS('http://3.39.182.9:8080/ws');
-    const client = new Client({
-      webSocketFactory: () => socket,
-      reconnectDelay: 1000,
-      debug: (str: string) => {
-        console.log(str);
-      },
-      connectHeaders: {
-        chatRoomId: roomId.toString(),
-        Authorization: `Bearer ${accessToken}`,
-        email,
-        userId: userId.toString(),
-      },
-    });
-
-    client.onConnect = (frame: Frame) => {
-      console.log(`/sub/${roomId}/chat`, frame);
-
-      client.subscribe(
-        `/sub/${roomId}/chat`,
-        message => {
-          const body = JSON.parse(message.body);
-          const newChat: ChattingTypes = {
-            user_id: body.user_id,
-            message_id: body.message_id,
-            chat: body.chat,
-            create_date: new Date(body.create_date),
-            message_image: body.message_image,
-          };
-
-          setChatting(prev => [...prev, newChat]);
-        },
-        {
-          chatRoomId: roomId.toString(),
-          Authorization: `Bearer ${accessToken}`,
-          email,
-          userId: userId.toString(),
-        },
-      );
-    };
-
-    client.onStompError = frame => {
-      console.error(`Broker reported error: ${frame.headers}`);
-      console.error(`Additional details: ${frame.body}`);
-    };
-
-    client.activate();
-    setStompClient(client);
-  }, [roomId, setChatting]);
 
   return (
     <div className='flex flex-col'>
