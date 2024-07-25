@@ -200,12 +200,14 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
           </div>
         </div>
       </div>
-      <button
-        onClick={paymentClick}
-        className={`w-full h-60 text-24 font-bold text-white bg-blue`}
-      >
-        결제하기
-      </button>
+      <div className='flex justify-center'>
+        <button
+          onClick={paymentClick}
+          className={`w-full sm:w-[90%] sm:rounded-sm h-60 text-24 font-bold text-white bg-blue`}
+        >
+          결제하기
+        </button>
+      </div>
     </BottomModal>
   );
 };
