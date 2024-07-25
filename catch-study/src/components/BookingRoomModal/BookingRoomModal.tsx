@@ -6,6 +6,7 @@ import {
   dateTo8Digit,
   getCurrentTime,
   getEndTime,
+  getInputFormatTime,
 } from '../../utils/time.utils';
 import { getRoomTimeInfo } from '../../apis/api/studycafe';
 import { getRoomTimetable } from '../../apis/services/studycafe';
@@ -100,7 +101,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
       name: selectedRoom.room_name,
       type: SEAT_TYPE.ROOM,
       time: roomTime,
-      startTime: selectedStartTime,
+      startTime: `${getInputFormatTime(roomDate.year, roomDate.month, roomDate.date)} ${selectedStartTime}`,
       price: roomTotalPrice,
       date: roomDate,
     };

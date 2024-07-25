@@ -80,7 +80,6 @@ const PaymentPage: React.FC = () => {
   return (
     <>
       <Topbar />
-      <input className='border' type='checkbox' />
       <div className='p-30 border-b border-light-gray [&>*]:mb-10 text-16'>
         <div>{cafeName}</div>
         <div>
