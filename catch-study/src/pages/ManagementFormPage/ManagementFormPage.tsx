@@ -71,7 +71,7 @@ const ManagementForm: React.FC = () => {
       const { author } = getUserInfo(userRawData);
 
       if (author === 'roleUser') {
-        alert('관리자 아이다로 로그인 해주세요.');
+        alert('관리자 아이디로 로그인 해주세요.');
         navigate(ROUTE.HOME);
         return;
       }
