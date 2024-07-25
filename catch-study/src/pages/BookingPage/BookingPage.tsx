@@ -44,6 +44,8 @@ const BookingPage: React.FC = () => {
 
       const data = getBookingList(rawData);
 
+      console.log(data);
+
       setBookingList(data);
     })();
   }, []);
@@ -150,14 +152,22 @@ const BookingPage: React.FC = () => {
           <div>
             퇴실 시간 : {booking.startTime !== '' ? booking.endTime : '-'}
           </div>
-          <div className='flex w-full justify-between [&>*]:w-1/2 [&>*]:rounded-sm'>
-            <button className='h-40 text-white bg-blue mr-15'>연장하기</button>
+          <div className='flex w-full justify-between [&>*]:rounded-sm'>
             <button
-              onClick={e => checkoutClick(e, booking.id)}
-              className='h-40 border border-dark-gray'
+              className={`${booking.type === SEAT_TYPE.SEAT ? 'w-1/2 mr-15' : 'w-full'} h-40 text-white bg-blue`}
             >
-              퇴실하기
+              연장하기
             </button>
+            {booking.type === SEAT_TYPE.SEAT ? (
+              <button
+                onClick={e => checkoutClick(e, booking.id)}
+                className='w-1/2 h-40 border border-dark-gray'
+              >
+                퇴실하기
+              </button>
+            ) : (
+              ''
+            )}
           </div>
           <button
             onClick={() => makeChattingClick(booking.cafeId, booking.cafeName)}
