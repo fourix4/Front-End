@@ -5,17 +5,15 @@ import { getChattingRoom } from '../../apis/api/chatting';
 import { getCheckUser } from '../../apis/api/user';
 import { getChattingRoomData } from '../../apis/services/chatting';
 import { isAuthUser } from '../../apis/services/user';
-import { setCafeName } from '../../atoms/cafeName';
-import { setChattingRoomId } from '../../atoms/chatting';
-import { ROUTE } from '../../config/constants';
 import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
+import { ROUTE } from '../../config/constants';
 import { ChattingRoomTypes } from '../../types/chatting';
 import { getTime } from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
   const navigate = useNavigate();
-        
+
   const setChattingRoomId = useSetAtom(chattingRoomId);
   const setCafeName = useSetAtom(cafeName);
 
@@ -40,7 +38,7 @@ const ChattingRoomList: React.FC = () => {
       const roomRawData = await getChattingRoom();
       const roomData = getChattingRoomData(roomRawData);
 
-      setChattingRooms(data);
+      setChattingRooms(roomData);
     })();
   }, []);
 
