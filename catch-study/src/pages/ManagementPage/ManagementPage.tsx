@@ -45,7 +45,7 @@ const ManagementPage: React.FC = () => {
       }
       setCafeInfo(rawData.result as FormDataTypes);
     })();
-  }, [isExist, setIsExist, setCafeInfo]);
+  }, [navigate]);
 
   return (
     <>
