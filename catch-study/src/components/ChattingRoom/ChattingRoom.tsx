@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
-import { CHATTINGS, ChattingTypes } from '../../types/chatting';
+import { ChattingTypes } from '../../types/chatting';
 import { getChatTime } from '../../utils/time.utils';
 
 interface ChattingRoomPropTypes {
@@ -22,12 +22,11 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   cafeName,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const naviagte = useNavigate();
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
-  const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
+  const [chatting, setChatting] = useState<ChattingTypes[]>([]);
   const [sendChat, setSendChat] = useState('');
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
@@ -36,8 +35,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const handleSendMessage = () => {
-    console.log(sendChat);
-
+    if (sendChat === '') return;
     if (!accessToken) return;
 
     if (stompClient) {
@@ -51,20 +49,20 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
           userId: userId.toString(),
         },
       });
+
       setSendChat('');
     }
   };
 
-  // 스크롤 조정
-  // const scrollToBottom = () => {
-  //   if (messagesEndRef.current) {
-  //     messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
-  //   }
-  // };
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [chatting]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatting]);
 
   useEffect(() => {
     (async () => {
@@ -78,7 +76,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       const chattingRawData = await getChatting(parseInt(roomId, 10));
       const chattingData = getChattingData(chattingRawData);
 
-      setChatting(prev => [...prev, ...chattingData]);
+      setChatting(chattingData);
     })();
   }, []);
 
@@ -115,9 +113,17 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
               message_image: body.message_image,
             };
 
-            // console.log('새로운 채팅', newChat);
+            // 기존 채팅과 중복 확인 후 추가
+            setChatting(prev => {
+              const exists = prev.some(
+                c => c.message_id === newChat.message_id,
+              );
 
-            setChatting(prev => [...prev, newChat]);
+              if (exists) {
+                return prev;
+              }
+              return [...prev, newChat];
+            });
           },
           {
             chatRoomId: roomId.toString(),
@@ -126,6 +132,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
             userId: userId.toString(),
           },
         );
+        scrollToBottom();
       };
 
       client.onStompError = frame => {
@@ -167,10 +174,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
   return (
     <div className='flex flex-col'>
-      <div
-        ref={scrollContainerRef}
-        className='flex flex-col px-20 pt-20 overflow-y-scroll h-chat gap-30'
-      >
+      <div className='flex flex-col px-20 pt-20 overflow-y-scroll pb-[40px] h-chat gap-30'>
         {Object.keys(groupedChattings).map(date => (
           <div key={date}>
             <div className='flex items-center justify-between flex-grow gap-10 py-10'>
