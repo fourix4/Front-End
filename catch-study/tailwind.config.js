@@ -10,7 +10,7 @@ module.exports = {
   content: ['./src/**/*.{ts,tsx,js,jsx,html}'],
   theme: {
     extend: {
-      spacing: px0_200,
+      spacing: px0_1000,
       fontSize: px0_100,
       width: { ...px0_1000, web: '1200px' },
       height: {

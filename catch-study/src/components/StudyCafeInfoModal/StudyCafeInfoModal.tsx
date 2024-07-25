@@ -87,7 +87,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   return (
     <>
       <BottomModal isOpen={isOpen} closeModal={closeModal}>
-        <div className='h-505 p-30 overflow-y-auto'>
+        <div className='min-w-400 h-505 p-30 overflow-y-auto'>
           {/* <SlideImage images={info.cafe_images} /> */}
           <SlideImage images={[test1, test2, test3, test4]} />
 
@@ -124,12 +124,14 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
             <span className='align-middle'>{info.cafe_phone}</span>
           </div>
         </div>
-        <button
-          onClick={e => bookingClick(e, info.cafe_id, info.cafe_name)}
-          className={`w-full h-60 text-24 font-bold text-white bg-blue`}
-        >
-          예약하기
-        </button>
+        <div className='flex justify-center'>
+          <button
+            onClick={e => bookingClick(e, info.cafe_id, info.cafe_name)}
+            className={`w-full sm:w-[90%] sm:rounded-sm h-60 text-24 font-bold text-white bg-blue`}
+          >
+            예약하기
+          </button>
+        </div>
       </BottomModal>
     </>
   );
