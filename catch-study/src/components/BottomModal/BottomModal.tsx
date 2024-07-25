@@ -13,7 +13,7 @@ const BottomModal: React.FC<BottomModalPropTypes> = ({
 }) => {
   return (
     <div
-      className={`fixed bottom-0 min-w-300 w-full rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'} sm:right-0 sm:w-400 lg:w-500 sm:h-screen sm:rounded-t-[0]`}
+      className={`fixed bottom-0 min-w-300 w-full rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0 sm:translate-x-400 lg:translate-x-500'} sm:w-400 lg:w-500 sm:right-0 sm:h-screen sm:rounded-t-[0]`}
     >
       <div>
         <div className='relative h-5'>
