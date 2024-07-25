@@ -87,17 +87,24 @@ const ChattingRoom = () => {
       setUserId(id);
       setEmail(userEmail);
 
-      if (!roomId) {
+      const Roomid = sessionStorage.getItem('chattingRoomId');
+
+      if (!Roomid) {
         alert('채팅방 정보가 없습니다.');
         naviagte(ROUTE.CHATTING);
         return;
       }
 
       // 이전 채팅 정보 가져오기
-      const chattingRawData = await getChatting(roomId);
+      const chattingRawData = await getChatting(parseInt(Roomid));
       const chattingData = getChattingData(chattingRawData);
 
       setChatting(prev => [...prev, ...chattingData]);
+
+      if (!roomId) {
+        console.log('id 없음');
+        return;
+      }
 
       // 소켓 연결
       const socket = new SockJS('http://3.39.182.9:8080/ws');
@@ -129,6 +136,8 @@ const ChattingRoom = () => {
               create_date: new Date(body.create_date),
               message_image: body.message_image,
             };
+
+            console.log(newChat);
 
             setChatting(prev => [...prev, newChat]);
           },
