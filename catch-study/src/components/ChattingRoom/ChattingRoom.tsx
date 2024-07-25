@@ -1,12 +1,9 @@
 import { Client, Frame } from '@stomp/stompjs';
-import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
-import { cafeName } from '../../atoms/cafeName';
-import { chattingRoomId } from '../../atoms/chatting';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
 import { getChatTime } from '../../utils/time.utils';
@@ -14,16 +11,20 @@ import { getChatTime } from '../../utils/time.utils';
 interface ChattingRoomPropTypes {
   userId: number;
   email: string;
+  roomId: string;
+  cafeName: string;
 }
 
-const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({ userId, email }) => {
+const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
+  userId,
+  email,
+  roomId,
+  cafeName,
+}) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const naviagte = useNavigate();
-
-  const [roomId] = useAtom(chattingRoomId);
-  const [cafe] = useAtom(cafeName);
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
@@ -69,16 +70,14 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({ userId, email }) => {
 
   useEffect(() => {
     (async () => {
-      const Roomid = sessionStorage.getItem('chattingRoomId');
-
-      if (!Roomid) {
+      if (!roomId) {
         alert('채팅방 정보가 없습니다.');
         naviagte(ROUTE.CHATTING);
         return;
       }
 
       // 이전 채팅 정보 가져오기
-      const chattingRawData = await getChatting(parseInt(Roomid));
+      const chattingRawData = await getChatting(parseInt(roomId, 10));
       const chattingData = getChattingData(chattingRawData);
 
       setChatting(prev => [...prev, ...chattingData]);
@@ -99,7 +98,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({ userId, email }) => {
         connectHeaders: {
           chatRoomId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
-          email: email,
+          email,
           userId: userId.toString(),
         },
       });
@@ -201,7 +200,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({ userId, email }) => {
                   ) : (
                     <div>
                       {showCafeName && (
-                        <span className='font-medium text-12'>{cafe}</span>
+                        <span className='font-medium text-12'>{cafeName}</span>
                       )}
                       <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}

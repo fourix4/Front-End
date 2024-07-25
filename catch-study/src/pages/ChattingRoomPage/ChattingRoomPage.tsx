@@ -10,8 +10,10 @@ const ChattingRoomPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [authChecked, setAuthChecked] = useState(false);
-  const [userId, setUserId] = useState<number | null>(null);
+  const [id, setId] = useState<number | null>(null);
   const [email, setEmail] = useState<string | null>(null);
+  const [roomId] = useState(sessionStorage.getItem('chattingRoomId'));
+  const [cafeName] = useState(sessionStorage.getItem('cafeName'));
 
   useEffect(() => {
     (async () => {
@@ -26,10 +28,10 @@ const ChattingRoomPage: React.FC = () => {
 
       // 유저정보 가져오기
       const userInfoata = await getUser();
-      const { userId, email } = getUserInfo(userInfoata);
+      const { userId, email: userEmail } = getUserInfo(userInfoata);
 
-      setUserId(userId);
-      setEmail(email);
+      setId(userId);
+      setEmail(userEmail);
       setAuthChecked(true);
     })();
   }, [navigate]);
@@ -37,8 +39,13 @@ const ChattingRoomPage: React.FC = () => {
   return (
     <div className='w-screen h-screen overflow-hidden'>
       <Topbar />
-      {authChecked && userId && email && (
-        <ChattingRoom userId={userId} email={email} />
+      {authChecked && id && email && roomId && cafeName && (
+        <ChattingRoom
+          userId={id}
+          email={email}
+          roomId={roomId}
+          cafeName={cafeName}
+        />
       )}
     </div>
   );
