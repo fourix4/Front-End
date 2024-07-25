@@ -10,6 +10,7 @@ import {
 } from '../../utils/time.utils';
 import { getRoomTimeInfo } from '../../apis/api/studycafe';
 import { getRoomTimetable } from '../../apis/services/studycafe';
+import BottomModal from '../BottomModal/BottomModal';
 
 interface BookingRoomModalPropTypes {
   isOpen: boolean;
@@ -110,17 +111,8 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
   };
 
   return (
-    <div
-      className={`fixed bottom-0 min-w-[300px] w-full rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'}`}
-    >
-      <div className='h-490 p-30'>
-        <div className='relative'>
-          <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
-          <button
-            onClick={closeModal}
-            className='absolute w-24 h-24 bg-center bg-no-repeat bg-close right-0 inset-y-1/2 translate-y-[-50%]'
-          ></button>
-        </div>
+    <BottomModal isOpen={isOpen} closeModal={closeModal}>
+      <div className='h-505 p-30 overflow-y-auto'>
         <div className='mb-20 font-bold text-center text-20'>
           날짜/시간 선택
         </div>
@@ -214,7 +206,7 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
       >
         결제하기
       </button>
-    </div>
+    </BottomModal>
   );
 };
 
