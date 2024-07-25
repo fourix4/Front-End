@@ -9,7 +9,7 @@ import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
 import { ROUTE } from '../../config/constants';
 import { ChattingRoomTypes } from '../../types/chatting';
-import { getTime } from '../../utils/time.utils';
+import { getChatTime } from '../../utils/time.utils';
 
 const ChattingRoomList: React.FC = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const ChattingRoomList: React.FC = () => {
               <p className='font-bold text-20'>{chattingRoom.cafe_name}</p>
               <span className='font-normal text-12'>
                 {chattingRoom.last_chat_date &&
-                  getTime(chattingRoom.last_chat_date)}
+                  getChatTime(chattingRoom.last_chat_date)}
               </span>
             </div>
             <p className='font-light text-16'>{chattingRoom.last_chat}</p>
