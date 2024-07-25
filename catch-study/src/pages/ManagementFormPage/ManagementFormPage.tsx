@@ -8,7 +8,7 @@ import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
-import { ROUTE } from '../../config/constants';
+import { ROLE, ROUTE } from '../../config/constants';
 import {
   MANAGEMENT_INFO_ERROR,
   ManagementErrorTypes,
@@ -70,7 +70,7 @@ const ManagementForm: React.FC = () => {
       const userRawData = await getUser();
       const { author } = getUserInfo(userRawData);
 
-      if (author === 'roleUser') {
+      if (author !== ROLE.manager) {
         alert('관리자 아이디로 로그인 해주세요.');
         navigate(ROUTE.HOME);
         return;
