@@ -4,18 +4,19 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
-import { getCheckUser, getUser } from '../../apis/api/user';
 import { getChattingData } from '../../apis/services/chatting';
-import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
 import { getChatTime } from '../../utils/time.utils';
 
-const MY_USER_ID = 1;
+interface ChattingRoomPropTypes {
+  userId: number;
+  email: string;
+}
 
-const ChattingRoom = () => {
+const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({ userId, email }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -30,8 +31,6 @@ const ChattingRoom = () => {
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
-  const [userId, setUserId] = useState<number | null>(null);
-  const [email, setEmail] = useState<string | null>(null);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -70,23 +69,6 @@ const ChattingRoom = () => {
 
   useEffect(() => {
     (async () => {
-      // 로그인 체크
-      const userCheckRawData = await getCheckUser();
-      const { isAuth, message } = isAuthUser(userCheckRawData);
-
-      if (!isAuth) {
-        alert(message);
-        naviagte(ROUTE.HOME);
-        return;
-      }
-
-      // 유저정보 가져오기
-      const userRawData = await getUser();
-      const { userId: id, email: userEmail } = getUserInfo(userRawData);
-
-      setUserId(id);
-      setEmail(userEmail);
-
       const Roomid = sessionStorage.getItem('chattingRoomId');
 
       if (!Roomid) {
@@ -117,8 +99,8 @@ const ChattingRoom = () => {
         connectHeaders: {
           chatRoomId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
-          email: userEmail,
-          userId: id.toString(),
+          email: email,
+          userId: userId.toString(),
         },
       });
 
@@ -144,8 +126,8 @@ const ChattingRoom = () => {
           {
             chatRoomId: roomId.toString(),
             Authorization: `Bearer ${accessToken}`,
-            email: userEmail,
-            userId: id.toString(),
+            email,
+            userId: userId.toString(),
           },
         );
       };
@@ -209,7 +191,7 @@ const ChattingRoom = () => {
 
               return (
                 <div key={chat.message_id + chat.create_date.toString()}>
-                  {chat.user_id === MY_USER_ID ? (
+                  {chat.user_id === userId ? (
                     <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}
                       <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
