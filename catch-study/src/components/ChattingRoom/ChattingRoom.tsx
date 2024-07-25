@@ -11,7 +11,7 @@ import { cafeName } from '../../atoms/cafeName';
 import { chattingRoomId } from '../../atoms/chatting';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { CHATTINGS, ChattingTypes } from '../../types/chatting';
-import { getTime } from '../../utils/time.utils';
+import { getChatTime } from '../../utils/time.utils';
 
 const MY_USER_ID = 1;
 
@@ -26,7 +26,7 @@ const ChattingRoom = () => {
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
-  const [sendChat, setSencChat] = useState('');
+  const [sendChat, setSendChat] = useState('');
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
@@ -48,13 +48,13 @@ const ChattingRoom = () => {
         destination: `/pub/${roomId}/chat`,
         body: JSON.stringify({ chat: sendChat }),
         headers: {
-          chatRoodID: roomId.toString(),
+          chatRoodId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
           email,
           userId: userId.toString(),
         },
       });
-      setSencChat('');
+      setSendChat('');
     }
   };
 
@@ -155,7 +155,7 @@ const ChattingRoom = () => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
       return chattings.reduce(
         (groups: Record<string, ChattingTypes[]>, chat) => {
-          const date = chat.create_date.toLocaleDateString();
+          const date = new Date(chat.create_date).toLocaleDateString();
 
           if (!groups[date]) {
             groups[date] = [];
@@ -204,7 +204,7 @@ const ChattingRoom = () => {
                     <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}
                       <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
-                        {getTime(chat.create_date)}
+                        {getChatTime(chat.create_date)}
                       </span>
                     </div>
                   ) : (
@@ -215,7 +215,7 @@ const ChattingRoom = () => {
                       <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}
                         <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
-                          {getTime(chat.create_date)}
+                          {getChatTime(chat.create_date)}
                         </span>
                       </div>
                     </div>
@@ -232,7 +232,7 @@ const ChattingRoom = () => {
         <input
           type='text'
           value={sendChat}
-          onChange={e => setSencChat(e.target.value)}
+          onChange={e => setSendChat(e.target.value)}
           className='w-full h-full px-10'
         />
         <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>
