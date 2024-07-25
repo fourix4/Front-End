@@ -38,10 +38,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   const handleSendMessage = () => {
     console.log(sendChat);
 
-    if (!roomId) return;
     if (!accessToken) return;
-    if (!userId) return;
-    if (!email) return;
 
     if (stompClient) {
       stompClient.publish({
@@ -58,15 +55,16 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
     }
   };
 
-  const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
-    }
-  };
+  // 스크롤 조정
+  // const scrollToBottom = () => {
+  //   if (messagesEndRef.current) {
+  //     messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
+  //   }
+  // };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [chatting]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [chatting]);
 
   useEffect(() => {
     (async () => {
@@ -81,12 +79,11 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       const chattingData = getChattingData(chattingRawData);
 
       setChatting(prev => [...prev, ...chattingData]);
+    })();
+  }, []);
 
-      if (!roomId) {
-        console.log('id 없음');
-        return;
-      }
-
+  useEffect(() => {
+    (async () => {
       // 소켓 연결
       const socket = new SockJS('http://3.39.182.9:8080/ws');
       const client = new Client({
@@ -118,7 +115,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
               message_image: body.message_image,
             };
 
-            console.log(newChat);
+            // console.log('새로운 채팅', newChat);
 
             setChatting(prev => [...prev, newChat]);
           },
@@ -172,7 +169,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
     <div className='flex flex-col'>
       <div
         ref={scrollContainerRef}
-        className='flex flex-col px-20 pt-20 overflow-y-scroll pb-80 h-chat gap-30'
+        className='flex flex-col px-20 pt-20 overflow-y-scroll h-chat gap-30'
       >
         {Object.keys(groupedChattings).map(date => (
           <div key={date}>
@@ -189,7 +186,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
                 index === 0 || chatsArray[index - 1].user_id !== chat.user_id;
 
               return (
-                <div key={chat.message_id + chat.create_date.toString()}>
+                <div key={chat.message_id + index}>
                   {chat.user_id === userId ? (
                     <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}

@@ -17,7 +17,7 @@ module.exports = {
         ...px0_1000,
         topbar: '80px',
         modal: '550px',
-        chat: 'calc(100vh - 80px)',
+        chat: 'calc(100vh - 170px)',
       },
       maxWidth: {
         ...px0_1000,
