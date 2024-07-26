@@ -52,7 +52,7 @@ const RoomForm: React.FC = () => {
         <div className='flex items-center justify-start w-full gap-10'>
           <p className='whitespace-nowrap'>예약 시간 이전</p>
           <input
-            type='number'
+            type='text'
             value={time}
             onChange={handleCancelTimeChange}
             className='input-box max-w-100'
