@@ -174,7 +174,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col px-20 pt-20 overflow-y-scroll pb-[40px] h-chat gap-30'>
+      <div className='flex flex-col p-20 overflow-y-scroll h-chat gap-30'>
         {Object.keys(groupedChattings).map(date => (
           <div key={date}>
             <div className='flex items-center justify-between flex-grow gap-10 py-10'>
