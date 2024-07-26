@@ -14,6 +14,7 @@ import test4 from '../../assets/test4.png';
 import { ROUTE } from '../../config/constants';
 import { getCheckUser } from '../../apis/api/user';
 import { isAuthUser } from '../../apis/services/user';
+import BottomModal from '../BottomModal/BottomModal';
 
 interface StudyCafeInfoModalPropTypes {
   isOpen: boolean;
@@ -84,61 +85,55 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
   };
 
   return (
-    <div
-      className={`fixed bottom-0 min-w-[300px] w-full rounded-t-default shadow-modal bg-white ${isOpen ? 'visible' : 'invisible'} duration-300 ease-out ${isOpen ? 'h-modal' : 'h-0'}`}
-    >
-      <div className='h-490 p-30'>
-        <div className='relative'>
-          <div className='h-6 mb-20 w-50 rounded-default bg-light-gray m-middle'></div>
-          <button
-            onClick={closeModal}
-            className='absolute w-24 h-24 bg-center bg-no-repeat bg-close right-0 inset-y-1/2 translate-y-[-50%]'
-          ></button>
-        </div>
+    <>
+      <BottomModal isOpen={isOpen} closeModal={closeModal}>
+        <div className='min-w-400 h-505 p-30 overflow-y-auto'>
+          {/* <SlideImage images={info.cafe_images} /> */}
+          <SlideImage images={[test1, test2, test3, test4]} />
 
-        {/* <SlideImage images={info.cafe_images} /> */}
-        <SlideImage images={[test1, test2, test3, test4]} />
-
-        <div className='mb-20'>
-          <p className='font-bold text-20 mb-15'>이용 가능 좌석</p>
-          <div>
-            <span className='mr-60'>
-              <span className='font-bold text-16 mr-25'>자유석</span>
-              <span className='text-16'>
-                {info.available_seats}/{info.total_seats}
+          <div className='mb-20'>
+            <p className='font-bold text-20 mb-15'>이용 가능 좌석</p>
+            <div>
+              <span className='mr-60'>
+                <span className='font-bold mr-25'>자유석</span>
+                <span>
+                  {info.available_seats}/{info.total_seats}
+                </span>
               </span>
-            </span>
-            <span>
-              <span className='font-bold text-16 mr-25'>스터디룸</span>
-              <span className='text-16'>
-                {info.available_rooms}/{info.total_rooms}
+              <span>
+                <span className='font-bold mr-25'>스터디룸</span>
+                <span>
+                  {info.available_rooms}/{info.total_rooms}
+                </span>
               </span>
+            </div>
+          </div>
+          <div className='mb-20'>
+            <img src={mapPin} className='inline mr-10' />
+            <span className='align-middle '>{info.address}</span>
+          </div>
+          <div className='mb-15'>
+            <img src={time} className='inline mr-10' />
+            <span className='align-middle '>
+              {info.opening_hours} ~ {info.closed_hours}
             </span>
           </div>
+          <div className='ml-30  mb-15'>휴무일 {info.cloesd_day}</div>
+          <div>
+            <img src={phone} className='inline mr-10' />
+            <span className='align-middle'>{info.cafe_phone}</span>
+          </div>
         </div>
-        <div className='mb-20'>
-          <img src={mapPin} className='inline mr-10' />
-          <span className='align-middle text-16'>{info.address}</span>
+        <div className='flex justify-center'>
+          <button
+            onClick={e => bookingClick(e, info.cafe_id, info.cafe_name)}
+            className={`w-full sm:w-[90%] sm:rounded-sm h-60 text-24 font-bold text-white bg-blue`}
+          >
+            예약하기
+          </button>
         </div>
-        <div className='mb-15'>
-          <img src={time} className='inline mr-10' />
-          <span className='align-middle text-16'>
-            {info.opening_hours} ~ {info.closed_hours}
-          </span>
-        </div>
-        <div className='ml-30 text-16 mb-15'>휴무일 {info.cloesd_day}</div>
-        <div>
-          <img src={phone} className='inline mr-10' />
-          <span className='align-middle text-16'>{info.cafe_phone}</span>
-        </div>
-      </div>
-      <button
-        onClick={e => bookingClick(e, info.cafe_id, info.cafe_name)}
-        className={`w-full h-60 text-24 font-bold text-white bg-blue`}
-      >
-        예약하기
-      </button>
-    </div>
+      </BottomModal>
+    </>
   );
 };
 

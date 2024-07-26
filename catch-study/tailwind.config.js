@@ -10,13 +10,13 @@ module.exports = {
   content: ['./src/**/*.{ts,tsx,js,jsx,html}'],
   theme: {
     extend: {
-      spacing: px0_200,
+      spacing: px0_1000,
       fontSize: px0_100,
-      width: px0_1000,
+      width: { ...px0_1000, smWeb: '600px', lgWeb: '1000px' },
       height: {
         ...px0_1000,
         topbar: '80px',
-        modal: '550px',
+        modal: '600px',
         chat: 'calc(100vh - 170px)',
       },
       maxWidth: {

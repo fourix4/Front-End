@@ -53,6 +53,7 @@ const MyPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const userRawData = await getUser();
+
       const { isAuth, message } = isAuthUser(userRawData);
 
       if (!isAuth) {
@@ -109,12 +110,12 @@ const MyPage: React.FC = () => {
   return (
     <>
       <Topbar />
-      <div>
-        <div className='p-20 border-b border-light-gray'>
+      <div className='[&>*]:m-middle'>
+        <div className='sm:w-smWeb lg:w-lgWeb p-20 border-b border-light-gray'>
           <p className='mb-10 text-20'>{userInfo.userName}</p>
           <p className='text-dark-gray'>{userInfo.email}</p>
         </div>
-        <div className='px-20 py-10 border-b border-light-gray bg-bright-gray'>
+        <div className='sm:w-smWeb lg:w-lgWeb px-20 py-10 border-b border-light-gray bg-bright-gray'>
           <p className='text-20 font-bold mb-10'>예약 내역</p>
           <div className='mb-10'>
             <input
@@ -141,7 +142,7 @@ const MyPage: React.FC = () => {
               : `${getInputFormatTime(startTime.year, startTime.month, startTime.date)} ~ ${getInputFormatTime(endTime.year, endTime.month, endTime.date)}`}
           </p>
         </div>
-        <div className='min-h-300 h-600 overflow-y-auto'>
+        <div className='sm:w-smWeb lg:w-lgWeb min-h-300 h-600 overflow-y-auto'>
           {history.map((historyData, i) => (
             <BookingHistory key={i} historyData={historyData} />
           ))}

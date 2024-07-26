@@ -64,12 +64,14 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
           <div
             key={i}
             onClick={e => studycafeClick(e, id, cafeName)}
-            className='flex items-center p-20 border-b studycafe h-140 border-light-gray'
+            className='flex justify-center border-b h-140 border-light-gray cursor-pointer'
           >
-            <img className='mr-20 w-100 h-100' src={cafeImage} />
-            <div>
-              <div className='mb-10 text-16'>{cafeName}</div>
-              <div className='text-12'>{address}</div>
+            <div className='w-full sm:w-smWeb lg:w-lgWeb flex items-center p-20'>
+              <img className='mr-20 w-100 h-100' src={cafeImage} />
+              <div>
+                <div className='mb-10 text-16'>{cafeName}</div>
+                <div className='text-12'>{address}</div>
+              </div>
             </div>
           </div>
         ),

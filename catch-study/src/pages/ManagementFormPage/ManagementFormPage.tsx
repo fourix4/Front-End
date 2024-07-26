@@ -78,14 +78,14 @@ const ManagementForm: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className='w-screen h-full'>
+    <div className='w-full h-full'>
       <Topbar />
       <h1 className='w-full pb-10 font-bold text-center pt-30 text-22'>
         스터디 카페 정보 입력
       </h1>
       <form
         onSubmit={handleInfoSubmit}
-        className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'
+        className='flex flex-col w-full sm:w-smWeb lg:w-lgWeb h-full gap-20 p-20 m-middle md:w-1/2'
       >
         <input
           name='cafe_name'

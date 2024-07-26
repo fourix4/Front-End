@@ -124,7 +124,7 @@ const StudycafeBookingPage: React.FC = () => {
   return (
     <div>
       <Topbar />
-      <div className='w-full h-600 overflow-x-auto m-middle'>
+      <div className='w-full sm:w-smWeb lg:w-lgWeb h-600 overflow-x-auto m-middle'>
         <div className='relative w-800 h-full box-border'>
           <div>
             <img

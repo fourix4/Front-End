@@ -107,7 +107,7 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
     <>
       <div className='relative mb-20'>
         <div
-          className='overflow-hidden bg-black w-400 h-150 m-middle'
+          className='overflow-hidden bg-black w-200 sm:w-300 lg:w-400 h-150 m-middle'
           onTouchStart={touchStart}
           onTouchMove={touchMove}
           onTouchEnd={touchEnd}
@@ -117,7 +117,7 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
               <img
                 key={i}
                 src={image}
-                className='object-contain min-w-[400px] h-150 '
+                className='object-contain min-w-200 sm:min-w-300 lg:min-w-400 h-150 '
               />
             ))}
           </div>
