@@ -44,8 +44,6 @@ const BookingPage: React.FC = () => {
 
       const data = getBookingList(rawData);
 
-      console.log(data);
-
       setBookingList(data);
     })();
   }, []);

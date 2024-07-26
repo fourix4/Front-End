@@ -53,6 +53,7 @@ const MyPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const userRawData = await getUser();
+
       const { isAuth, message } = isAuthUser(userRawData);
 
       if (!isAuth) {

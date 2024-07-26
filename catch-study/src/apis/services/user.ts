@@ -16,10 +16,10 @@ export const getUserInfo = (
 ) => {
   if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     const result = {
-      userName: rawData.data.result.userName,
+      userName: rawData.data.result.user_name,
       email: rawData.data.result.email,
       author: rawData.data.result.author,
-      userId: rawData.data.result.userId,
+      userId: rawData.data.result.user_id,
     };
 
     return result;
