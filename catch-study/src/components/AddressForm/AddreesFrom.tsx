@@ -10,9 +10,9 @@ interface AddressFromPropTypes {
 const AddressForm: React.FC<AddressFromPropTypes> = ({ address }) => {
   const { handleInputChange, handleSelectChange } = useManagementInfo();
 
-  const [city, setCity] = useState('시');
-  const [country, setCountry] = useState('군/구');
-  const [town, setTown] = useState('동');
+  const [city, setCity] = useState(address.city || '시');
+  const [country, setCountry] = useState(address.country || '군/구');
+  const [town, setTown] = useState(address.town || '동');
 
   return (
     <div className='flex flex-col input-box'>
@@ -26,10 +26,8 @@ const AddressForm: React.FC<AddressFromPropTypes> = ({ address }) => {
           }}
           className='w-1/3'
         >
-          <option selected hidden>
-            시
-          </option>
-          {CITY_LIST['시'].map(option => (
+          <option hidden>시</option>
+          {CITY_LIST['시']?.map(option => (
             <option value={option}>{option}</option>
           ))}
         </select>
@@ -42,11 +40,9 @@ const AddressForm: React.FC<AddressFromPropTypes> = ({ address }) => {
           }}
           className='w-1/3'
         >
-          <option selected hidden>
-            군/구
-          </option>
+          <option hidden>군/구</option>
           {city !== '시'
-            ? CITY_LIST['군/구'][city].map(option => (
+            ? CITY_LIST['군/구'][city]?.map(option => (
                 <option key={option}>{option}</option>
               ))
             : ''}
@@ -60,11 +56,9 @@ const AddressForm: React.FC<AddressFromPropTypes> = ({ address }) => {
           }}
           className='w-1/3'
         >
-          <option selected hidden>
-            동
-          </option>
+          <option hidden>동</option>
           {city !== '시' && country !== '군/구'
-            ? CITY_LIST['동'][country].map(option => (
+            ? CITY_LIST['동'][country]?.map(option => (
                 <option key={option}>{option}</option>
               ))
             : ''}
