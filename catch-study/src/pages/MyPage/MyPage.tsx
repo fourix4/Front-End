@@ -110,12 +110,12 @@ const MyPage: React.FC = () => {
   return (
     <>
       <Topbar />
-      <div>
-        <div className='p-20 border-b border-light-gray'>
+      <div className='[&>*]:m-middle'>
+        <div className='sm:w-smWeb p-20 border-b border-light-gray'>
           <p className='mb-10 text-20'>{userInfo.userName}</p>
           <p className='text-dark-gray'>{userInfo.email}</p>
         </div>
-        <div className='px-20 py-10 border-b border-light-gray bg-bright-gray'>
+        <div className='sm:w-smWeb px-20 py-10 border-b border-light-gray bg-bright-gray'>
           <p className='text-20 font-bold mb-10'>예약 내역</p>
           <div className='mb-10'>
             <input
