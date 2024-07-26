@@ -1,36 +1,41 @@
 import { Client, Frame } from '@stomp/stompjs';
-import { useAtom } from 'jotai';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
-import { cafeName } from '../../atoms/cafeName';
-import { chattingRoomId } from '../../atoms/chatting';
-import { ACCESS_TOKEN } from '../../config/constants';
-import { CHATTINGS, ChattingTypes } from '../../types/chatting';
-import { getTime } from '../../utils/time.utils';
+import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
+import { ChattingTypes } from '../../types/chatting';
+import { getChatTime } from '../../utils/time.utils';
 
-const MY_USER_ID = 1;
+interface ChattingRoomPropTypes {
+  userId: number;
+  email: string;
+  roomId: string;
+  cafeName: string;
+}
 
-const ChattingRoom = () => {
+const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
+  userId,
+  email,
+  roomId,
+  cafeName,
+}) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const [roomId] = useAtom(chattingRoomId);
-  const [cafe] = useAtom(cafeName);
+  const naviagte = useNavigate();
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
-  const [chatting, setChatting] = useState<ChattingTypes[]>(CHATTINGS);
-  const [sendChat, setSencChat] = useState('');
+  const [chatting, setChatting] = useState<ChattingTypes[]>([]);
+  const [sendChat, setSendChat] = useState('');
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
+
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const handleSendMessage = () => {
-    console.log(sendChat);
-
-    if (!roomId) return;
+    if (sendChat === '') return;
     if (!accessToken) return;
 
     if (stompClient) {
@@ -38,17 +43,22 @@ const ChattingRoom = () => {
         destination: `/pub/${roomId}/chat`,
         body: JSON.stringify({ chat: sendChat }),
         headers: {
-          chatRoodID: roomId.toString(),
+          chatRoodId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
+          email,
+          userId: userId.toString(),
         },
       });
-      setSencChat('');
+
+      setSendChat('');
     }
   };
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'auto' });
+      messagesEndRef.current.scrollIntoView({
+        behavior: 'auto',
+      });
     }
   };
 
@@ -57,10 +67,91 @@ const ChattingRoom = () => {
   }, [chatting]);
 
   useEffect(() => {
+    (async () => {
+      if (!roomId) {
+        alert('채팅방 정보가 없습니다.');
+        naviagte(ROUTE.CHATTING);
+        return;
+      }
+
+      // 이전 채팅 정보 가져오기
+      const chattingRawData = await getChatting(parseInt(roomId, 10));
+      const chattingData = getChattingData(chattingRawData);
+
+      setChatting(chattingData);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      // 소켓 연결
+      const socket = new SockJS('http://3.39.182.9:8080/ws');
+      const client = new Client({
+        webSocketFactory: () => socket,
+        reconnectDelay: 1000,
+        debug: (str: string) => {
+          console.log(str);
+        },
+        connectHeaders: {
+          chatRoomId: roomId.toString(),
+          Authorization: `Bearer ${accessToken}`,
+          email,
+          userId: userId.toString(),
+        },
+      });
+
+      client.onConnect = (frame: Frame) => {
+        console.log(`/sub/${roomId}/chat`, frame);
+
+        client.subscribe(
+          `/sub/${roomId}/chat`,
+          chat => {
+            const body = JSON.parse(chat.body);
+            const newChat: ChattingTypes = {
+              user_id: body.user_id,
+              message_id: body.message_id,
+              chat: body.chat,
+              create_date: new Date(body.create_date),
+              message_image: body.message_image,
+            };
+
+            // 기존 채팅과 중복 확인 후 추가
+            setChatting(prev => {
+              const exists = prev.some(
+                c => c.message_id === newChat.message_id,
+              );
+
+              if (exists) {
+                return prev;
+              }
+              return [...prev, newChat];
+            });
+          },
+          {
+            chatRoomId: roomId.toString(),
+            Authorization: `Bearer ${accessToken}`,
+            email,
+            userId: userId.toString(),
+          },
+        );
+        scrollToBottom();
+      };
+
+      client.onStompError = frame => {
+        console.error(`Broker reported error: ${frame.headers}`);
+        console.error(`Additional details: ${frame.body}`);
+      };
+
+      client.activate();
+      setStompClient(client);
+    })();
+  }, [accessToken, naviagte]);
+
+  useEffect(() => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
       return chattings.reduce(
         (groups: Record<string, ChattingTypes[]>, chat) => {
-          const date = chat.createDate.toLocaleDateString();
+          const date = new Date(chat.create_date).toLocaleDateString();
 
           if (!groups[date]) {
             groups[date] = [];
@@ -76,81 +167,16 @@ const ChattingRoom = () => {
       groupChattingsByDate(
         chatting.sort(
           (a, b) =>
-            new Date(a.createDate).getTime() - new Date(b.createDate).getTime(),
+            new Date(a.create_date).getTime() -
+            new Date(b.create_date).getTime(),
         ),
       ),
     );
   }, [chatting]);
 
-  useEffect(() => {
-    // id로 채팅 가져오기
-    if (!roomId) return;
-
-    (async () => {
-      const rawData = await getChatting(roomId);
-      const data = getChattingData(rawData);
-
-      setChatting(prev => [...prev, ...data]);
-
-      console.log('이전 채팅', data);
-    })();
-  }, [roomId, getChatting, getChattingData, setChatting]);
-
-  useEffect(() => {
-    if (!roomId) return;
-    if (!accessToken) return;
-
-    const socket = new SockJS('http://3.39.182.9:8080/ws');
-    const client = new Client({
-      webSocketFactory: () => socket,
-      reconnectDelay: 1000,
-      debug: (str: string) => {
-        console.log(str);
-      },
-      connectHeaders: {
-        chatRoomId: roomId.toString(),
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    client.onConnect = (frame: Frame) => {
-      console.log(`/sub/${roomId}/chat`, frame);
-
-      client.subscribe(
-        `/sub/${roomId}/chat`,
-        message => {
-          const body = JSON.parse(message.body);
-          const newChat: ChattingTypes = {
-            userId: body.userId,
-            messageId: body.messageId,
-            chat: body.chat,
-            createDate: new Date(body.createDate),
-            messageImage: body.messageImage,
-          };
-
-          setChatting(prev => [...prev, newChat]);
-        },
-        {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      );
-    };
-
-    client.onStompError = frame => {
-      console.error(`Broker reported error: ${frame.headers}`);
-      console.error(`Additional details: ${frame.body}`);
-    };
-
-    client.activate();
-    setStompClient(client);
-  }, [roomId, setChatting]);
-
   return (
     <div className='flex flex-col'>
-      <div
-        ref={scrollContainerRef}
-        className='flex flex-col px-20 pt-20 overflow-y-scroll pb-80 h-chat gap-30'
-      >
+      <div className='flex flex-col p-20 overflow-y-scroll h-chat gap-30'>
         {Object.keys(groupedChattings).map(date => (
           <div key={date}>
             <div className='flex items-center justify-between flex-grow gap-10 py-10'>
@@ -163,26 +189,26 @@ const ChattingRoom = () => {
 
             {groupedChattings[date].map((chat, index, chatsArray) => {
               const showCafeName =
-                index === 0 || chatsArray[index - 1].userId !== chat.userId;
+                index === 0 || chatsArray[index - 1].user_id !== chat.user_id;
 
               return (
-                <div key={chat.messageId + chat.createDate.toString()}>
-                  {chat.userId === MY_USER_ID ? (
+                <div key={chat.message_id + index}>
+                  {chat.user_id === userId ? (
                     <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}
                       <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
-                        {getTime(chat.createDate)}
+                        {getChatTime(chat.create_date)}
                       </span>
                     </div>
                   ) : (
                     <div>
                       {showCafeName && (
-                        <span className='font-medium text-12'>{cafe}</span>
+                        <span className='font-medium text-12'>{cafeName}</span>
                       )}
                       <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}
                         <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
-                          {getTime(chat.createDate)}
+                          {getChatTime(chat.create_date)}
                         </span>
                       </div>
                     </div>
@@ -192,14 +218,14 @@ const ChattingRoom = () => {
             })}
           </div>
         ))}
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} className='mb-20' />
       </div>
 
       <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'>
         <input
           type='text'
           value={sendChat}
-          onChange={e => setSencChat(e.target.value)}
+          onChange={e => setSendChat(e.target.value)}
           className='w-full h-full px-10'
         />
         <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>

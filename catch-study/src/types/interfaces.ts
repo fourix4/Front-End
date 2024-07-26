@@ -172,9 +172,9 @@ export interface BookingTypes {
   address: string;
   name: string;
   code: number;
-  paymentTime: string;
-  startTime: string;
-  endTime: string;
+  payment_time: string;
+  start_time: string;
+  end_time: string;
   availableTime?: string;
 }
 
@@ -213,7 +213,7 @@ export interface BookingHistoryResponseTypes extends ResponseTypes {
 export interface MakeChattingTypes extends ResponseTypes {
   data: {
     result: {
-      chatRoomId: number;
+      chat_room_id: number;
     };
   };
 }

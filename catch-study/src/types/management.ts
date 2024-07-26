@@ -32,6 +32,6 @@ export interface FormDataTypes {
   usage_fee: UsageFeeTypes[];
   title_image: File | null;
   multiple_images: File[];
-  seatChart_image: string;
+  seat_chart_image: string;
   cafe_phone: string;
 }

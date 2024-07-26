@@ -1,6 +1,7 @@
-export const getTime = (date: Date) => {
-  const hour = date.getHours();
-  const minute = String(date.getMinutes());
+export const getChatTime = (date: Date) => {
+  const newDate = new Date(date);
+  const hour = newDate.getHours();
+  const minute = String(newDate.getMinutes());
 
   return `${hour} : ${minute.padStart(2, '0')}`;
 };

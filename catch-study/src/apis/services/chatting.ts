@@ -14,7 +14,8 @@ export const getChattingRoomData = (
 
   return CHATTING_ROOM_LISTS.sort(
     (a, b) =>
-      new Date(b.lastChatDate).getTime() - new Date(a.lastChatDate).getTime(),
+      new Date(b.last_chat_date).getTime() -
+      new Date(a.last_chat_date).getTime(),
   );
 };
 
@@ -27,7 +28,7 @@ export const getChattingData = (
 
   return CHATTINGS.sort(
     (a, b) =>
-      new Date(b.createDate).getTime() - new Date(a.createDate).getTime(),
+      new Date(b.create_date).getTime() - new Date(a.create_date).getTime(),
   );
 };
 
