@@ -29,7 +29,7 @@ const CityFilter: React.FC<CityFilterPropTypes> = ({ onFilterChange }) => {
 
   return (
     <div className='flex justify-center w-full border-b border-light-gray'>
-      <div className='flex items-center w-full sm:w-smWeb px-20 py-10'>
+      <div className='flex items-center w-full sm:w-smWeb lg:w-lgWeb px-20 py-10'>
         <select
           onChange={cityChange}
           className='px-10 mr-10 bg-right bg-no-repeat border cursor-pointer h-35 min-w-95 rounded-default border-dark-gray text-14 text-dark-gray select bg-polygon'

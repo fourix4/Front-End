@@ -80,7 +80,7 @@ const PaymentPage: React.FC = () => {
     <>
       <Topbar />
       <div className='[&>*]:m-middle'>
-        <div className='w-full sm:w-smWeb py-30 px-20 border-b border-light-gray [&>*]:mb-10'>
+        <div className='w-full sm:w-smWeb lg:w-lgWeb py-30 px-20 border-b border-light-gray [&>*]:mb-10'>
           <div>{cafeName}</div>
           <div>
             {date.year}년 {date.month}월 {date.date}일
@@ -88,10 +88,10 @@ const PaymentPage: React.FC = () => {
           <div>{name}</div>
           <div>{time}시간</div>
         </div>
-        <div className='w-full sm:w-smWeb p-30 border-b border-light-gray text-right text-20 font-bold'>
+        <div className='w-full sm:w-smWeb lg:w-lgWeb p-30 border-b border-light-gray text-right text-20 font-bold'>
           {price.toLocaleString()}원
         </div>
-        <div className='w-full sm:w-smWeb p-30'>
+        <div className='w-full sm:w-smWeb lg:w-lgWeb p-30'>
           {PAYMENT_TYPE.map((paymentType, i) => (
             <div
               key={paymentType}
@@ -113,7 +113,7 @@ const PaymentPage: React.FC = () => {
       <div className='flex justify-center'>
         <button
           onClick={paymentClick}
-          className={`fixed bottom-0 sm:bottom-10 w-full sm:w-smWeb sm:rounded-sm h-60 text-24 font-bold text-white bg-blue`}
+          className={`fixed bottom-0 sm:bottom-10 w-full sm:w-smWeb lg:w-lgWeb sm:rounded-sm h-60 text-24 font-bold text-white bg-blue`}
         >
           결제하기
         </button>
