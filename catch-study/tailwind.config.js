@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       spacing: px0_1000,
       fontSize: px0_100,
-      width: { ...px0_1000, web: '1200px' },
+      width: { ...px0_1000, smWeb: '600px', lgWeb: '1000px' },
       height: {
         ...px0_1000,
         topbar: '80px',

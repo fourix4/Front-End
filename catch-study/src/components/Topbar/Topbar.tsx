@@ -14,8 +14,8 @@ const Topbar: React.FC = () => {
 
   return (
     <>
-      <header className='flex justify-center w-full box-border px-20 border-b h-topbar py-25 border-light-gray'>
-        <div className='w-full sm:w-web flex items-center justify-between'>
+      <header className='flex justify-center w-full box-border border-b h-topbar border-light-gray'>
+        <div className='w-full sm:w-smWeb px-20 py-25 flex items-center justify-between'>
           <div
             onClick={logoClick}
             className='inline-block cursor-pointer text-24'

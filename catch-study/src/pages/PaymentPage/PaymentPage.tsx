@@ -80,41 +80,45 @@ const PaymentPage: React.FC = () => {
   return (
     <>
       <Topbar />
-      <div className='p-30 border-b border-light-gray [&>*]:mb-10 text-16'>
-        <div>{cafeName}</div>
-        <div>
-          {date.year}년 {date.month}월 {date.date}일
-        </div>
-        <div>{name}</div>
-        <div>{time}시간</div>
-      </div>
-      <div className='p-30 border-b border-light-gray text-right text-20 font-bold'>
-        {price.toLocaleString()}원
-      </div>
-      <div className='p-30'>
-        {PAYMENT_TYPE.map((paymentType, i) => (
-          <div
-            key={paymentType}
-            className='[&>*]:align-middle [&>*]:cursor-pointer text-16'
-          >
-            <input
-              className={`w-15 h-15 mr-10 rounded-full ${isChecked && checkedPayment === paymentType ? 'border-blue border-4' : 'border border-light-gray'}`}
-              type='checkbox'
-              id={paymentType}
-              checked={isChecked && checkedPayment === paymentType}
-              onChange={e => checkboxChange(e, paymentType)}
-            />
-            <img src={images[i]} className='inline-block mr-10' />
-            <label htmlFor={paymentType}>{paymentType}</label>
+      <div className='[&>*]:m-middle'>
+        <div className='w-full sm:w-smWeb py-30 px-20 border-b border-light-gray [&>*]:mb-10'>
+          <div>{cafeName}</div>
+          <div>
+            {date.year}년 {date.month}월 {date.date}일
           </div>
-        ))}
+          <div>{name}</div>
+          <div>{time}시간</div>
+        </div>
+        <div className='w-full sm:w-smWeb p-30 border-b border-light-gray text-right text-20 font-bold'>
+          {price.toLocaleString()}원
+        </div>
+        <div className='w-full sm:w-smWeb p-30'>
+          {PAYMENT_TYPE.map((paymentType, i) => (
+            <div
+              key={paymentType}
+              className='[&>*]:align-middle [&>*]:cursor-pointer'
+            >
+              <input
+                className={`w-15 h-15 mr-10 rounded-full ${isChecked && checkedPayment === paymentType ? 'border-blue border-4' : 'border border-light-gray'}`}
+                type='checkbox'
+                id={paymentType}
+                checked={isChecked && checkedPayment === paymentType}
+                onChange={e => checkboxChange(e, paymentType)}
+              />
+              <img src={images[i]} className='inline-block mr-10' />
+              <label htmlFor={paymentType}>{paymentType}</label>
+            </div>
+          ))}
+        </div>
       </div>
-      <button
-        onClick={paymentClick}
-        className={`fixed bottom-0 w-full h-60 text-24 font-bold text-white bg-blue`}
-      >
-        결제하기
-      </button>
+      <div className='flex justify-center'>
+        <button
+          onClick={paymentClick}
+          className={`fixed bottom-0 sm:bottom-10 w-full sm:w-smWeb sm:rounded-sm h-60 text-24 font-bold text-white bg-blue`}
+        >
+          결제하기
+        </button>
+      </div>
     </>
   );
 };
