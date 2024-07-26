@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { CITY_LIST } from '../../config/constants';
 import useManagementInfo from '../../hooks/useManagementInfo';
 import { AddressTypes } from '../../types/management';
 
@@ -8,47 +10,64 @@ interface AddressFromPropTypes {
 const AddressForm: React.FC<AddressFromPropTypes> = ({ address }) => {
   const { handleInputChange, handleSelectChange } = useManagementInfo();
 
+  const [city, setCity] = useState('시');
+  const [country, setCountry] = useState('군/구');
+  const [town, setTown] = useState('동');
+
   return (
     <div className='flex flex-col input-box'>
       <div className='flex items-center justify-center gap-10'>
         <select
           name='city'
-          value={address.city}
-          onChange={e => handleSelectChange(e, 'address')}
+          value={city}
+          onChange={e => {
+            handleSelectChange(e, 'address');
+            setCity(e.target.value);
+          }}
           className='w-1/3'
         >
           <option selected hidden>
             시
           </option>
-          <option value={'1'}>1</option>
-          <option value={'2'}>2</option>
-          <option value={'3'}>3</option>
+          {CITY_LIST['시'].map(option => (
+            <option value={option}>{option}</option>
+          ))}
         </select>
         <select
           name='country'
-          value={address.country}
-          onChange={e => handleSelectChange(e, 'address')}
+          value={country}
+          onChange={e => {
+            handleSelectChange(e, 'address');
+            setCountry(e.target.value);
+          }}
           className='w-1/3'
         >
           <option selected hidden>
             군/구
           </option>
-          <option value={'1'}>1</option>
-          <option value={'2'}>2</option>
-          <option value={'3'}>3</option>
+          {city !== '시'
+            ? CITY_LIST['군/구'][city].map(option => (
+                <option key={option}>{option}</option>
+              ))
+            : ''}
         </select>
         <select
           name='town'
-          value={address.town}
-          onChange={e => handleSelectChange(e, 'address')}
+          value={town}
+          onChange={e => {
+            handleSelectChange(e, 'address');
+            setTown(e.target.value);
+          }}
           className='w-1/3'
         >
           <option selected hidden>
             동
           </option>
-          <option value={'1'}>1</option>
-          <option value={'2'}>2</option>
-          <option value={'3'}>3</option>
+          {city !== '시' && country !== '군/구'
+            ? CITY_LIST['동'][country].map(option => (
+                <option key={option}>{option}</option>
+              ))
+            : ''}
         </select>
       </div>
       <div>
