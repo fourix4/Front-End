@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getManagementInfo } from '../../apis/api/manager';
 import { getCheckUser, getUser } from '../../apis/api/user';
-import { getCafeInfoData } from '../../apis/services/manager';
+import getCafeInfoData from '../../apis/services/manager';
 import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import ManagementCafeInfo from '../../components/ManagementCafeInfo/ManagementCafeInfo';
 import Topbar from '../../components/Topbar/Topbar';
@@ -39,6 +39,7 @@ const ManagementPage: React.FC = () => {
 
       const rawData = await getManagementInfo();
       const data = getCafeInfoData(rawData);
+
       if (data) {
         setCafeInfo(data);
         setIsExist(true);
