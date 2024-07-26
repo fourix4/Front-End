@@ -45,6 +45,7 @@ const useManagementInfo = () => {
 
   const handleInputChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
     setFormData(prevFormData => ({
       ...prevFormData,
       [name]: parseInt(value, 10),
