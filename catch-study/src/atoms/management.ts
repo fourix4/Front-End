@@ -27,14 +27,14 @@ export const formDataAtom = atom<FormDataTypes>({
     cancel_available_time: 0,
     rooms: [],
   },
-
   usage_fee: [],
   title_image: null,
   multiple_images: [],
   seat_chart_image: '',
   cafe_phone: '',
 });
-export const cafeIndoAtom = atom<CafeInfoTypes>({
+
+export const cafeInfoAtom = atom<CafeInfoTypes>({
   cafe_name: '',
   address: {
     city: '',
@@ -50,7 +50,6 @@ export const cafeIndoAtom = atom<CafeInfoTypes>({
     cancel_available_time: 0,
     rooms: [],
   },
-
   usage_fee: [],
   title_image: null,
   multiple_images: [],

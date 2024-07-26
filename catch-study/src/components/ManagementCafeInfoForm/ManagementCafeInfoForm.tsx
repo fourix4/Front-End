@@ -17,6 +17,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropTypes> = ({
     formData,
     usageFees,
     roomInfos,
+    cafeData,
     handleInputChange,
     handleSelectChange,
     handleRoomNameChange,
@@ -84,7 +85,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropTypes> = ({
             <input
               name='cafe_name'
               placeholder='스터디 카페 이름'
-              value={formData.cafe_name}
+              value={cafeData.cafe_name}
               onChange={handleInputChange}
               className='w-full p-4'
             />
@@ -94,7 +95,7 @@ const ManagementCafeInfoForm: React.FC<ManagementCafeInfoFormPropTypes> = ({
             <div className='flex items-center justify-center w-full gap-10'>
               <select
                 name='city'
-                value={formData.address.city}
+                value={cafeData.address.city}
                 onChange={e => handleSelectChange(e, 'address')}
                 className='w-1/3 p-4'
               >

@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { ChangeEvent, useEffect } from 'react';
 
 import {
-  cafeIndoAtom,
+  cafeInfoAtom,
   cancelTimeAtom,
   formDataAtom,
   roomInfosAtom,
@@ -21,7 +21,7 @@ const useManagementInfo = () => {
   const [thumbnail, setThumbnail] = useAtom(thumbnailAtom);
   const [storeImages, setStoreImages] = useAtom(storeImagesAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
-  const [cafeData, setCafeData] = useAtom(cafeIndoAtom);
+  const [cafeData, setCafeData] = useAtom(cafeInfoAtom);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -141,7 +141,6 @@ const useManagementInfo = () => {
         cancel_available_time: cancelTime,
         rooms: roomInfos,
       },
-
       usage_fee: usageFees,
       title_image: thumbnail,
       multiple_images: storeImages,
