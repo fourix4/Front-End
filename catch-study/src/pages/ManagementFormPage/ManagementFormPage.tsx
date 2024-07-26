@@ -15,7 +15,7 @@ import {
 } from '../../config/error';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
-const ManagementForm: React.FC = () => {
+const ManagementFormPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { formData, handleInputChange, handleInputChangeNumber } =
@@ -156,4 +156,4 @@ const ManagementForm: React.FC = () => {
   );
 };
 
-export default ManagementForm;
+export default ManagementFormPage;
