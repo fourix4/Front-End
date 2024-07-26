@@ -102,7 +102,7 @@ const ManagementEditPage: React.FC = () => {
           <label className='whitespace-nowrap'>이용 가능 좌석</label>
           <input
             name='seats'
-            type='number'
+            type='string'
             value={formData.seats}
             onChange={handleInputChangeNumber}
             className='input-box'
