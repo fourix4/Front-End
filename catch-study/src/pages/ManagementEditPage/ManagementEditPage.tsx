@@ -1,4 +1,6 @@
-import { patchManagementInfo } from '../../apis/api/manager';
+import { useEffect } from 'react';
+import { getManagementInfo, patchManagementInfo } from '../../apis/api/manager';
+import getCafeInfoData from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
@@ -14,7 +16,7 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 const ManagementEditPage: React.FC = () => {
   useAuthCheck();
 
-  const { formData, handleInputChange, handleInputChangeNumber } =
+  const { formData, setFormData, handleInputChange, handleInputChangeNumber } =
     useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
@@ -50,6 +52,17 @@ const ManagementEditPage: React.FC = () => {
 
     console.log(rawData);
   };
+
+  useEffect(() => {
+    (async () => {
+      const rawData = await getManagementInfo();
+      const data = getCafeInfoData(rawData);
+
+      if (data) {
+        setFormData(data);
+      }
+    })();
+  }, []);
 
   return (
     <div className='w-screen h-full'>
