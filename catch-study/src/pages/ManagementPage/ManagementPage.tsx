@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getManagementInfo } from '../../apis/api/manager';
-import { getCheckUser, getUser } from '../../apis/api/user';
 import getCafeInfoData from '../../apis/services/manager';
-import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import ManagementCafeInfo from '../../components/ManagementCafeInfo/ManagementCafeInfo';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
+import useAuthCheck from '../../hooks/useAuthCheck';
 import useManagementInfo from '../../hooks/useManagementInfo';
 import { CafeInfoTypes } from '../../types/management';
 
 const ManagementPage: React.FC = () => {
+  useAuthCheck();
+
   const navigate = useNavigate();
 
   const { setFormData } = useManagementInfo();
@@ -20,26 +21,6 @@ const ManagementPage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      // 로그인 확인
-      const checkRawData = await getCheckUser();
-      const { isAuth, message } = isAuthUser(checkRawData);
-
-      if (!isAuth) {
-        alert(message);
-        navigate(ROUTE.HOME);
-        return;
-      }
-
-      // 권한 확인
-      const userRawData = await getUser();
-      const { author } = getUserInfo(userRawData);
-
-      if (author === 'roleUser') {
-        alert('관리자 아이다로 로그인 해주세요.');
-        navigate(ROUTE.HOME);
-        return;
-      }
-
       const rawData = await getManagementInfo();
       const data = getCafeInfoData(rawData);
 

@@ -8,9 +8,12 @@ import {
   MANAGEMENT_INFO_ERROR,
   ManagementErrorTypes,
 } from '../../config/error';
+import useAuthCheck from '../../hooks/useAuthCheck';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementEditPage: React.FC = () => {
+  useAuthCheck();
+
   const { formData, handleInputChange, handleInputChangeNumber } =
     useManagementInfo();
 

@@ -1,22 +1,18 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { postManagementInfo } from '../../apis/api/manager';
-import { getCheckUser, getUser } from '../../apis/api/user';
-import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
-import { ROLE, ROUTE } from '../../config/constants';
 import {
   MANAGEMENT_INFO_ERROR,
   ManagementErrorTypes,
 } from '../../config/error';
+import useAuthCheck from '../../hooks/useAuthCheck';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementFormPage: React.FC = () => {
-  const navigate = useNavigate();
+  useAuthCheck();
 
   const { formData, handleInputChange, handleInputChangeNumber } =
     useManagementInfo();
@@ -54,29 +50,6 @@ const ManagementFormPage: React.FC = () => {
 
     console.log(rawData);
   };
-
-  useEffect(() => {
-    (async () => {
-      // 로그인 확인
-      const checkRawData = await getCheckUser();
-      const { isAuth, message } = isAuthUser(checkRawData);
-
-      if (!isAuth) {
-        alert(message);
-        navigate(ROUTE.HOME);
-        return;
-      }
-
-      // 권한 확인
-      const userRawData = await getUser();
-      const { author } = getUserInfo(userRawData);
-
-      if (author !== ROLE.manager) {
-        alert('관리자 아이디로 로그인 해주세요.');
-        navigate(ROUTE.HOME);
-      }
-    })();
-  }, [navigate]);
 
   return (
     <div className='w-screen h-full'>
