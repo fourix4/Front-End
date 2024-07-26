@@ -1,24 +1,61 @@
+import { patchManagementInfo } from '../../apis/api/manager';
 import AddressForm from '../../components/AddressForm/AddreesFrom';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
+import {
+  MANAGEMENT_INFO_ERROR,
+  ManagementErrorTypes,
+} from '../../config/error';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementEditPage: React.FC = () => {
   const { formData, handleInputChange, handleInputChangeNumber } =
     useManagementInfo();
 
-  console.log('edit', formData);
+  const getErrorMessage = (errorType: ManagementErrorTypes): string => {
+    return MANAGEMENT_INFO_ERROR[errorType];
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+
+    let errorType: ManagementErrorTypes | null = null;
+
+    if (formData.cafe_name === '') {
+      errorType = 'CAFE_NAME_ERROR';
+    } else if (formData.seats === 0) {
+      errorType = 'SEATS_ERROR';
+    } else {
+      const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+      if (!timePattern.test(formData.opening_hours)) {
+        errorType = 'OPENING_HOURS_ERROR';
+      } else if (!timePattern.test(formData.closed_hours)) {
+        errorType = 'CLOSED_HOURS_ERROR';
+      }
+    }
+
+    if (errorType !== null) {
+      alert(getErrorMessage(errorType));
+      return;
+    }
+
+    const rawData = await patchManagementInfo(formData);
+
+    console.log(rawData);
+  };
 
   return (
     <div className='w-screen h-full'>
       <Topbar />
       <h1 className='w-full pb-10 font-bold text-center pt-30 text-22'>
-        스터디 카페 정보 입력
+        스터디 카페 정보 수정
       </h1>
       <form
-        // onSubmit={}
+        onSubmit={e => handleEditSubmit(e)}
         className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'
       >
         <input
