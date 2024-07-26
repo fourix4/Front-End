@@ -75,7 +75,7 @@ const ManagementFormPage: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
-        <AddressForm address={formData.address} />
+        <AddressForm />
         <div className='flex items-center justify-center gap-10'>
           <input
             name='opening_hours'

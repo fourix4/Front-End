@@ -1,7 +1,8 @@
-import { CafeInfoResponseTypes, ResponseTypes } from '../../types/interfaces';
+import { STATUS } from '../../config/api';
+import { CafeInfoResponseTypes } from '../../types/interfaces';
 
-const getCafeInfoData = (rawData: ResponseTypes | CafeInfoResponseTypes) => {
-  if (rawData.data) {
+const getCafeInfoData = (rawData: CafeInfoResponseTypes) => {
+  if (rawData.code === STATUS.SUCCESS && rawData.data) {
     return rawData.data.result;
   }
 

@@ -2,6 +2,7 @@ import { useAtom } from 'jotai';
 import { ChangeEvent, useEffect } from 'react';
 
 import {
+  addressAtom,
   cafeInfoAtom,
   cancelTimeAtom,
   formDataAtom,
@@ -16,6 +17,7 @@ type ManagementChangeTypes = 'room' | 'fee';
 
 const useManagementInfo = () => {
   const [roomInfos, setRoomInfos] = useAtom(roomInfosAtom);
+  const [address, setAddress] = useAtom(addressAtom);
   const [cancelTime, setCancelTime] = useAtom(cancelTimeAtom);
   const [usageFees, setUsageFees] = useAtom(usageFeesAtom);
   const [thumbnail, setThumbnail] = useAtom(thumbnailAtom);
@@ -29,13 +31,10 @@ const useManagementInfo = () => {
   ) => {
     const { name, value } = e.target;
 
-    if (field) {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [field]: {
-          ...prevFormData[field],
-          [name]: value,
-        },
+    if (field === 'address') {
+      setAddress(prevAdress => ({
+        ...prevAdress,
+        [name]: value,
       }));
     } else {
       setFormData(prevFormData => ({
@@ -55,18 +54,12 @@ const useManagementInfo = () => {
     }));
   };
 
-  const handleSelectChange = (
-    e: ChangeEvent<HTMLSelectElement>,
-    field: string,
-  ) => {
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    setFormData(prevFormData => ({
-      ...prevFormData,
-      [field]: {
-        ...prevFormData.address,
-        [name]: value,
-      },
+    setAddress(prevAdress => ({
+      ...prevAdress,
+      [name]: value,
     }));
   };
 
@@ -145,8 +138,9 @@ const useManagementInfo = () => {
       usage_fee: usageFees,
       title_image: thumbnail,
       multiple_images: storeImages,
+      address,
     }));
-  }, [roomInfos, usageFees, cancelTime, thumbnail, storeImages]);
+  }, [roomInfos, usageFees, cancelTime, thumbnail, storeImages, address]);
 
   return {
     roomInfos,
@@ -156,6 +150,8 @@ const useManagementInfo = () => {
     thumbnail,
     storeImages,
     cafeData,
+    address,
+    setAddress,
     setUsageFees,
     setRoomInfos,
     setFormData,

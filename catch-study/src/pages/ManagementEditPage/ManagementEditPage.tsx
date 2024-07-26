@@ -16,8 +16,16 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 const ManagementEditPage: React.FC = () => {
   useAuthCheck();
 
-  const { formData, setFormData, handleInputChange, handleInputChangeNumber } =
-    useManagementInfo();
+  const {
+    formData,
+    setFormData,
+    setAddress,
+    setCancelTime,
+    setRoomInfos,
+    setUsageFees,
+    handleInputChange,
+    handleInputChangeNumber,
+  } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
@@ -60,7 +68,13 @@ const ManagementEditPage: React.FC = () => {
 
       if (data) {
         setFormData(data);
+        setAddress(data.address);
+        setCancelTime(data.room_info.cancel_available_time);
+        setRoomInfos(data.room_info.rooms);
+        setUsageFees(data.usage_fee);
       }
+
+      console.log(data);
     })();
   }, []);
 
@@ -88,7 +102,7 @@ const ManagementEditPage: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
-        <AddressForm address={formData.address} />
+        <AddressForm />
         <div className='flex items-center justify-center gap-10'>
           <input
             name='opening_hours'

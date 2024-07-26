@@ -1,5 +1,6 @@
 import { atom } from 'jotai';
 import {
+  AddressTypes,
   CafeInfoTypes,
   FormDataTypes,
   RoomInfoTypes,
@@ -7,6 +8,12 @@ import {
 } from '../types/management';
 
 export const roomInfosAtom = atom<RoomInfoTypes[]>([]);
+export const addressAtom = atom<AddressTypes>({
+  city: '',
+  country: '',
+  town: '',
+  etc: '',
+});
 export const cancelTimeAtom = atom<number>(0);
 export const usageFeesAtom = atom<UsageFeeTypes[]>([]);
 export const thumbnailAtom = atom<File | string | null>(null);
