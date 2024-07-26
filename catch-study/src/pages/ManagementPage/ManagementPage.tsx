@@ -2,17 +2,17 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getManagementInfo } from '../../apis/api/manager';
 import { getCheckUser, getUser } from '../../apis/api/user';
-import isExistCafeInfo from '../../apis/services/manager';
+import { getCafeInfoData } from '../../apis/services/manager';
 import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import ManagementCafeInfo from '../../components/ManagementCafeInfo/ManagementCafeInfo';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
-import { FormDataTypes } from '../../types/management';
+import { CafeInfoTypes } from '../../types/management';
 
 const ManagementPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const [cafeInfo, setCafeInfo] = useState<FormDataTypes>();
+  const [cafeInfo, setCafeInfo] = useState<CafeInfoTypes>();
   const [isExist, setIsExist] = useState(false);
 
   useEffect(() => {
@@ -38,12 +38,11 @@ const ManagementPage: React.FC = () => {
       }
 
       const rawData = await getManagementInfo();
-
-      if (isExistCafeInfo(rawData)) {
+      const data = getCafeInfoData(rawData);
+      if (data) {
+        setCafeInfo(data);
         setIsExist(true);
-        return;
       }
-      setCafeInfo(rawData.result as FormDataTypes);
     })();
   }, [navigate]);
 

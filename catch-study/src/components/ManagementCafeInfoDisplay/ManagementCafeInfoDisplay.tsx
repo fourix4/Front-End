@@ -1,8 +1,8 @@
 import React from 'react';
-import { FormDataTypes } from '../../types/management';
+import { CafeInfoTypes } from '../../types/management';
 
 interface ManagementCafeInfoDisplayPropsTypes {
-  cafeInfo: FormDataTypes;
+  cafeInfo: CafeInfoTypes;
   onEdit: () => void;
 }
 
@@ -90,7 +90,7 @@ const ManagementCafeInfoDisplay: React.FC<
           <h2 className='font-semibold text-17'>썸네일 사진</h2>
           {cafeInfo.title_image && (
             <img
-              src={URL.createObjectURL(cafeInfo.title_image)}
+              src={cafeInfo.title_image}
               className='object-cover w-64 h-64 mt-4'
             />
           )}
@@ -101,7 +101,7 @@ const ManagementCafeInfoDisplay: React.FC<
             cafeInfo.multiple_images.map((image, index) => (
               <img
                 key={index}
-                src={URL.createObjectURL(image)}
+                src={image}
                 className='object-cover w-64 h-64 mt-4'
                 alt={`Store Image ${index + 1}`}
               />
