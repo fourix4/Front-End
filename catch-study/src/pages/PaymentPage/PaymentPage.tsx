@@ -54,6 +54,8 @@ const PaymentPage: React.FC = () => {
     );
     const result = getRedirectPCURL(rawData);
 
+    console.log(result);
+
     if (result) {
       navigate(result);
       return;

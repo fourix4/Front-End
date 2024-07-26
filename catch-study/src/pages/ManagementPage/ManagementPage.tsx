@@ -30,13 +30,13 @@ const ManagementPage: React.FC = () => {
         {isExist && cafeInfo ? (
           <ManagementCafeInfo cafeInfo={cafeInfo} />
         ) : (
-          <div className='w-full'>
+          <div className='w-full sm:w-smWeb lg:w-lgWeb'>
             <Link to={ROUTE.MANAGEMENT_FORM}>
               <button className='input-box'>스터디 카페 정보 입력</button>
             </Link>
           </div>
         )}
-        <div className='w-full'>
+        <div className='w-full sm:w-smWeb lg:w-lgWeb'>
           <Link to={ROUTE.CHATTING}>
             <button className='input-box'>채팅</button>
           </Link>
