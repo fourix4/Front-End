@@ -18,7 +18,8 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 const ManagementForm: React.FC = () => {
   const navigate = useNavigate();
 
-  const { formData, handleInputChange } = useManagementInfo();
+  const { formData, handleInputChange, handleInputChangeNumber } =
+    useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
@@ -133,7 +134,7 @@ const ManagementForm: React.FC = () => {
             name='seats'
             type='number'
             value={formData.seats}
-            onChange={handleInputChange}
+            onChange={handleInputChangeNumber}
             className='input-box'
           />
         </div>

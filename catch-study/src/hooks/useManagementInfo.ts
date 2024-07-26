@@ -43,6 +43,14 @@ const useManagementInfo = () => {
     }
   };
 
+  const handleInputChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [name]: parseInt(value, 10),
+    }));
+  };
+
   const handleSelectChange = (
     e: ChangeEvent<HTMLSelectElement>,
     field: string,
@@ -154,7 +162,7 @@ const useManagementInfo = () => {
     handleRoomNameChange,
     handleThumbnailChange,
     handleStoreImagesChange,
-
+    handleInputChangeNumber,
     handleRemoveItem,
     handleAddItem,
     handleArrayChange,
