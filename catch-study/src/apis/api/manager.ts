@@ -48,8 +48,12 @@ export const getManagementInfo = async () => {
   try {
     const { data } = await instance.get(API_ADDRESS.MANAGER_INFO_URI);
 
+    console.log('조회 데이터', data);
+
     return data;
   } catch (error) {
+    console.log('에러', error);
+
     const errorObj = error as ErrorResponseTypes;
 
     return errorObj;

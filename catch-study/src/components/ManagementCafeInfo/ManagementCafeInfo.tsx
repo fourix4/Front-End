@@ -18,7 +18,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
   useEffect(() => {
     setCafeData(cafeInfo);
     setUsageFees(cafeInfo.usage_fee);
-    setRoomInfos(cafeInfo.room_info[0].rooms);
+    setRoomInfos(cafeInfo.room_info.rooms);
   }, [isEdit]);
 
   return (

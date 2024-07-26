@@ -65,13 +65,13 @@ const ManagementCafeInfoDisplay: React.FC<
 
         <div className='flex-1 w-full pt-10 border-t-2 md:border-0 border-light-gray'>
           <h2 className='font-semibold text-17'>스터디룸 정보</h2>
-          {cafeInfo.room_info[0].rooms.length === 0 ? (
+          {cafeInfo.room_info.rooms.length === 0 ? (
             <div>
               <p>스터디룸 없음</p>
             </div>
           ) : (
             <div className='flex flex-col gap-10'>
-              {cafeInfo.room_info[0].rooms.map((room, index) => (
+              {cafeInfo.room_info.rooms.map((room, index) => (
                 <div key={index}>
                   <p>{room.name} 스터디룸</p>
                   <p>

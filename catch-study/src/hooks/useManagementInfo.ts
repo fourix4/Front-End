@@ -137,12 +137,11 @@ const useManagementInfo = () => {
   useEffect(() => {
     setFormData(prevFormData => ({
       ...prevFormData,
-      room_info: [
-        {
-          cancel_available_time: cancelTime,
-          rooms: roomInfos,
-        },
-      ],
+      room_info: {
+        cancel_available_time: cancelTime,
+        rooms: roomInfos,
+      },
+
       usage_fee: usageFees,
       title_image: thumbnail,
       multiple_images: storeImages,

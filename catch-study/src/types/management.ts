@@ -23,12 +23,11 @@ export interface FormDataTypes {
   closed_hours: string;
   closed_day: string;
   seats: number;
-  room_info: [
-    {
-      cancel_available_time: number;
-      rooms: RoomInfoTypes[];
-    },
-  ];
+  room_info: {
+    cancel_available_time: number;
+    rooms: RoomInfoTypes[];
+  };
+
   usage_fee: UsageFeeTypes[];
   title_image: File | null;
   multiple_images: File[];
@@ -43,12 +42,11 @@ export interface CafeInfoTypes {
   closed_hours: string;
   closed_day: string;
   seats: number;
-  room_info: [
-    {
-      cancel_available_time: number;
-      rooms: RoomInfoTypes[];
-    },
-  ];
+  room_info: {
+    cancel_available_time: number;
+    rooms: RoomInfoTypes[];
+  };
+
   usage_fee: UsageFeeTypes[];
   title_image: string | null;
   multiple_images: string[];

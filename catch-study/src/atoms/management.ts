@@ -23,12 +23,11 @@ export const formDataAtom = atom<FormDataTypes>({
   closed_hours: '',
   closed_day: '',
   seats: 0,
-  room_info: [
-    {
-      cancel_available_time: 0,
-      rooms: [],
-    },
-  ],
+  room_info: {
+    cancel_available_time: 0,
+    rooms: [],
+  },
+
   usage_fee: [],
   title_image: null,
   multiple_images: [],
@@ -47,12 +46,11 @@ export const cafeIndoAtom = atom<CafeInfoTypes>({
   closed_hours: '',
   closed_day: '',
   seats: 0,
-  room_info: [
-    {
-      cancel_available_time: 0,
-      rooms: [],
-    },
-  ],
+  room_info: {
+    cancel_available_time: 0,
+    rooms: [],
+  },
+
   usage_fee: [],
   title_image: null,
   multiple_images: [],
