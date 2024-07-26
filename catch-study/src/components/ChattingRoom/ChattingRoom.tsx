@@ -56,7 +56,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
   const scrollToBottom = () => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef.current.scrollIntoView({
+        behavior: 'auto',
+      });
     }
   };
 
@@ -216,7 +218,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
             })}
           </div>
         ))}
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} className='mb-20' />
       </div>
 
       <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'>
