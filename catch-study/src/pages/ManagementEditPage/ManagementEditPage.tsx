@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { getManagementInfo, patchManagementInfo } from '../../apis/api/manager';
 import getCafeInfoData from '../../apis/services/manager';
-import AddressForm from '../../components/AddressForm/AddreesFrom';
+import AddressForm from '../../components/AddressForm/AddreesForm';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
 import RoomForm from '../../components/RoomForm/RoomForm';

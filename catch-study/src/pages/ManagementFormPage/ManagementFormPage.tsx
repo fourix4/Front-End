@@ -1,5 +1,5 @@
 import { postManagementInfo } from '../../apis/api/manager';
-import AddressForm from '../../components/AddressForm/AddreesFrom';
+import AddressForm from '../../components/AddressForm/AddreesForm';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
