@@ -29,8 +29,8 @@ export interface FormDataTypes {
   };
 
   usage_fee: UsageFeeTypes[];
-  title_image: File | null;
-  multiple_images: File[];
+  title_image: File | string | null;
+  multiple_images: File[] | string[];
   seat_chart_image: string;
   cafe_phone: string;
 }

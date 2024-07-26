@@ -12,7 +12,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
     <>
       <div className='relative w-full p-20 border-2 rounded-sm border-light-gray bg-bright-gray'>
         <h1 className='mb-10 font-bold text-20'>스터디 카페 정보</h1>
-        <Link to={'/management/form'}>
+        <Link to={'/management/edit'}>
           <button className='absolute p-6 bg-white border-2 text-14 text-light-gray top-10 right-10 border-light-gray rounded-default'>
             수정하기
           </button>

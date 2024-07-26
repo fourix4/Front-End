@@ -7,10 +7,13 @@ import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import ManagementCafeInfo from '../../components/ManagementCafeInfo/ManagementCafeInfo';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
+import useManagementInfo from '../../hooks/useManagementInfo';
 import { CafeInfoTypes } from '../../types/management';
 
 const ManagementPage: React.FC = () => {
   const navigate = useNavigate();
+
+  const { setFormData } = useManagementInfo();
 
   const [cafeInfo, setCafeInfo] = useState<CafeInfoTypes>();
   const [isExist, setIsExist] = useState(false);
@@ -42,6 +45,7 @@ const ManagementPage: React.FC = () => {
 
       if (data) {
         setCafeInfo(data);
+        setFormData(data);
         setIsExist(true);
       }
     })();

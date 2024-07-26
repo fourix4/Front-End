@@ -9,8 +9,8 @@ import {
 export const roomInfosAtom = atom<RoomInfoTypes[]>([]);
 export const cancelTimeAtom = atom<number>(0);
 export const usageFeesAtom = atom<UsageFeeTypes[]>([]);
-export const thumbnailAtom = atom<File | null>(null);
-export const storeImagesAtom = atom<File[]>([]);
+export const thumbnailAtom = atom<File | string | null>(null);
+export const storeImagesAtom = atom<File[] | string[]>([]);
 export const formDataAtom = atom<FormDataTypes>({
   cafe_name: '',
   address: {

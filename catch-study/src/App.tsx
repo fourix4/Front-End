@@ -1,11 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import { ROUTE } from './config/constants';
+import BookingPage from './pages/BookingPage/BookingPage';
 import ChattingPage from './pages/ChattingPage/ChattingPage';
 import ChattingRoomPage from './pages/ChattingRoomPage/ChattingRoomPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
-
-import BookingPage from './pages/BookingPage/BookingPage';
 import ManagementEditPage from './pages/ManagementEditPage/ManagementEditPage';
 import ManagementFormPage from './pages/ManagementFormPage/ManagementFormPage';
 import ManagementPage from './pages/ManagementPage/ManagementPage';
