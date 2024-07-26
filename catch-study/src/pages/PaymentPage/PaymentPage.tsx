@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
-import { PAYMENT_TYPE, ROUTE } from '../../config/constants';
+import { PAYMENT_TYPE } from '../../config/constants';
 import kakaoPayment from '../../assets/kakao_payment.svg';
 import postPayment from '../../apis/api/payment';
 import getRedirectPCURL from '../../apis/services/payment';
@@ -59,8 +59,7 @@ const PaymentPage: React.FC = () => {
       return;
     }
 
-    navigate(ROUTE.PAYMENT_SUCCESS);
-    // alert('결제 실패');
+    alert('결제 실패');
   };
 
   const checkboxChange = (

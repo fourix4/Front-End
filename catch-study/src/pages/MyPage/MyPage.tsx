@@ -142,7 +142,7 @@ const MyPage: React.FC = () => {
               : `${getInputFormatTime(startTime.year, startTime.month, startTime.date)} ~ ${getInputFormatTime(endTime.year, endTime.month, endTime.date)}`}
           </p>
         </div>
-        <div className='min-h-300 h-600 overflow-y-auto'>
+        <div className='sm:w-smWeb min-h-300 h-600 overflow-y-auto'>
           {history.map((historyData, i) => (
             <BookingHistory key={i} historyData={historyData} />
           ))}
