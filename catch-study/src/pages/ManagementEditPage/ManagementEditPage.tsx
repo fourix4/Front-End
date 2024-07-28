@@ -24,7 +24,6 @@ const ManagementEditPage: React.FC = () => {
     setRoomInfos,
     setUsageFees,
     handleInputChange,
-    // handleInputChangeNumber,
   } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {

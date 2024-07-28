@@ -32,7 +32,6 @@ export interface FormDataTypes {
   usage_fee: UsageFeeTypes[];
   title_image: File | string | null;
   multiple_images: File[] | string[];
-  seat_chart_image: string;
   cafe_phone: string;
 }
 
@@ -51,6 +50,5 @@ export interface CafeInfoTypes {
   usage_fee: UsageFeeTypes[];
   title_image: string | null;
   multiple_images: string[];
-  seat_chart_image: string;
   cafe_phone: string;
 }

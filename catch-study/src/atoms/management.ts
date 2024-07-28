@@ -37,7 +37,6 @@ export const formDataAtom = atom<FormDataTypes>({
   usage_fee: [],
   title_image: null,
   multiple_images: [],
-  seat_chart_image: '',
   cafe_phone: '',
 });
 
@@ -60,6 +59,5 @@ export const cafeInfoAtom = atom<CafeInfoTypes>({
   usage_fee: [],
   title_image: null,
   multiple_images: [],
-  seat_chart_image: '',
   cafe_phone: '',
 });
