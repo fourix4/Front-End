@@ -86,8 +86,6 @@ export const getManagementInfo = async () => {
 
     return data;
   } catch (error) {
-    console.log('에러', error);
-
     const errorObj = error as ErrorResponseTypes;
 
     return errorObj;

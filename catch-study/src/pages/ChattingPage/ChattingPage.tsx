@@ -30,8 +30,6 @@ const ChattingPage: React.FC = () => {
       const roomRawData = await getChattingRoom();
       const roomData = getChattingRoomData(roomRawData);
 
-      console.log('채팅방', roomData);
-
       setChattingRooms(roomData);
     })();
   }, [navigate]);
