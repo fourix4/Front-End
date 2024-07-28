@@ -6,16 +6,13 @@ import instance from '../utils/axios';
 export interface DataTypes {
   [key: string]: any;
 }
-
 const createFormData = (data: FormDataTypes): FormData => {
   const formData = new FormData();
 
-  // JSON 데이터를 Blob으로 변환하여 FormData에 추가
   const json = JSON.stringify(data);
 
   formData.append('data', new Blob([json], { type: 'application/json' }));
 
-  // 파일 데이터를 FormData에 추가
   Object.entries(data).forEach(([key, value]) => {
     if (
       value instanceof File ||
@@ -33,18 +30,6 @@ const createFormData = (data: FormDataTypes): FormData => {
 
   return formData;
 };
-
-// const createFormData = (data: DataTypes): FormData => {
-//   const formData = new FormData();
-
-//   for (const key in data) {
-//     if (key in data && data[key] !== null) {
-//       formData.append(key, data[key]);
-//     }
-//   }
-
-//   return formData;
-// };
 
 export const postManagementInfo = async (formData: FormDataTypes) => {
   try {
