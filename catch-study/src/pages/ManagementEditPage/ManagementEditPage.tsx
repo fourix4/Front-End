@@ -126,16 +126,6 @@ const ManagementEditPage: React.FC = () => {
           className='input-box'
         />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        {/* <div className='flex items-center w-full gap-20'>
-          <label className='whitespace-nowrap'>이용 가능 좌석</label>
-          <input
-            name='seats'
-            type='string'
-            value={formData.seats}
-            onChange={handleInputChangeNumber}
-            className='input-box'
-          />
-        </div> */}
         <FeeForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         <RoomForm />

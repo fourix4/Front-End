@@ -6,6 +6,7 @@ export interface AddressTypes {
 }
 
 export interface RoomInfoTypes {
+  // id? : string
   name: string;
   capacity: number;
   price: number;

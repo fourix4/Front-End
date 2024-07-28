@@ -15,6 +15,7 @@ const createFormData = (data: DataTypes): FormData => {
       formData.append(key, data[key]);
     }
   }
+
   return formData;
 };
 
@@ -25,11 +26,6 @@ export const postManagementInfo = async (formData: FormDataTypes) => {
     const { data } = await instance.post<ResponseTypes>(
       API_ADDRESS.MANAGER_INFO_URI,
       dataForm,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
     );
 
     return data;
@@ -47,11 +43,6 @@ export const patchManagementInfo = async (editFormData: FormDataTypes) => {
     const { data } = await instance.patch<ResponseTypes>(
       API_ADDRESS.MANAGER_INFO_URI,
       dataForm,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      },
     );
 
     return data;
