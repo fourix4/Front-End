@@ -28,7 +28,7 @@ export interface FormDataTypes {
     cancel_available_time: number;
     rooms: RoomInfoTypes[];
   };
-
+  seat_chart_image: string;
   usage_fee: UsageFeeTypes[];
   title_image: File | string | null;
   multiple_images: File[] | string[];
@@ -46,7 +46,7 @@ export interface CafeInfoTypes {
     cancel_available_time: number;
     rooms: RoomInfoTypes[];
   };
-
+  seat_chart_image: string;
   usage_fee: UsageFeeTypes[];
   title_image: string | null;
   multiple_images: string[];

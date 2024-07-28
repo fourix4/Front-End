@@ -21,6 +21,8 @@ const ManagementPage: React.FC = () => {
       const rawData = await getManagementInfo();
       const data = getCafeInfoData(rawData);
 
+      console.log('조회', data);
+
       if (data) {
         setCafeInfo(data);
         setIsExist(true);
