@@ -12,14 +12,14 @@ interface ChattingRoomPropTypes {
   userId: number;
   email: string;
   roomId: string;
-  cafeName: string;
+  chattingName: string;
 }
 
 const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   userId,
   email,
   roomId,
-  cafeName,
+  chattingName,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -203,7 +203,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
                   ) : (
                     <div>
                       {showCafeName && (
-                        <span className='font-medium text-12'>{cafeName}</span>
+                        <span className='font-medium text-12'>
+                          {chattingName}
+                        </span>
                       )}
                       <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}

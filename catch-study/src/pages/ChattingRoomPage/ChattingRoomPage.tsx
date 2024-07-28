@@ -13,7 +13,7 @@ const ChattingRoomPage: React.FC = () => {
   const [id, setId] = useState<number | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [roomId] = useState(sessionStorage.getItem('chattingRoomId'));
-  const [cafeName] = useState(sessionStorage.getItem('cafeName'));
+  const [chattingName] = useState(sessionStorage.getItem('chattingName'));
 
   useEffect(() => {
     (async () => {
@@ -39,12 +39,12 @@ const ChattingRoomPage: React.FC = () => {
   return (
     <div className='w-screen h-screen overflow-hidden'>
       <Topbar />
-      {authChecked && id && email && roomId && cafeName && (
+      {authChecked && id && email && roomId && chattingName && (
         <ChattingRoom
           userId={id}
           email={email}
           roomId={roomId}
-          cafeName={cafeName}
+          chattingName={chattingName}
         />
       )}
     </div>
