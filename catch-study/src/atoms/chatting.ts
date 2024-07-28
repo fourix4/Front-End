@@ -18,3 +18,22 @@ export const setChattingRoomId = atom(null, (_, set, update: number | null) => {
     sessionStorage.setItem('chattingRoomId', update.toString());
   }
 });
+
+export const chattingName = atom<string | null>(null);
+
+chattingName.onMount = setAtom => {
+  const savedName = sessionStorage.getItem('chattingName');
+
+  if (savedName) {
+    setAtom(savedName);
+  }
+};
+
+export const setChattingName = atom(null, (_, set, update: string | null) => {
+  set(chattingName, update);
+  if (update === null) {
+    sessionStorage.removeItem('chattingName');
+  } else {
+    sessionStorage.setItem('chattingName', update);
+  }
+});

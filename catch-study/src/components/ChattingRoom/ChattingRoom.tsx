@@ -12,14 +12,14 @@ interface ChattingRoomPropTypes {
   userId: number;
   email: string;
   roomId: string;
-  cafeName: string;
+  chattingName: string;
 }
 
 const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   userId,
   email,
   roomId,
-  cafeName,
+  chattingName,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (sendChat === '') return;
     if (!accessToken) return;
 
@@ -203,7 +205,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
                   ) : (
                     <div>
                       {showCafeName && (
-                        <span className='font-medium text-12'>{cafeName}</span>
+                        <span className='font-medium text-12'>
+                          {chattingName}
+                        </span>
                       )}
                       <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
                         {chat.chat}
@@ -221,7 +225,10 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
         <div ref={messagesEndRef} className='mb-20' />
       </div>
 
-      <div className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'>
+      <form
+        onSubmit={e => handleSendMessage(e)}
+        className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'
+      >
         <input
           type='text'
           value={sendChat}
@@ -229,12 +236,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
           className='w-full h-full px-10'
         />
         <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>
-          <button
-            onClick={handleSendMessage}
-            className='w-30 h-30 bg-send-plane'
-          ></button>
+          <button type='submit' className='w-30 h-30 bg-send-plane'></button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -173,9 +173,9 @@ export interface BookingTypes {
   address: string;
   name: string;
   code: number;
-  payment_time: string;
-  start_time: string;
-  end_time: string;
+  paymentTime: string;
+  startTime: string;
+  endTime: string;
   availableTime?: string;
 }
 
