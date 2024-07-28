@@ -1,9 +1,10 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
 const RoomForm: React.FC = () => {
   const {
     roomInfos,
+    cancelTime,
     handleAddItem,
     setCancelTime,
     handleRoomNameChange,
@@ -11,29 +12,11 @@ const RoomForm: React.FC = () => {
     handleRemoveItem,
   } = useManagementInfo();
 
-  const [timeType, setTimeType] = useState<'분' | '시간'>('분');
-  const [time, setTime] = useState('');
-
   const handleCancelTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-
-    setTime(value);
-
     const numberValue = value === '' ? 0 : parseInt(value, 10);
-    const cancelTime = timeType === '시간' ? numberValue * 60 : numberValue;
 
-    setCancelTime(cancelTime);
-  };
-
-  const handleTimeTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const newTimeType = e.target.value as '분' | '시간';
-
-    setTimeType(newTimeType);
-
-    const numberValue = time === '' ? 0 : parseInt(time, 10);
-    const cancelTime = newTimeType === '시간' ? numberValue * 60 : numberValue;
-
-    setCancelTime(cancelTime);
+    setCancelTime(numberValue);
   };
 
   return (
@@ -53,15 +36,12 @@ const RoomForm: React.FC = () => {
           <p className='whitespace-nowrap'>예약 시간 이전</p>
           <input
             type='text'
-            value={time}
+            value={cancelTime}
             onChange={handleCancelTimeChange}
             className='input-box max-w-100'
           />
-          <select value={timeType} onChange={handleTimeTypeChange}>
-            <option value='분'>분</option>
-            <option value='시간'>시간</option>
-          </select>
-          <p className='whitespace-nowrap'>전까지 취소 가능</p>
+
+          <p className='whitespace-nowrap'>분 전까지 취소 가능</p>
         </div>
       )}
       {roomInfos.map((room, index) => (
