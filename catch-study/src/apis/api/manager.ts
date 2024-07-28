@@ -6,6 +6,7 @@ import instance from '../utils/axios';
 export interface DataTypes {
   [key: string]: any;
 }
+
 const createFormData = (data: FormDataTypes): FormData => {
   const formData = new FormData();
 
@@ -14,17 +15,12 @@ const createFormData = (data: FormDataTypes): FormData => {
   formData.append('data', new Blob([json], { type: 'application/json' }));
 
   Object.entries(data).forEach(([key, value]) => {
-    if (
-      value instanceof File ||
-      (Array.isArray(value) && value[0] instanceof File)
-    ) {
-      if (Array.isArray(value)) {
-        value.forEach((file, index) => {
-          formData.append(`${key}[${index}]`, file);
-        });
-      } else {
-        formData.append(key, value);
-      }
+    if (value instanceof File) {
+      formData.append(key, value);
+    } else if (Array.isArray(value) && value[0] instanceof File) {
+      value.forEach(file => {
+        formData.append(key, file);
+      });
     }
   });
 
