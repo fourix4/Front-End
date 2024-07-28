@@ -2,6 +2,8 @@ import { useAtom } from 'jotai';
 import { ChangeEvent, useEffect } from 'react';
 
 import {
+  addressAtom,
+  cafeInfoAtom,
   cancelTimeAtom,
   formDataAtom,
   roomInfosAtom,
@@ -15,11 +17,13 @@ type ManagementChangeTypes = 'room' | 'fee';
 
 const useManagementInfo = () => {
   const [roomInfos, setRoomInfos] = useAtom(roomInfosAtom);
+  const [address, setAddress] = useAtom(addressAtom);
   const [cancelTime, setCancelTime] = useAtom(cancelTimeAtom);
   const [usageFees, setUsageFees] = useAtom(usageFeesAtom);
   const [thumbnail, setThumbnail] = useAtom(thumbnailAtom);
   const [storeImages, setStoreImages] = useAtom(storeImagesAtom);
   const [formData, setFormData] = useAtom(formDataAtom);
+  const [cafeData, setCafeData] = useAtom(cafeInfoAtom);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,
@@ -27,13 +31,10 @@ const useManagementInfo = () => {
   ) => {
     const { name, value } = e.target;
 
-    if (field) {
-      setFormData(prevFormData => ({
-        ...prevFormData,
-        [field]: {
-          ...prevFormData[field],
-          [name]: value,
-        },
+    if (field === 'address') {
+      setAddress(prevAdress => ({
+        ...prevAdress,
+        [name]: value,
       }));
     } else {
       setFormData(prevFormData => ({
@@ -43,18 +44,22 @@ const useManagementInfo = () => {
     }
   };
 
-  const handleSelectChange = (
-    e: ChangeEvent<HTMLSelectElement>,
-    field: string,
-  ) => {
+  const handleInputChangeNumber = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    const numberValue = value === '' ? 0 : parseInt(value, 10);
 
     setFormData(prevFormData => ({
       ...prevFormData,
-      [field]: {
-        ...prevFormData.address,
-        [name]: value,
-      },
+      [name]: numberValue,
+    }));
+  };
+
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    setAddress(prevAdress => ({
+      ...prevAdress,
+      [name]: value,
     }));
   };
 
@@ -126,17 +131,16 @@ const useManagementInfo = () => {
   useEffect(() => {
     setFormData(prevFormData => ({
       ...prevFormData,
-      room_info: [
-        {
-          cancel_available_time: cancelTime,
-          rooms: roomInfos,
-        },
-      ],
+      room_info: {
+        cancel_available_time: cancelTime,
+        rooms: roomInfos,
+      },
       usage_fee: usageFees,
       title_image: thumbnail,
       multiple_images: storeImages,
+      address,
     }));
-  }, [roomInfos, usageFees, cancelTime, thumbnail, storeImages]);
+  }, [roomInfos, usageFees, cancelTime, thumbnail, storeImages, address]);
 
   return {
     roomInfos,
@@ -145,16 +149,20 @@ const useManagementInfo = () => {
     formData,
     thumbnail,
     storeImages,
+    cafeData,
+    address,
+    setAddress,
     setUsageFees,
     setRoomInfos,
     setFormData,
     setCancelTime,
+    setCafeData,
     handleInputChange,
     handleSelectChange,
     handleRoomNameChange,
     handleThumbnailChange,
     handleStoreImagesChange,
-
+    handleInputChangeNumber,
     handleRemoveItem,
     handleAddItem,
     handleArrayChange,

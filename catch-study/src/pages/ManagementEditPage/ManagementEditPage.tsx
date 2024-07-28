@@ -1,7 +1,9 @@
-import { postManagementInfo } from '../../apis/api/manager';
+import { useEffect } from 'react';
+import { getManagementInfo, patchManagementInfo } from '../../apis/api/manager';
+import getCafeInfoData from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesForm';
 import FeeForm from '../../components/FeeForm/FeeForm';
-import ImageForm from '../../components/ImangeForm/ImageForm';
+import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
 import {
@@ -11,17 +13,25 @@ import {
 import useAuthCheck from '../../hooks/useAuthCheck';
 import useManagementInfo from '../../hooks/useManagementInfo';
 
-const ManagementFormPage: React.FC = () => {
+const ManagementEditPage: React.FC = () => {
   useAuthCheck();
 
-  const { formData, handleInputChange, handleInputChangeNumber } =
-    useManagementInfo();
+  const {
+    formData,
+    setFormData,
+    setAddress,
+    setCancelTime,
+    setRoomInfos,
+    setUsageFees,
+    handleInputChange,
+    // handleInputChangeNumber,
+  } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
   };
 
-  const handleInfoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
 
@@ -29,8 +39,6 @@ const ManagementFormPage: React.FC = () => {
 
     if (formData.cafe_name === '') {
       errorType = 'CAFE_NAME_ERROR';
-    } else if (formData.seats === 0) {
-      errorType = 'SEATS_ERROR';
     } else {
       const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
@@ -46,20 +54,37 @@ const ManagementFormPage: React.FC = () => {
       return;
     }
 
-    const rawData = await postManagementInfo(formData);
+    const rawData = await patchManagementInfo(formData);
 
     console.log(rawData);
   };
 
+  useEffect(() => {
+    (async () => {
+      const rawData = await getManagementInfo();
+      const data = getCafeInfoData(rawData);
+
+      if (data) {
+        setFormData(data);
+        setAddress(data.address);
+        setCancelTime(data.room_info.cancel_available_time);
+        setRoomInfos(data.room_info.rooms);
+        setUsageFees(data.usage_fee);
+      }
+
+      console.log(data);
+    })();
+  }, []);
+
   return (
-    <div className='w-full h-full'>
+    <div className='w-screen h-full'>
       <Topbar />
       <h1 className='w-full pb-10 font-bold text-center pt-30 text-22'>
-        스터디 카페 정보 입력
+        스터디 카페 정보 수정
       </h1>
       <form
-        onSubmit={handleInfoSubmit}
-        className='flex flex-col w-full sm:w-smWeb lg:w-lgWeb h-full gap-20 p-20 m-middle md:w-1/2'
+        onSubmit={e => handleEditSubmit(e)}
+        className='flex flex-col w-full h-full gap-20 p-20 m-middle md:w-1/2'
       >
         <input
           name='cafe_name'
@@ -101,21 +126,11 @@ const ManagementFormPage: React.FC = () => {
           className='input-box'
         />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <div className='flex items-center w-full gap-20'>
-          <label className='whitespace-nowrap'>이용 가능 좌석</label>
-          <input
-            name='seats'
-            type='number'
-            value={formData.seats}
-            onChange={handleInputChangeNumber}
-            className='input-box'
-          />
-        </div>
         <FeeForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         <RoomForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <ImageForm />
+        <ImageEditForm />
         <div className='w-full pt-50'>
           <button
             type='submit'
@@ -129,4 +144,4 @@ const ManagementFormPage: React.FC = () => {
   );
 };
 
-export default ManagementFormPage;
+export default ManagementEditPage;

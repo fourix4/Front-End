@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 import { ROUTE } from './config/constants';
+import BookingPage from './pages/BookingPage/BookingPage';
 import ChattingPage from './pages/ChattingPage/ChattingPage';
 import ChattingRoomPage from './pages/ChattingRoomPage/ChattingRoomPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import MainPage from './pages/MainPage/MainPage';
-
-import BookingPage from './pages/BookingPage/BookingPage';
-import ManagementForm from './pages/ManagementFormPage/ManagementFormPage';
+import ManagementEditPage from './pages/ManagementEditPage/ManagementEditPage';
+import ManagementFormPage from './pages/ManagementFormPage/ManagementFormPage';
 import ManagementPage from './pages/ManagementPage/ManagementPage';
 import MyPage from './pages/MyPage/MyPage';
 import PaymentPage from './pages/PaymentPage/PaymentPage';
@@ -25,7 +25,8 @@ const App: React.FC = () => {
         <Route path={ROUTE.CHATTING_ROOM} element={<ChattingRoomPage />} />
         <Route path={ROUTE.MYPAGE} element={<MyPage />} />
         <Route path={ROUTE.MANAGEMENT} element={<ManagementPage />} />
-        <Route path={ROUTE.MANAGEMENT_FORM} element={<ManagementForm />} />
+        <Route path={ROUTE.MANAGEMENT_FORM} element={<ManagementFormPage />} />
+        <Route path={ROUTE.MANAGEMENT_EDIT} element={<ManagementEditPage />} />
         <Route
           path={ROUTE.STUDYCAFE_BOOKING}
           element={<StudycafeBookingPage />}

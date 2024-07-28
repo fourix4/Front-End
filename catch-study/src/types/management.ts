@@ -6,6 +6,7 @@ export interface AddressTypes {
 }
 
 export interface RoomInfoTypes {
+  // id? : string
   name: string;
   capacity: number;
   price: number;
@@ -23,15 +24,33 @@ export interface FormDataTypes {
   closed_hours: string;
   closed_day: string;
   seats: number;
-  room_info: [
-    {
-      cancel_available_time: number;
-      rooms: RoomInfoTypes[];
-    },
-  ];
+  room_info: {
+    cancel_available_time: number;
+    rooms: RoomInfoTypes[];
+  };
+
   usage_fee: UsageFeeTypes[];
-  title_image: File | null;
-  multiple_images: File[];
+  title_image: File | string | null;
+  multiple_images: File[] | string[];
+  seat_chart_image: string;
+  cafe_phone: string;
+}
+
+export interface CafeInfoTypes {
+  cafe_name: string;
+  address: AddressTypes;
+  opening_hours: string;
+  closed_hours: string;
+  closed_day: string;
+  seats: number;
+  room_info: {
+    cancel_available_time: number;
+    rooms: RoomInfoTypes[];
+  };
+
+  usage_fee: UsageFeeTypes[];
+  title_image: string | null;
+  multiple_images: string[];
   seat_chart_image: string;
   cafe_phone: string;
 }

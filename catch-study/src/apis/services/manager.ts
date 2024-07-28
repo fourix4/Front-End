@@ -1,12 +1,12 @@
 import { STATUS } from '../../config/api';
-import { ResponseTypes } from '../../types/interfaces';
+import { CafeInfoResponseTypes } from '../../types/interfaces';
 
-const isExistCafeInfo = (rawData: ResponseTypes) => {
-  if (rawData.code === STATUS.SUCCESS) {
-    return true;
+const getCafeInfoData = (rawData: CafeInfoResponseTypes) => {
+  if (rawData.code === STATUS.SUCCESS && rawData.data) {
+    return rawData.data.result;
   }
 
-  return false;
+  return null;
 };
 
-export default isExistCafeInfo;
+export default getCafeInfoData;
