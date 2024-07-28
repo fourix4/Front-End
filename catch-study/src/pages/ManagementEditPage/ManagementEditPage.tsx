@@ -24,7 +24,7 @@ const ManagementEditPage: React.FC = () => {
     setRoomInfos,
     setUsageFees,
     handleInputChange,
-    handleInputChangeNumber,
+    // handleInputChangeNumber,
   } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
@@ -39,8 +39,6 @@ const ManagementEditPage: React.FC = () => {
 
     if (formData.cafe_name === '') {
       errorType = 'CAFE_NAME_ERROR';
-    } else if (formData.seats === 0) {
-      errorType = 'SEATS_ERROR';
     } else {
       const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
@@ -128,7 +126,7 @@ const ManagementEditPage: React.FC = () => {
           className='input-box'
         />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <div className='flex items-center w-full gap-20'>
+        {/* <div className='flex items-center w-full gap-20'>
           <label className='whitespace-nowrap'>이용 가능 좌석</label>
           <input
             name='seats'
@@ -137,7 +135,7 @@ const ManagementEditPage: React.FC = () => {
             onChange={handleInputChangeNumber}
             className='input-box'
           />
-        </div>
+        </div> */}
         <FeeForm />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         <RoomForm />
