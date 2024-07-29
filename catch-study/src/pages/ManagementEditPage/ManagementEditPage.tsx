@@ -24,7 +24,6 @@ const ManagementEditPage: React.FC = () => {
     setRoomInfos,
     setUsageFees,
     handleInputChange,
-    // handleInputChangeNumber,
   } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
@@ -33,7 +32,7 @@ const ManagementEditPage: React.FC = () => {
 
   const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    console.log('보내기', formData);
 
     let errorType: ManagementErrorTypes | null = null;
 
@@ -56,7 +55,7 @@ const ManagementEditPage: React.FC = () => {
 
     const rawData = await patchManagementInfo(formData);
 
-    console.log(rawData);
+    console.log('받기', rawData);
   };
 
   useEffect(() => {
@@ -71,8 +70,6 @@ const ManagementEditPage: React.FC = () => {
         setRoomInfos(data.room_info.rooms);
         setUsageFees(data.usage_fee);
       }
-
-      console.log(data);
     })();
   }, []);
 

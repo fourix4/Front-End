@@ -23,7 +23,6 @@ const ManagementFormPage: React.FC = () => {
 
   const handleInfoSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
 
     let errorType: ManagementErrorTypes | null = null;
 
@@ -48,7 +47,7 @@ const ManagementFormPage: React.FC = () => {
 
     const rawData = await postManagementInfo(formData);
 
-    console.log(rawData);
+    console.log('받음', rawData);
   };
 
   return (
@@ -59,7 +58,7 @@ const ManagementFormPage: React.FC = () => {
       </h1>
       <form
         onSubmit={handleInfoSubmit}
-        className='flex flex-col w-full sm:w-smWeb lg:w-lgWeb h-full gap-20 p-20 m-middle md:w-1/2'
+        className='flex flex-col w-full h-full gap-20 p-20 sm:w-smWeb lg:w-lgWeb m-middle md:w-1/2'
       >
         <input
           name='cafe_name'

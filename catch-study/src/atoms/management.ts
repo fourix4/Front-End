@@ -34,10 +34,10 @@ export const formDataAtom = atom<FormDataTypes>({
     cancel_available_time: 0,
     rooms: [],
   },
+  seat_chart_image: '',
   usage_fee: [],
   title_image: null,
   multiple_images: [],
-  seat_chart_image: '',
   cafe_phone: '',
 });
 
@@ -57,9 +57,9 @@ export const cafeInfoAtom = atom<CafeInfoTypes>({
     cancel_available_time: 0,
     rooms: [],
   },
+  seat_chart_image: '',
   usage_fee: [],
   title_image: null,
   multiple_images: [],
-  seat_chart_image: '',
   cafe_phone: '',
 });

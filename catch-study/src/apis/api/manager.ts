@@ -7,14 +7,22 @@ export interface DataTypes {
   [key: string]: any;
 }
 
-const createFormData = (data: DataTypes): FormData => {
+const createFormData = (data: FormDataTypes): FormData => {
   const formData = new FormData();
 
-  for (const key in data) {
-    if (key in data && data[key] !== null) {
-      formData.append(key, data[key]);
+  const json = JSON.stringify(data);
+
+  formData.append('data', new Blob([json], { type: 'application/json' }));
+
+  Object.entries(data).forEach(([key, value]) => {
+    if (value instanceof File) {
+      formData.append(key, value);
+    } else if (Array.isArray(value) && value[0] instanceof File) {
+      value.forEach(file => {
+        formData.append(key, file);
+      });
     }
-  }
+  });
 
   return formData;
 };
@@ -59,8 +67,6 @@ export const getManagementInfo = async () => {
 
     return data;
   } catch (error) {
-    console.log('에러', error);
-
     const errorObj = error as ErrorResponseTypes;
 
     return errorObj;
