@@ -15,22 +15,18 @@ const postPayment = async (
   amount: number,
   startTime = '',
 ) => {
-  const params = {
-    cafe_id: cafeId,
-    payment_type: paymentType,
-    seat_id: type === SEAT_TYPE.SEAT ? id : '',
-    room_id: type === SEAT_TYPE.ROOM ? id : '',
-    type,
-    time,
-    amount,
-    start_time: startTime,
-  };
-
   try {
     const { data } = await instance.post<PaymentKakaoResponseTypes>(
       API_ADDRESS.PAYMENT_KAKAO,
       {
-        params,
+        cafe_id: cafeId,
+        payment_type: paymentType,
+        seat_id: type === SEAT_TYPE.SEAT ? id : '',
+        room_id: type === SEAT_TYPE.ROOM ? id : '',
+        type,
+        time,
+        amount,
+        start_time: startTime,
       },
     );
 

@@ -23,13 +23,9 @@ export const getCurrentBooking = async () => {
 };
 
 export const patchCheckout = async (bookingId: number) => {
-  const params = {
-    booking_id: bookingId,
-  };
-
   try {
     const { data } = await instance.patch<ResponseTypes>(API_ADDRESS.CHECKOUT, {
-      params,
+      booking_id: bookingId,
     });
 
     return data;
@@ -41,15 +37,11 @@ export const patchCheckout = async (bookingId: number) => {
 };
 
 export const patchCancelRoom = async (bookingId: number) => {
-  const params = {
-    booking_id: bookingId,
-  };
-
   try {
     const { data } = await instance.patch<ResponseTypes>(
       API_ADDRESS.ROOM_CANCEL,
       {
-        params,
+        booking_id: bookingId,
       },
     );
 
