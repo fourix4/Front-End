@@ -55,7 +55,11 @@ const BookingRoomModal: React.FC<BookingRoomModalPropTypes> = ({
   useEffect(() => {
     (async () => {
       const date = dateTo8Digit(roomDate.year, roomDate.month, roomDate.date);
-      const rawData = await getRoomTimeInfo(selectedType.id, date, roomTime);
+      const rawData = await getRoomTimeInfo(
+        selectedType.id,
+        date,
+        roomTime * 60,
+      );
       const data = getRoomTimetable(rawData);
 
       setAvailableTime(data);
