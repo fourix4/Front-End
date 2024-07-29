@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getManagementInfo, patchManagementInfo } from '../../apis/api/manager';
-import getCafeInfoData from '../../apis/services/manager';
+import {
+  getCafeInfoData,
+  isSuccessCafeInfo,
+} from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesForm';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
 import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
+import { ROUTE } from '../../config/constants';
 import {
   MANAGEMENT_INFO_ERROR,
   ManagementErrorTypes,
@@ -15,6 +20,8 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementEditPage: React.FC = () => {
   useAuthCheck();
+
+  const navigator = useNavigate();
 
   const {
     formData,
@@ -61,6 +68,12 @@ const ManagementEditPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const rawData = await getManagementInfo();
+
+      if (!isSuccessCafeInfo(rawData)) {
+        alert(rawData.message);
+        navigator(ROUTE.MANAGEMENT);
+      }
+
       const data = getCafeInfoData(rawData);
 
       if (data) {
