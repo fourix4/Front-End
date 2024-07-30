@@ -5,7 +5,6 @@ import { getUserInfo } from '../../apis/services/user';
 import { ACCESS_TOKEN, ROLE, ROUTE } from '../../config/constants';
 
 const RedirectionPage = () => {
-  // const navigate = useNavigate();
   const accessToken = new URL(document.location.toString()).searchParams.get(
     ACCESS_TOKEN,
   );
@@ -26,15 +25,6 @@ const RedirectionPage = () => {
 
       setRole(author);
       setLoading(false);
-
-      // console.log(author);
-      // if (author === ROLE.manager) {
-      //   console.log('매니저');
-
-      //   navigate(ROUTE.MANAGEMENT);
-      // }
-
-      // navigate(ROUTE.HOME);
     })();
   }, []);
 
