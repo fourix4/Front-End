@@ -1,5 +1,9 @@
 import { API_ADDRESS } from '../../config/api';
-import { ErrorResponseTypes, ResponseTypes } from '../../types/interfaces';
+import {
+  CafeInfoResponseTypes,
+  ErrorResponseTypes,
+  ResponseTypes,
+} from '../../types/interfaces';
 import { FormDataTypes } from '../../types/management';
 import instance from '../utils/axios';
 
@@ -63,7 +67,9 @@ export const patchManagementInfo = async (editFormData: FormDataTypes) => {
 
 export const getManagementInfo = async () => {
   try {
-    const { data } = await instance.get(API_ADDRESS.MANAGER_INFO_URI);
+    const { data } = await instance.get<CafeInfoResponseTypes>(
+      API_ADDRESS.MANAGER_INFO_URI,
+    );
 
     return data;
   } catch (error) {
