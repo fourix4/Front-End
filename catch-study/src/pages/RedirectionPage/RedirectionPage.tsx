@@ -1,12 +1,17 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import { getUser } from '../../apis/api/user';
+import { getUserInfo } from '../../apis/services/user';
+import { ACCESS_TOKEN, ROLE, ROUTE } from '../../config/constants';
 
 const RedirectionPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const accessToken = new URL(document.location.toString()).searchParams.get(
     ACCESS_TOKEN,
   );
+
+  const [role, setRole] = useState(ROLE.user);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!accessToken) {
@@ -15,10 +20,36 @@ const RedirectionPage = () => {
       localStorage.setItem(ACCESS_TOKEN, accessToken);
     }
 
-    navigate(ROUTE.HOME);
+    (async () => {
+      const rawData = await getUser();
+      const { author } = getUserInfo(rawData);
+
+      setRole(author);
+      setLoading(false);
+
+      // console.log(author);
+      // if (author === ROLE.manager) {
+      //   console.log('매니저');
+
+      //   navigate(ROUTE.MANAGEMENT);
+      // }
+
+      // navigate(ROUTE.HOME);
+    })();
   }, []);
 
-  return <div></div>;
+  return (
+    <div>
+      {loading ? (
+        <p>로딩</p>
+      ) : (
+        <>
+          {role === ROLE.user && <Navigate to={ROUTE.HOME} replace />}
+          {role === ROLE.manager && <Navigate to={ROUTE.MANAGEMENT} />}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default RedirectionPage;
