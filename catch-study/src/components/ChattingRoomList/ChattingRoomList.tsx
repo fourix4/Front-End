@@ -11,11 +11,11 @@ interface ChattingRoomListPropsTypes {
 
 const ChattingRoomList: React.FC<ChattingRoomListPropsTypes> = ({ rooms }) => {
   const [, setChattingRoomIdAtom] = useAtom(setChattingRoomId);
-  const [, setChattingNAmeAtom] = useAtom(setChattingName);
+  const [, setChattingNameAtom] = useAtom(setChattingName);
 
   const handleSelectChattingRoom = (id: number, name: string) => {
     setChattingRoomIdAtom(id);
-    setChattingNAmeAtom(name);
+    setChattingNameAtom(name);
   };
 
   return (
