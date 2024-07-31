@@ -27,13 +27,16 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
     const rawData = await getStudycafeList(filter, page);
     const data = getStudycafeListData(rawData);
 
+    if (data.length === 0) {
+      setHasMore(false);
+      return;
+    }
+
     if (
-      data.length === 0 ||
       studycafeList.every(
         (v, i) => JSON.stringify(v) === JSON.stringify(data[i]),
       )
     ) {
-      setHasMore(false);
       return;
     }
 
@@ -51,12 +54,12 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
     }
 
     (async () => {
-      const rawData = await getStudycafeList(filter, page);
+      const rawData = await getStudycafeList(filter, 1);
 
       setStudycafeList(getStudycafeListData(rawData));
+      setHasMore(true);
+      setPage(2);
     })();
-
-    setHasMore(true);
   }, [filter]);
 
   return (
