@@ -6,6 +6,14 @@ export const getChatTime = (date: Date) => {
   return `${hour} : ${minute.padStart(2, '0')}`;
 };
 
+export const getDateFullFormat = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDay();
+
+  return `${year}년 ${month}월 ${day}일`;
+};
+
 export const dateTo8Digit = (year: number, month: number, date: number) => {
   let result = `${year}`;
 
