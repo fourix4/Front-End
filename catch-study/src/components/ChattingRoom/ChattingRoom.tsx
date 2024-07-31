@@ -40,7 +40,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (sendChat === '' || !accessToken || !stompClient) return;
+    if (sendChat === '' || !accessToken || !stompClient) {
+      return;
+    }
 
     stompClient.publish({
       destination: `/pub/${roomId}/chat`,
