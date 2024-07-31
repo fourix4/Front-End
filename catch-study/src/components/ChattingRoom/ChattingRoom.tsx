@@ -6,7 +6,7 @@ import { getChatting } from '../../apis/api/chatting';
 import { getChattingData } from '../../apis/services/chatting';
 import { ACCESS_TOKEN, ROUTE } from '../../config/constants';
 import { ChattingTypes } from '../../types/chatting';
-import { getChatTime } from '../../utils/time.utils';
+import { getChatTime, getDateFullFormat } from '../../utils/time.utils';
 
 interface ChattingRoomPropTypes {
   userId: number;
@@ -203,7 +203,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
         {Object.keys(groupedChattings).map(date => (
           <div key={date}>
             <div className='flex items-center justify-center'>
-              <p className='font-normal text-dark-gray text-10'>{date}</p>
+              <p className='font-normal text-dark-gray text-10'>
+                {getDateFullFormat(new Date(date))}
+              </p>
             </div>
 
             {groupedChattings[date].map((chat, index, chatsArray) => {
