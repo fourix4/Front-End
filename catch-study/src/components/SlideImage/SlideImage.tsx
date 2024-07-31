@@ -117,6 +117,7 @@ const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
               <img
                 key={i}
                 src={image}
+                referrerPolicy='no-referrer'
                 className='object-contain min-w-200 sm:min-w-300 lg:min-w-400 h-150 '
               />
             ))}
