@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import CityFilter from '../../components/CityFilter/CityFilter';
+import StudyCafeInfoModal from '../../components/StudyCafeInfoModal/StudyCafeInfoModal';
 import StudyCafeList from '../../components/StudyCafeList/StudyCafeList';
 import Topbar from '../../components/Topbar/Topbar';
 import { CityFilterTypes, StudycafeTypes } from '../../types/interfaces';
-import StudyCafeInfoModal from '../../components/StudyCafeInfoModal/StudyCafeInfoModal';
 
 const MainPage: React.FC = () => {
   const [filter, setFilter] = useState<CityFilterTypes>({
