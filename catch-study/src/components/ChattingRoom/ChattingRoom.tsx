@@ -32,7 +32,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
-  const [isAtBottom, setIsAtBottom] = useState(true); // 사용자가 채팅창의 맨 아래에 있는지 여부를 추적
+  const [isAtBottom, setIsAtBottom] = useState(true);
   const [hasNewMessage, setHasNewMessage] = useState(false);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);

@@ -1,4 +1,4 @@
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -17,8 +17,7 @@ import {
 } from '../../apis/services/booking';
 import { getChattingRoomIdData } from '../../apis/services/chatting';
 import { getUserInfo, isAuthUser } from '../../apis/services/user';
-import { cafeName } from '../../atoms/cafeName';
-import { chattingRoomId } from '../../atoms/chatting';
+import { setChattingName, setChattingRoomId } from '../../atoms/chatting';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE, SEAT_TYPE } from '../../config/constants';
 import { BookingTypes } from '../../types/interfaces';
@@ -26,8 +25,8 @@ import { BookingTypes } from '../../types/interfaces';
 const BookingPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const setChattingRoomId = useSetAtom(chattingRoomId);
-  const setCafeName = useSetAtom(cafeName);
+  const [, setChattingRoomIdAtom] = useAtom(setChattingRoomId);
+  const [, setChattingNameAtom] = useAtom(setChattingName);
 
   const [bookingList, setBookingList] = useState<BookingTypes[]>([]);
   const [userId, setUserId] = useState<number>();
@@ -101,8 +100,8 @@ const BookingPage: React.FC = () => {
 
       if (!data) return;
 
-      setChattingRoomId(data);
-      setCafeName(name);
+      setChattingRoomIdAtom(data.chat_room_id);
+      setChattingNameAtom(name);
 
       navigate(ROUTE.CHATTING_ROOM);
     })();
