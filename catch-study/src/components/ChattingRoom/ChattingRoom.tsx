@@ -76,14 +76,6 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
     }
   };
 
-  // const scrollToBottom = () => {
-  //   if (messagesEndRef.current) {
-  //     messagesEndRef.current.scrollIntoView({
-  //       behavior: 'auto',
-  //     });
-  //   }
-  // };
-
   useEffect(() => {
     scrollToBottom();
   }, [chatting]);
