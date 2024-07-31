@@ -22,6 +22,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   chattingName,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   const naviagte = useNavigate();
 
@@ -31,38 +32,57 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
+  const [isAtBottom, setIsAtBottom] = useState(true); // 사용자가 채팅창의 맨 아래에 있는지 여부를 추적
+  const [hasNewMessage, setHasNewMessage] = useState(false);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
   const handleSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (sendChat === '') return;
-    if (!accessToken) return;
+    if (sendChat === '' || !accessToken || !stompClient) return;
 
-    if (stompClient) {
-      stompClient.publish({
-        destination: `/pub/${roomId}/chat`,
-        body: JSON.stringify({ chat: sendChat }),
-        headers: {
-          chatRoodId: roomId.toString(),
-          Authorization: `Bearer ${accessToken}`,
-          email,
-          userId: userId.toString(),
-        },
-      });
+    stompClient.publish({
+      destination: `/pub/${roomId}/chat`,
+      body: JSON.stringify({ chat: sendChat }),
+      headers: {
+        chatRoodId: roomId.toString(),
+        Authorization: `Bearer ${accessToken}`,
+        email,
+        userId: userId.toString(),
+      },
+    });
 
-      setSendChat('');
-    }
+    setSendChat('');
   };
 
-  const scrollToBottom = () => {
+  const scrollToBottom = (behavior: 'auto' | 'smooth' = 'auto') => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({
-        behavior: 'auto',
-      });
+      messagesEndRef.current.scrollIntoView({ behavior });
     }
   };
+
+  const handleScroll = () => {
+    if (chatContainerRef.current) {
+      const { scrollTop, clientHeight, scrollHeight } =
+        chatContainerRef.current;
+      const atBottom = scrollHeight - scrollTop === clientHeight;
+
+      setIsAtBottom(atBottom);
+
+      if (atBottom) {
+        setHasNewMessage(false);
+      }
+    }
+  };
+
+  // const scrollToBottom = () => {
+  //   if (messagesEndRef.current) {
+  //     messagesEndRef.current.scrollIntoView({
+  //       behavior: 'auto',
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     scrollToBottom();
@@ -82,7 +102,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
       setChatting(chattingData);
     })();
-  }, []);
+  }, [naviagte, roomId]);
 
   useEffect(() => {
     (async () => {
@@ -123,10 +143,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
                 c => c.message_id === newChat.message_id,
               );
 
-              if (exists) {
-                return prev;
-              }
-              return [...prev, newChat];
+              return exists ? prev : [...prev, newChat];
             });
           },
           {
@@ -178,15 +195,15 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
   return (
     <div className='flex flex-col'>
-      <div className='flex flex-col p-20 overflow-y-scroll h-chat gap-30'>
+      <div
+        ref={chatContainerRef}
+        onScroll={handleScroll}
+        className='flex flex-col p-20 overflow-y-scroll h-chat gap-30'
+      >
         {Object.keys(groupedChattings).map(date => (
           <div key={date}>
-            <div className='flex items-center justify-between flex-grow gap-10 py-10'>
-              <div className='w-full h-2 bg-dark-gray'></div>
-              <p className='flex-shrink-0 font-normal text-dark-gray text-12'>
-                {date}
-              </p>
-              <div className='w-full h-2 bg-dark-gray'></div>
+            <div className='flex items-center justify-center'>
+              <p className='font-normal text-dark-gray text-10'>{date}</p>
             </div>
 
             {groupedChattings[date].map((chat, index, chatsArray) => {
@@ -196,9 +213,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
               return (
                 <div key={chat.message_id + index}>
                   {chat.user_id === userId ? (
-                    <div className='relative px-20 py-16 mt-10 ml-auto font-normal text-white break-words rounded-sm max-w-200 w-max text-start bg-blue text-12'>
+                    <div className='relative mt-10 ml-auto font-normal text-white break-words rounded-sm px-18 py-14 max-w-200 w-max text-start bg-blue text-12'>
                       {chat.chat}
-                      <span className='absolute bottom-0 font-normal text-black -left-50 text-dark-gray'>
+                      <span className='absolute bottom-0 font-normal text-10 -left-36 text-dark-gray'>
                         {getChatTime(chat.create_date)}
                       </span>
                     </div>
@@ -209,9 +226,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
                           {chattingName}
                         </span>
                       )}
-                      <div className='relative px-20 py-16 mb-10 mr-auto font-normal break-words bg-white border-2 rounded-sm w-max max-w-200 text-start border-light-gray text-12'>
+                      <div className='relative mb-10 mr-auto font-normal break-words px-18 py-14 bg-bright-gray rounded-e-sm rounded-es-sm w-max max-w-200 text-start text-12'>
                         {chat.chat}
-                        <span className='absolute bottom-0 font-normal text-black -right-50 text-dark-gray'>
+                        <span className='absolute bottom-0 font-normal -right-36 text-10 text-dark-gray'>
                           {getChatTime(chat.create_date)}
                         </span>
                       </div>
@@ -225,9 +242,18 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
         <div ref={messagesEndRef} className='mb-20' />
       </div>
 
+      {hasNewMessage && !isAtBottom && (
+        <div
+          onClick={() => scrollToBottom('smooth')}
+          className='fixed px-6 py-4 text-white transform -translate-x-1/2 cursor-pointer rounded-default text-10 bottom-76 left-1/2 bg-blue'
+        >
+          새로운 메시지
+        </div>
+      )}
+
       <form
         onSubmit={e => handleSendMessage(e)}
-        className='fixed flex items-center justify-between w-10/12 gap-10 p-5 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default'
+        className='fixed flex items-center justify-between w-10/12 gap-10 p-6 transform -translate-x-1/2 bg-white max-w-700 left-1/2 bottom-20 drop-shadow-xl rounded-default shadow-modal'
       >
         <input
           type='text'
@@ -235,8 +261,8 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
           onChange={e => setSendChat(e.target.value)}
           className='w-full h-full px-10'
         />
-        <div className='items-center w-40 h-40 p-5 rounded-full bg-blue'>
-          <button type='submit' className='w-30 h-30 bg-send-plane'></button>
+        <div className='flex items-center justify-center p-5 rounded-full w-38 h-38 bg-blue'>
+          <button type='submit' className='w-24 h-24 bg-send-plane'></button>
         </div>
       </form>
     </div>
