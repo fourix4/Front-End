@@ -36,7 +36,9 @@ const ChattingRoomList: React.FC<ChattingRoomListPropsTypes> = ({ rooms }) => {
                 {room.last_chat_date && getChatTime(room.last_chat_date)}
               </span>
             </div>
-            <p className='font-light text-16'>{room.last_chat}</p>
+            <p className='font-light text-16 text-dark-gray'>
+              {room.last_chat}
+            </p>
           </Link>
         </li>
       ))}
