@@ -39,7 +39,10 @@ const MyPage: React.FC = () => {
     const rawData = await getBookingHistorySelectDate(startTime, endTime, page);
     const data = getDateHistory(rawData);
 
-    if (data.length === 0) {
+    if (
+      data.length === 0 ||
+      history.every((v, i) => JSON.stringify(v) === JSON.stringify(data[i]))
+    ) {
       setHasMore(false);
       return;
     }

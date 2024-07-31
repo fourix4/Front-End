@@ -52,39 +52,7 @@ export const getBookingList = (
     });
   }
 
-  return [
-    {
-      type: 'seat',
-      id: 1,
-      cafeId: 1,
-      cafeName: '이지 스터디 카페',
-      status: '이용 전',
-      amount: 10000,
-      address: '서울시 종로구 xxx',
-      name: '1A',
-      code: 1234,
-      paymentTime: '2024-6-27 12:36',
-      startTime: '2024-6-27 12:50',
-      endTime: '2024-6-27 14:50',
-      availableTime: '2024-6-27 13:06',
-    },
-    {
-      type: 'room',
-      id: 2,
-      cafeId: 2,
-      cafeName: '이지 스터디 카페',
-      status: '이용 전',
-      amount: 10000,
-      address: '서울시 종로구 xxx',
-      name: '4인실 스터디룸',
-      code: 1234,
-      paymentTime: '2024-6-27 12:36',
-      startTime: '2024-6-27 12:50',
-      endTime: '2024-6-27 14:50',
-    },
-  ];
-
-  // return []
+  return [];
 };
 
 export const isSuccessCheckout = (rawData: ResponseTypes) => {
@@ -116,46 +84,7 @@ export const getRecentHistory = (
     return rawData.data.result.booking_list;
   }
 
-  return [
-    {
-      booking_id: 1,
-      cafe_id: 1,
-      cafe_name: '이지 스터디 카페',
-      type: 'seat',
-      address: '인천시 부평구 ---',
-      payment_time: '2024-01-04 19:34',
-      start_time: '2024-01-04 19:44',
-      end_time: '2024-01-04 20:44',
-      amount: 3000,
-      status: '이용 완료',
-    },
-    {
-      booking_id: 2,
-      cafe_id: 1,
-      cafe_name: '이지 스터디 카페',
-      type: 'room',
-      address: '인천시 부평구 ---',
-      payment_time: '2024-01-04 19:34',
-      start_time: '2024-01-04 19:44',
-      end_time: '2024-01-04 20:44',
-      amount: 3000,
-      status: '취소됨',
-    },
-    {
-      booking_id: 2,
-      cafe_id: 1,
-      cafe_name: '이지 스터디 카페',
-      type: 'room',
-      address: '인천시 부평구 ---',
-      payment_time: '2024-01-04 19:34',
-      start_time: '2024-01-04 19:44',
-      end_time: '2024-01-04 20:44',
-      amount: 3000,
-      status: '입실 중',
-    },
-  ];
-
-  // return [];
+  return [];
 };
 
 export const getDateHistory = (
@@ -165,16 +94,5 @@ export const getDateHistory = (
     return rawData.data.result.booking_list;
   }
 
-  return Array(10).fill({
-    booking_id: 2,
-    cafe_id: 1,
-    cafe_name: '이지 스터디 카페',
-    type: 'room',
-    address: '인천시 부평구 ---',
-    payment_time: '2024-01-04 19:34',
-    start_time: '2024-01-04 19:44',
-    end_time: '2024-01-04 20:44',
-    amount: 3000,
-    status: '입실 중',
-  });
+  return [];
 };
