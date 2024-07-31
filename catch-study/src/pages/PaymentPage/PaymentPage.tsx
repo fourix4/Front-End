@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import Topbar from '../../components/Topbar/Topbar';
 import { PAYMENT_TYPE } from '../../config/constants';
@@ -21,7 +21,6 @@ interface PaymentInfoTypes {
 const images = [kakaoPayment];
 
 const PaymentPage: React.FC = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const {
     cafeId,
@@ -57,7 +56,7 @@ const PaymentPage: React.FC = () => {
     console.log(result);
 
     if (result) {
-      navigate(result);
+      window.location.href = result;
       return;
     }
 

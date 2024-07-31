@@ -128,7 +128,7 @@ export interface StudycafeTypes {
 
 export interface PaymentKakaoResponseTypes extends ResponseTypes {
   data: {
-    result: { next_redirct_pc_url: string };
+    result: { next_redirect_pc_url: string };
   };
 }
 

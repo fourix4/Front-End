@@ -8,7 +8,7 @@ const getRedirectPCURL = (
   rawData: PaymentKakaoResponseTypes | ErrorResponseTypes,
 ): string | false => {
   if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
-    return rawData.data.result.next_redirct_pc_url;
+    return rawData.data.result.next_redirect_pc_url;
   }
   return false;
 };
