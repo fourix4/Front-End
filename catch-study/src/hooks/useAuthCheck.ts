@@ -22,7 +22,7 @@ const useAuthCheck = () => {
       const userRawData = await getUser();
       const { author } = getUserInfo(userRawData);
 
-      if (author !== ROLE.manager) {
+      if (author !== ROLE.MANAGER) {
         alert('관리자 아이디로 로그인 해주세요.');
         navigate(ROUTE.HOME);
       }

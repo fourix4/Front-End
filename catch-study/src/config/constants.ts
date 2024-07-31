@@ -75,7 +75,7 @@ export const TIME_TABLE = Array.from({ length: 48 }, (_, i) => {
 
 export const PAYMENT_TYPE = ['카카오페이'];
 
-export const ROLE = { user: 'roleUser', manager: 'roleManager' };
+export const ROLE = { USER: 'roleUser', MANAGER: 'roleManager' };
 
 export interface ChattingRoomType {
   chat_room_id: number;

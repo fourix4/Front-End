@@ -9,7 +9,7 @@ const RedirectionPage = () => {
     ACCESS_TOKEN,
   );
 
-  const [role, setRole] = useState(ROLE.user);
+  const [role, setRole] = useState(ROLE.USER);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,8 +34,8 @@ const RedirectionPage = () => {
         <p>로딩</p>
       ) : (
         <>
-          {role === ROLE.user && <Navigate to={ROUTE.HOME} replace />}
-          {role === ROLE.manager && <Navigate to={ROUTE.MANAGEMENT} />}
+          {role === ROLE.USER && <Navigate to={ROUTE.HOME} replace />}
+          {role === ROLE.MANAGER && <Navigate to={ROUTE.MANAGEMENT} />}
         </>
       )}
     </div>
