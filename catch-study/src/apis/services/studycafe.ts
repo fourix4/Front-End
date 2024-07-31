@@ -24,8 +24,6 @@ export const getStudycafeListData = (
 export const getStudycafeInfoData = (
   rawData: StudycafeInfoResponseTypes | ErrorResponseTypes,
 ): StudycafeInfoDataTypes | null => {
-  console.log(rawData);
-
   if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
     return rawData.data.result;
   }

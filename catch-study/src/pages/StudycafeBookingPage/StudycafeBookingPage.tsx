@@ -5,7 +5,6 @@ import { getStudycafeSeatingChart } from '../../apis/api/studycafe';
 import { getStudycafeSeatData } from '../../apis/services/studycafe';
 import { RoomsTypes, SeatPriceTypes, SeatsTypes } from '../../types/interfaces';
 import { SEAT_TYPE } from '../../config/constants';
-import seatingchart from '../../assets/seatingchart-test.svg';
 import SEATINGCHART from '../../config/seatingchart';
 import BookingRoomModal from '../../components/BookingRoomModal/BookingRoomModal';
 import BookingSeatModal from '../../components/BookingSeatModal/BookingSeatModal';
@@ -16,7 +15,7 @@ const StudycafeBookingPage: React.FC = () => {
   const [seats, setSeats] = useState<SeatsTypes[]>([]);
   const [rooms, setRooms] = useState<RoomsTypes[]>([]);
   const [usageFee, setUsageFee] = useState<SeatPriceTypes[]>([]);
-  const [_, setSeatingChart] = useState('');
+  const [seatingChart, setSeatingChart] = useState('');
   const [selectedType, setSelectedType] = useState({
     type: '',
     id: -1,
@@ -128,9 +127,9 @@ const StudycafeBookingPage: React.FC = () => {
         <div className='relative w-800 h-full box-border'>
           <div>
             <img
-              // src={seatingChart? seatingChart : ''}
-              src={seatingchart}
-              className='min-w-800 w-full h-full object-none'
+              src={seatingChart}
+              referrerPolicy='no-referrer'
+              className='min-w-800 w-full h-full object-contain'
             />
           </div>
 
@@ -139,9 +138,13 @@ const StudycafeBookingPage: React.FC = () => {
               <button
                 key={seat.seat_number}
                 onClick={e => seatClick(e, seat)}
+                // style={{
+                //   top: `${SEATINGCHART[cafeId][seat.seat_number].y}px`,
+                //   left: `${SEATINGCHART[cafeId][seat.seat_number].x}px`,
+                // }}
                 style={{
-                  top: `${SEATINGCHART[cafeId][seat.seat_number].y}px`,
-                  left: `${SEATINGCHART[cafeId][seat.seat_number].x}px`,
+                  top: `${SEATINGCHART[1][seat.seat_number].y}px`,
+                  left: `${SEATINGCHART[1][seat.seat_number].x}px`,
                 }}
                 className={`absolute w-50 h-50 text-16 border-[1px] ${(isClicked && selectedType.id === seat.seat_id && selectedType.type === SEAT_TYPE.SEAT) || !seat.is_available ? 'bg-dark-gray' : ''}`}
               >
@@ -154,9 +157,13 @@ const StudycafeBookingPage: React.FC = () => {
               <button
                 key={room.room_name}
                 onClick={e => roomClick(e, { ...room })}
+                // style={{
+                //   top: `${SEATINGCHART[cafeId][room.room_name].y}px`,
+                //   left: `${SEATINGCHART[cafeId][room.room_name].x}px`,
+                // }}
                 style={{
-                  top: `${SEATINGCHART[cafeId][room.room_name].y}px`,
-                  left: `${SEATINGCHART[cafeId][room.room_name].x}px`,
+                  top: `${SEATINGCHART[1][room.room_name].y}px`,
+                  left: `${SEATINGCHART[1][room.room_name].x}px`,
                 }}
                 className={`absolute w-180 h-80 text-16 border-[1px] ${isClicked && selectedRoom && selectedType.type === SEAT_TYPE.ROOM && selectedRoom.room_id === room.room_id ? 'bg-dark-gray' : ''}`}
               >
