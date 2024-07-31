@@ -39,11 +39,14 @@ const MyPage: React.FC = () => {
     const rawData = await getBookingHistorySelectDate(startTime, endTime, page);
     const data = getDateHistory(rawData);
 
+    if (data.length === 0) {
+      setHasMore(false);
+      return;
+    }
+
     if (
-      data.length === 0 ||
       history.every((v, i) => JSON.stringify(v) === JSON.stringify(data[i]))
     ) {
-      setHasMore(false);
       return;
     }
 
@@ -102,12 +105,13 @@ const MyPage: React.FC = () => {
       return;
     }
 
-    const rawData = await getBookingHistorySelectDate(startTime, endTime, page);
+    const rawData = await getBookingHistorySelectDate(startTime, endTime, 1);
     const data = getDateHistory(rawData);
 
     setHistory(data);
     setIsDateSearch(true);
     setHasMore(true);
+    setPage(2);
   };
 
   return (
