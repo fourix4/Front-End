@@ -30,7 +30,7 @@ const SEATINGCHART: SeatingchartTypes = {
     G2: { x: 500, y: 250 },
     H1: { x: 600, y: 200 },
     H2: { x: 600, y: 250 },
-    '4인용 스터디룸': { x: 509, y: 85 },
+    '6인용 스터디룸': { x: 509, y: 85 },
   },
 };
 
