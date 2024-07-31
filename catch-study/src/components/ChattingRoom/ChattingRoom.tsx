@@ -23,8 +23,11 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  const naviagte = useNavigate();
+  const [isAtBottom, setIsAtBottom] = useState(true);
+  const [hasNewMessage, setHasNewMessage] = useState(false);
+  const [initialRender, setInitialRender] = useState(true);
+  const [isSending, setIsSending] = useState(false);
+  const navigate = useNavigate();
 
   const [stompClient, setStompClient] = useState<Client | null>(null);
   const [chatting, setChatting] = useState<ChattingTypes[]>([]);
@@ -32,8 +35,6 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   const [groupedChattings, setGroupedChattings] = useState<
     Record<string, ChattingTypes[]>
   >({});
-  const [isAtBottom, setIsAtBottom] = useState(true);
-  const [hasNewMessage, setHasNewMessage] = useState(false);
 
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
 
@@ -55,7 +56,22 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       },
     });
 
+    setIsSending(true);
     setSendChat('');
+  };
+
+  const checkIfAtBottom = () => {
+    if (messagesEndRef.current && chatContainerRef.current) {
+      const messagesEndRect = messagesEndRef.current.getBoundingClientRect();
+      const chatContainerRect =
+        chatContainerRef.current.getBoundingClientRect();
+      const isBottom = messagesEndRect.top <= chatContainerRect.bottom + 450;
+
+      setIsAtBottom(isBottom);
+      if (isBottom) {
+        setHasNewMessage(false);
+      }
+    }
   };
 
   const scrollToBottom = (behavior: 'auto' | 'smooth' = 'auto') => {
@@ -65,28 +81,21 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   };
 
   const handleScroll = () => {
-    if (chatContainerRef.current) {
-      const { scrollTop, clientHeight, scrollHeight } =
-        chatContainerRef.current;
-      const atBottom = scrollHeight - scrollTop === clientHeight;
-
-      setIsAtBottom(atBottom);
-
-      if (atBottom) {
-        setHasNewMessage(false);
-      }
-    }
+    checkIfAtBottom();
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (isAtBottom || isSending) {
+      scrollToBottom();
+      setIsSending(false);
+    }
   }, [chatting]);
 
   useEffect(() => {
     (async () => {
       if (!roomId) {
         alert('채팅방 정보가 없습니다.');
-        naviagte(ROUTE.CHATTING);
+        navigate(ROUTE.CHATTING);
         return;
       }
 
@@ -96,69 +105,73 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
       setChatting(chattingData);
     })();
-  }, [naviagte, roomId]);
+  }, [navigate, roomId]);
 
   useEffect(() => {
-    (async () => {
-      // 소켓 연결
-      const socket = new SockJS('http://3.39.182.9:8080/ws');
-      const client = new Client({
-        webSocketFactory: () => socket,
-        reconnectDelay: 1000,
-        debug: (str: string) => {
-          console.log(str);
+    // 소켓 연결
+    const socket = new SockJS('http://3.39.182.9:8080/ws');
+    const client = new Client({
+      webSocketFactory: () => socket,
+      reconnectDelay: 1000,
+      debug: (str: string) => {
+        console.log(str);
+      },
+      connectHeaders: {
+        chatRoomId: roomId.toString(),
+        Authorization: `Bearer ${accessToken}`,
+        email,
+        userId: userId.toString(),
+      },
+    });
+
+    client.onConnect = (frame: Frame) => {
+      console.log(`/sub/${roomId}/chat`, frame);
+
+      client.subscribe(
+        `/sub/${roomId}/chat`,
+        chat => {
+          const body = JSON.parse(chat.body);
+          const newChat: ChattingTypes = {
+            user_id: body.user_id,
+            message_id: body.message_id,
+            chat: body.chat,
+            create_date: new Date(body.create_date),
+            message_image: body.message_image,
+          };
+
+          // 기존 채팅과 중복 확인 후 추가
+          setChatting(prev => {
+            const exists = prev.some(c => c.message_id === newChat.message_id);
+
+            return exists ? prev : [...prev, newChat];
+          });
         },
-        connectHeaders: {
+        {
           chatRoomId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
           email,
           userId: userId.toString(),
         },
-      });
+      );
 
-      client.onConnect = (frame: Frame) => {
-        console.log(`/sub/${roomId}/chat`, frame);
-
-        client.subscribe(
-          `/sub/${roomId}/chat`,
-          chat => {
-            const body = JSON.parse(chat.body);
-            const newChat: ChattingTypes = {
-              user_id: body.user_id,
-              message_id: body.message_id,
-              chat: body.chat,
-              create_date: new Date(body.create_date),
-              message_image: body.message_image,
-            };
-
-            // 기존 채팅과 중복 확인 후 추가
-            setChatting(prev => {
-              const exists = prev.some(
-                c => c.message_id === newChat.message_id,
-              );
-
-              return exists ? prev : [...prev, newChat];
-            });
-          },
-          {
-            chatRoomId: roomId.toString(),
-            Authorization: `Bearer ${accessToken}`,
-            email,
-            userId: userId.toString(),
-          },
-        );
+      if (initialRender) {
+        setInitialRender(false);
         scrollToBottom();
-      };
+      }
 
-      client.onStompError = frame => {
-        console.error(`Broker reported error: ${frame.headers}`);
-        console.error(`Additional details: ${frame.body}`);
-      };
+      if (!isAtBottom) {
+        setHasNewMessage(true);
+      }
+    };
 
-      client.activate();
-      setStompClient(client);
-    })();
-  }, [accessToken, naviagte]);
+    client.onStompError = frame => {
+      console.error(`Broker reported error: ${frame.headers}`);
+      console.error(`Additional details: ${frame.body}`);
+    };
+
+    client.activate();
+    setStompClient(client);
+  }, [accessToken, navigate]);
 
   useEffect(() => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
@@ -241,7 +254,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       {hasNewMessage && !isAtBottom && (
         <div
           onClick={() => scrollToBottom('smooth')}
-          className='fixed px-6 py-4 text-white transform -translate-x-1/2 cursor-pointer rounded-default text-10 bottom-76 left-1/2 bg-blue'
+          className='fixed px-8 py-4 text-white transform -translate-x-1/2 cursor-pointer rounded-default text-10 bottom-77 left-1/2 bg-blue'
         >
           새로운 메시지
         </div>
