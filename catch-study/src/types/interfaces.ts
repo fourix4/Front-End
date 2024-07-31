@@ -77,7 +77,9 @@ export interface ChattingResponseTypes extends ResponseTypes {
 
 export interface ChattingRoomIdResponseTypes extends ResponseTypes {
   data: {
-    result: number;
+    result: {
+      chat_room_id: number;
+    };
   };
 }
 
