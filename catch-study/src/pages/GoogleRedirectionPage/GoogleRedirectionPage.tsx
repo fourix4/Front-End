@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postGoogleLogin } from '../../apis/api/user';
-import { getAccessToken } from '../../apis/services/user';
-import { ACCESS_TOKEN } from '../../config/constants';
+import { getUser, postGoogleLogin } from '../../apis/api/user';
+import { getAccessToken, getUserInfo } from '../../apis/services/user';
+import { ACCESS_TOKEN, ROLE, ROUTE } from '../../config/constants';
 
 const GoogleRedirectionPage = () => {
   const navigate = useNavigate();
@@ -11,16 +11,25 @@ const GoogleRedirectionPage = () => {
   useEffect(() => {
     (async () => {
       if (code) {
-        const rawData = await postGoogleLogin(code);
-        const accessToken = getAccessToken(rawData);
+        const rawLoginData = await postGoogleLogin(code);
+        const accessToken = getAccessToken(rawLoginData);
 
         if (accessToken) {
           localStorage.setItem(ACCESS_TOKEN, accessToken);
+
+          const rawAuthorData = await getUser();
+          const { author } = getUserInfo(rawAuthorData);
+
+          if (author === ROLE.USER) {
+            navigate(ROUTE.HOME);
+          } else {
+            navigate(ROUTE.MANAGEMENT);
+          }
         } else {
           alert('로그인 실패');
         }
       }
-      navigate('/');
+      navigate(ROUTE.HOME);
     })();
   }, []);
 
