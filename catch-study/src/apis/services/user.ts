@@ -26,13 +26,7 @@ export const getUserInfo = (
     return result;
   }
 
-  return {
-    userName: '조현정',
-    email: 'abc123@naver.com',
-    userId: 1,
-    author: 'roleUser',
-  };
-  // return { userName: '', email: '' };
+  return null;
 };
 
 export const isAuthUser = (

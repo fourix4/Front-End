@@ -71,7 +71,9 @@ const MyPage: React.FC = () => {
       const userData = getUserInfo(userRawData);
       const historyData = getRecentHistory(historyRawData);
 
-      setUserInfo(userData);
+      if (userData) {
+        setUserInfo(userData);
+      }
       setHistory(historyData);
     })();
   }, []);

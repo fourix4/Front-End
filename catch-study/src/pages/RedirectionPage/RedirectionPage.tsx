@@ -19,9 +19,9 @@ const RedirectionPage = () => {
 
     (async () => {
       const rawData = await getUser();
-      const { author } = getUserInfo(rawData);
+      const data = getUserInfo(rawData);
 
-      if (author === ROLE.USER) {
+      if (data && data.author === ROLE.USER) {
         navigate(ROUTE.HOME);
       } else {
         navigate(ROUTE.MANAGEMENT);
