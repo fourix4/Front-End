@@ -28,11 +28,13 @@ const ChattingRoomPage: React.FC = () => {
 
       // 유저정보 가져오기
       const userInfoata = await getUser();
-      const { userId, email: userEmail } = getUserInfo(userInfoata);
+      const data = getUserInfo(userInfoata);
 
-      setId(userId);
-      setEmail(userEmail);
-      setAuthChecked(true);
+      if (data) {
+        setId(data.userId);
+        setEmail(data.email);
+        setAuthChecked(true);
+      }
     })();
   }, [navigate]);
 

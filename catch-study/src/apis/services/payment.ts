@@ -6,11 +6,12 @@ import {
 
 const getRedirectPCURL = (
   rawData: PaymentKakaoResponseTypes | ErrorResponseTypes,
-): string | false => {
+): { success: boolean; data: string } => {
   if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
-    return rawData.data.result.next_redirect_pc_url;
+    return { success: true, data: rawData.data.result.next_redirect_pc_url };
   }
-  return false;
+
+  return { success: false, data: rawData.message };
 };
 
 export default getRedirectPCURL;

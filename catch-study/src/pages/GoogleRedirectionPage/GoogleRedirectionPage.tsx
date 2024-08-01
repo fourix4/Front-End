@@ -18,9 +18,9 @@ const GoogleRedirectionPage = () => {
           localStorage.setItem(ACCESS_TOKEN, accessToken);
 
           const rawAuthorData = await getUser();
-          const { author } = getUserInfo(rawAuthorData);
+          const data = getUserInfo(rawAuthorData);
 
-          if (author === ROLE.USER) {
+          if (data && data.author === ROLE.USER) {
             navigate(ROUTE.HOME);
           } else {
             navigate(ROUTE.MANAGEMENT);

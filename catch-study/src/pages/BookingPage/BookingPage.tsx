@@ -112,7 +112,9 @@ const BookingPage: React.FC = () => {
       const rawData = await getUser();
       const data = getUserInfo(rawData);
 
-      setUserId(data.userId);
+      if (data) {
+        setUserId(data.userId);
+      }
     })();
   }, []);
 

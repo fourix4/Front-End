@@ -20,9 +20,9 @@ const useAuthCheck = () => {
 
       // 권한 확인
       const userRawData = await getUser();
-      const { author } = getUserInfo(userRawData);
+      const data = getUserInfo(userRawData);
 
-      if (author !== ROLE.MANAGER) {
+      if (data && data.author !== ROLE.MANAGER) {
         alert('관리자 아이디로 로그인 해주세요.');
         navigate(ROUTE.HOME);
       }
