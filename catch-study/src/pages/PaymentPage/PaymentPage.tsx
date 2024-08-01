@@ -51,14 +51,14 @@ const PaymentPage: React.FC = () => {
       price,
       startTime,
     );
-    const result = getRedirectPCURL(rawData);
+    const { success, data } = getRedirectPCURL(rawData);
 
-    if (result) {
-      window.location.href = result;
+    if (success) {
+      window.location.href = data;
       return;
     }
 
-    alert('결제 실패');
+    alert(data);
   };
 
   const checkboxChange = (
