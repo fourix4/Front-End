@@ -13,6 +13,7 @@ import PaymentPage from './pages/PaymentPage/PaymentPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage/PaymentSuccessPage';
 import RedirectionPage from './pages/RedirectionPage/RedirectionPage';
 import StudycafeBookingPage from './pages/StudycafeBookingPage/StudycafeBookingPage';
+import GoogleRedirectionPage from './pages/GoogleRedirectionPage/GoogleRedirectionPage';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,10 @@ const App: React.FC = () => {
         <Route path={ROUTE.PAYMENT} element={<PaymentPage />} />
         <Route path={ROUTE.PAYMENT_SUCCESS} element={<PaymentSuccessPage />} />
         <Route path={ROUTE.BOOKING} element={<BookingPage />} />
+        <Route
+          path={ROUTE.GOOGLE_REDIRECT}
+          element={<GoogleRedirectionPage />}
+        />
       </Routes>
     </>
   );

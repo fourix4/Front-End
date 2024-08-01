@@ -39,6 +39,7 @@ export const ROUTE = {
   STUDYCAFE_BOOKING: '/studycafe/booking',
   PAYMENT: '/payment',
   PAYMENT_SUCCESS: '/payment-success',
+  GOOGLE_REDIRECT: 'oauthgoogle',
 };
 
 interface MenuTypes {
