@@ -61,5 +61,5 @@ module.exports = {
       modal: '0px -4px 10px 0px #CCCCCC',
     },
   },
-  plugins: [],
+  purge: ['./src/**/*.html', './src/**/*.tsx', './src/**/*.ts'],
 };
