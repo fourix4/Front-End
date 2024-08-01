@@ -17,6 +17,7 @@ export const API_ADDRESS = {
   HISTORY: '/users/history',
   HISTORY_DATE: '/users/history/date',
   USER_CHECK: '/users/check',
+  GOOGLE_LOGIN_URI: '/users/login/google',
 };
 
 export const STATUS = {

@@ -3,6 +3,7 @@ import { ACCESS_TOKEN } from '../../config/constants';
 import { LOGIN_ERROR } from '../../config/error';
 import {
   ErrorResponseTypes,
+  LoginResponseTypes,
   ResponseTypes,
   UserResponseTypes,
 } from '../../types/interfaces';
@@ -53,4 +54,14 @@ export const isAuthUser = (
   }
 
   return { isAuth: true, message: '' };
+};
+
+export const getAccessToken = (
+  rawData: LoginResponseTypes | ErrorResponseTypes,
+) => {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
+    return rawData.data.result.accessToken;
+  }
+
+  return null;
 };

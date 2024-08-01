@@ -68,3 +68,18 @@ export const getCheckUser = async () => {
     return errorObj;
   }
 };
+
+export const postGoogleLogin = async (code: string) => {
+  try {
+    const { data } = await instance.post<LoginResponseTypes>(
+      API_ADDRESS.GOOGLE_LOGIN_URI,
+      { code },
+    );
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};
