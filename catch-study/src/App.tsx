@@ -1,10 +1,10 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ROUTE } from './config/constants';
+import MainPage from './pages/MainPage/MainPage';
 
 import LoadingPage from './pages/LoadingPage/LoadingPage';
 
-const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RedirectionPage = lazy(
   () => import('./pages/RedirectionPage/RedirectionPage'),
