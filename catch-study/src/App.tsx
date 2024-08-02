@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ROUTE } from './config/constants';
-import loading from '../src/assets/loading.svg';
+import LoadingPage from './pages/LoadingPage/LoadingPage';
 
 const MainPage = lazy(() => import('./pages/MainPage/MainPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
@@ -37,11 +37,7 @@ const GoogleRedirectionPage = lazy(
 const App: React.FC = () => {
   return (
     <>
-      <Suspense
-        fallback={
-          <img src={loading} className='w-50 h-50 m-middle mt-300'></img>
-        }
-      >
+      <Suspense fallback={<LoadingPage />}>
         <Routes>
           <Route path={ROUTE.HOME} element={<MainPage />} />
           <Route path={ROUTE.LOGIN} element={<LoginPage />} />
