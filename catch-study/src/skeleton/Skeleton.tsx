@@ -13,7 +13,7 @@ const Skeleton = ({
 }: SkeletonPropTypes) => {
   return (
     <div
-      className={`bg-light-gray animate-pulse ${width} ${height} ${rounded} ${className}`}
+      className={`bg-bright-gray animate-pulse ${width} ${height} ${rounded} ${className}`}
     ></div>
   );
 };
