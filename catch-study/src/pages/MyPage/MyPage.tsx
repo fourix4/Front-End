@@ -13,6 +13,8 @@ import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import BookingHistorySkeleton from '../../skeleton/BookingHistorySkeleton';
+import BookingUserSkeleton from '../../skeleton/BookingUserSkeleton';
 import { BookingHistoryTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
 
@@ -33,6 +35,7 @@ const MyPage: React.FC = () => {
   const [isDateSearch, setIsDateSearch] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const elementRef = useRef(null);
 
   const fetchGetHistory = async () => {
@@ -75,6 +78,7 @@ const MyPage: React.FC = () => {
         setUserInfo(userData);
       }
       setHistory(historyData);
+      setIsLoading(false);
     })();
   }, []);
 
@@ -120,10 +124,14 @@ const MyPage: React.FC = () => {
     <>
       <Topbar />
       <div className='[&>*]:m-middle'>
-        <div className='p-20 border-b sm:w-smWeb lg:w-lgWeb border-light-gray'>
-          <p className='mb-10 text-20'>{userInfo.userName}</p>
-          <p className='text-dark-gray'>{userInfo.email}</p>
-        </div>
+        {isLoading ? (
+          <BookingUserSkeleton />
+        ) : (
+          <div className='p-20 border-b sm:w-smWeb lg:w-lgWeb border-light-gray'>
+            <p className='mb-10 text-20'>{userInfo.userName}</p>
+            <p className='text-dark-gray'>{userInfo.email}</p>
+          </div>
+        )}
         <div className='px-20 py-10 border-b sm:w-smWeb lg:w-lgWeb border-light-gray bg-bright-gray'>
           <p className='mb-10 font-bold text-20'>예약 내역</p>
           <div className='mb-10'>
@@ -152,9 +160,15 @@ const MyPage: React.FC = () => {
           </p>
         </div>
         <div className='overflow-y-auto sm:w-smWeb lg:w-lgWeb min-h-300 h-600'>
-          {history.map((historyData, i) => (
-            <BookingHistory key={i} historyData={historyData} />
-          ))}
+          {isLoading ? (
+            <BookingHistorySkeleton />
+          ) : (
+            <>
+              {history.map((historyData, i) => (
+                <BookingHistory key={i} historyData={historyData} />
+              ))}
+            </>
+          )}
           {hasMore && (
             <div ref={elementRef}>
               <img src={loading} className='w-50 h-50 m-middle'></img>
