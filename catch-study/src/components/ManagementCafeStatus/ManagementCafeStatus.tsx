@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CafeStatusTypes } from '../../types/management';
 
 interface ManagementCafeStatusPropsTypes {
@@ -12,7 +13,9 @@ const ManagementCafeStatus: React.FC<ManagementCafeStatusPropsTypes> = ({
   return (
     <div>
       <h1>{cafeStatus.cafe_name} 카페 현황</h1>
-      <span>상세보기</span>
+      <span>
+        <Link to={`/management/detail/${cafeStatus.cafe_id}`}>상세보기</Link>
+      </span>
       <div>
         <h2>주소</h2>
         <p>

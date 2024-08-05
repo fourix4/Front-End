@@ -4,6 +4,7 @@ import { ROUTE } from './config/constants';
 import MainPage from './pages/MainPage/MainPage';
 
 import LoadingPage from './pages/LoadingPage/LoadingPage';
+import ManagementDetailPage from './pages/ManagementDetailPage/ManagementDetailPage';
 
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RedirectionPage = lazy(
@@ -68,6 +69,10 @@ const App: React.FC = () => {
           <Route
             path={ROUTE.GOOGLE_REDIRECT}
             element={<GoogleRedirectionPage />}
+          />
+          <Route
+            path={ROUTE.MANAGEMENT_DETAIL}
+            element={<ManagementDetailPage />}
           />
         </Routes>
       </Suspense>
