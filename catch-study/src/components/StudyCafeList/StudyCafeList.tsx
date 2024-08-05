@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
 import { getStudycafeList } from '../../apis/api/studycafe';
 import { getStudycafeListData } from '../../apis/services/studycafe';
 import loading from '../../assets/loading.svg';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
 
 interface StudyCafeListPropTypes {
   filter: CityFilterTypes;
@@ -72,9 +72,9 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
           <div
             key={i}
             onClick={e => studycafeClick(e, id, cafeName)}
-            className='flex justify-center border-b cursor-pointer h-140 border-light-gray'
+            className='flex justify-center border-b h-140 border-light-gray cursor-pointer'
           >
-            <div className='flex items-center w-full p-20 sm:w-smWeb lg:w-lgWeb'>
+            <div className='w-full sm:w-smWeb lg:w-lgWeb flex items-center p-20'>
               <img
                 className='mr-20 w-100 h-100'
                 src={cafeImage}
