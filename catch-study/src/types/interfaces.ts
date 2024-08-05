@@ -226,3 +226,8 @@ export interface CafeInfoResponseTypes extends ResponseTypes {
     result: CafeInfoTypes;
   };
 }
+
+export interface UserInfoTypes {
+  userName: string;
+  email: string;
+}

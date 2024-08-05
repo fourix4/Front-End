@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   getBookingHistoryRecent,
@@ -8,18 +8,19 @@ import { getUser } from '../../apis/api/user';
 import { getDateHistory, getRecentHistory } from '../../apis/services/booking';
 import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import loading from '../../assets/loading.svg';
-import BookingHistory from '../../components/BookingHistory/BookingHistory';
 import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { BookingHistoryTypes } from '../../types/interfaces';
+import { BookingHistoryTypes, UserInfoTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
+import BookingHistorySkeleton from '../../skeleton/BookingHistorySkeleton';
+import BookingUserSkeleton from '../../skeleton/BookingUserSkeleton';
 
-interface UserInfoTypes {
-  userName: string;
-  email: string;
-}
+const BookingHistory = lazy(
+  () => import('../../components/BookingHistory/BookingHistory'),
+);
+const UserInfo = lazy(() => import('../../components/UserInfo/UserInfo'));
 
 const MyPage: React.FC = () => {
   const navigate = useNavigate();
@@ -72,7 +73,10 @@ const MyPage: React.FC = () => {
       const historyData = getRecentHistory(historyRawData);
 
       if (userData) {
-        setUserInfo(userData);
+        setUserInfo({
+          userName: userData.userName,
+          email: userData.email,
+        });
       }
       setHistory(historyData);
     })();
@@ -120,10 +124,12 @@ const MyPage: React.FC = () => {
     <>
       <Topbar />
       <div className='[&>*]:m-middle'>
-        <div className='p-20 border-b sm:w-smWeb lg:w-lgWeb border-light-gray'>
-          <p className='mb-10 text-20'>{userInfo.userName}</p>
-          <p className='text-dark-gray'>{userInfo.email}</p>
-        </div>
+        {userInfo.userName !== '' && userInfo.email !== '' && (
+          <Suspense fallback={<BookingUserSkeleton />}>
+            <UserInfo userInfo={userInfo} />
+          </Suspense>
+        )}
+
         <div className='px-20 py-10 border-b sm:w-smWeb lg:w-lgWeb border-light-gray bg-bright-gray'>
           <p className='mb-10 font-bold text-20'>예약 내역</p>
           <div className='mb-10'>
@@ -152,9 +158,12 @@ const MyPage: React.FC = () => {
           </p>
         </div>
         <div className='overflow-y-auto sm:w-smWeb lg:w-lgWeb min-h-300 h-600'>
-          {history.map((historyData, i) => (
-            <BookingHistory key={i} historyData={historyData} />
-          ))}
+          {history.length !== 0 && (
+            <Suspense fallback={<BookingHistorySkeleton />}>
+              <BookingHistory history={history} />
+            </Suspense>
+          )}
+
           {hasMore && (
             <div ref={elementRef}>
               <img src={loading} className='w-50 h-50 m-middle'></img>
