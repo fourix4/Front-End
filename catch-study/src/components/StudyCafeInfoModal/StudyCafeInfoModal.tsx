@@ -7,10 +7,6 @@ import { getStudycafeInfo } from '../../apis/api/studycafe';
 import { getStudycafeInfoData } from '../../apis/services/studycafe';
 import { StudycafeInfoDataTypes, StudycafeTypes } from '../../types/interfaces';
 import SlideImage from '../SlideImage/SlideImage';
-import test1 from '../../assets/test1.png';
-import test2 from '../../assets/test2.png';
-import test3 from '../../assets/test3.png';
-import test4 from '../../assets/test4.png';
 import { ROUTE } from '../../config/constants';
 import { getCheckUser } from '../../apis/api/user';
 import { isAuthUser } from '../../apis/services/user';
@@ -88,9 +84,7 @@ const StudyCafeInfoModal: React.FC<StudyCafeInfoModalPropTypes> = ({
     <>
       <BottomModal isOpen={isOpen} closeModal={closeModal}>
         <div className='min-w-400 h-505 p-30 overflow-y-auto'>
-          {/* <SlideImage images={info.cafe_images} /> */}
-          <SlideImage images={[test1, test2, test3, test4]} />
-
+          <SlideImage images={info.cafe_images} />
           <div className='mb-20'>
             <p className='font-bold text-20 mb-15'>이용 가능 좌석</p>
             <div>
