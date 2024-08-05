@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { getStudycafeList } from '../../apis/api/studycafe';
 import { getStudycafeListData } from '../../apis/services/studycafe';
-import loading from '../../assets/loading.svg';
+import loadingGif from '../../assets/loading.svg';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
+import StudyCafeSkeleton from '../../skeleton/StudyCafeSkeleton';
 
 interface StudyCafeListPropTypes {
   filter: CityFilterTypes;
@@ -13,6 +14,8 @@ interface StudyCafeListPropTypes {
     name: string,
   ) => void;
 }
+
+const Studycafe = lazy(() => import('../Studycafe/Studycafe'));
 
 const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
   filter,
@@ -64,33 +67,18 @@ const StudyCafeList: React.FC<StudyCafeListPropTypes> = ({
 
   return (
     <div>
-      {studycafeList.map(
-        (
-          { cafe_id: id, cafe_name: cafeName, address, cafe_image: cafeImage },
-          i,
-        ) => (
-          <div
-            key={i}
-            onClick={e => studycafeClick(e, id, cafeName)}
-            className='flex justify-center border-b cursor-pointer h-140 border-light-gray'
-          >
-            <div className='flex items-center w-full p-20 sm:w-smWeb lg:w-lgWeb'>
-              <img
-                className='mr-20 w-100 h-100'
-                src={cafeImage}
-                referrerPolicy='no-referrer'
-              />
-              <div>
-                <div className='mb-10 text-16'>{cafeName}</div>
-                <div className='text-12'>{address}</div>
-              </div>
-            </div>
-          </div>
-        ),
+      {studycafeList.length !== 0 && (
+        <Suspense fallback={<StudyCafeSkeleton />}>
+          <Studycafe
+            studycafeClick={studycafeClick}
+            studycafeList={studycafeList}
+          />
+        </Suspense>
       )}
+
       {hasMore && (
         <div ref={elementRef}>
-          <img src={loading} className='w-50 h-50 m-middle'></img>
+          <img src={loadingGif} className='w-50 h-50 m-middle'></img>
         </div>
       )}
     </div>
