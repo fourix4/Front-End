@@ -41,11 +41,9 @@ const ChattingPage: React.FC = () => {
   return (
     <>
       <Topbar />
-      {authChecked && (
-        <Suspense fallback={<ChattingListSkeleton />}>
-          <ChattingRoomList rooms={chattingRooms} />
-        </Suspense>
-      )}
+      <Suspense fallback={<ChattingListSkeleton />}>
+        {authChecked && <ChattingRoomList rooms={chattingRooms} />}{' '}
+      </Suspense>
     </>
   );
 };
