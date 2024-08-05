@@ -201,7 +201,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   }, [chatting]);
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col sm:w-smWeb lg:w-lgWeb m-middle'>
       <div
         ref={chatContainerRef}
         onScroll={handleScroll}

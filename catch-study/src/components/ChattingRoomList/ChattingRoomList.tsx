@@ -24,7 +24,7 @@ const ChattingRoomList: React.FC<ChattingRoomListPropsTypes> = ({ rooms }) => {
         <li
           key={room.chat_room_id}
           onClick={() => handleSelectChattingRoom(room.chat_room_id, room.name)}
-          className='relative w-full p-20 border-b-2 cursor-pointer border-light-gray h-100'
+          className='relative w-full sm:w-smWeb lg:w-lgWeb m-middle p-20 border-b-2 cursor-pointer border-light-gray h-100'
         >
           <Link to={`/chatting/room`} className='block w-full h-full'>
             {!room.status && (
