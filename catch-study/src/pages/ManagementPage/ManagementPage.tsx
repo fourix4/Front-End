@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getManagementInfo } from '../../apis/api/manager';
-import {
-  getCafeInfoData,
-  isSuccessCafeInfo,
-} from '../../apis/services/manager';
+import { getCafeStatus } from '../../apis/api/manager';
 import ManagementCafeInfo from '../../components/ManagementCafeInfo/ManagementCafeInfo';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
@@ -21,20 +17,23 @@ const ManagementPage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const rawData = await getManagementInfo();
+      const rawData = await getCafeStatus();
+      console.log(rawData);
 
-      if (!isSuccessCafeInfo(rawData)) {
-        alert(rawData.message);
-      }
+      // const rawData = await getManagementInfo();
 
-      const data = getCafeInfoData(rawData);
+      // if (!isSuccessCafeInfo(rawData)) {
+      //   alert(rawData.message);
+      // }
 
-      console.log('조회', data);
+      // const data = getCafeInfoData(rawData);
 
-      if (data) {
-        setCafeInfo(data);
-        setIsExist(true);
-      }
+      // console.log('조회', data);
+
+      // if (data) {
+      //   setCafeInfo(data);
+      //   setIsExist(true);
+      // }
     })();
   }, [navigate]);
 

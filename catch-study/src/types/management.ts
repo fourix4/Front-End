@@ -52,3 +52,12 @@ export interface CafeInfoTypes {
   multiple_images: string[];
   cafe_phone: string;
 }
+
+export interface CafeStatusTypes {
+  cafe_id: number;
+  cafe_name: string;
+  address: AddressTypes;
+  using_seats: number;
+  seats: number;
+  sales: number;
+}

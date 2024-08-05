@@ -3,7 +3,7 @@ export const API_ADDRESS = {
   REISSUANCE_URI: '/users/reissuance',
   LOGOUT_URI: '/users/logout',
   STUDYCAFE_SEARCH_URI: '/studycafes/search',
-  MANAGER_INFO_URI: '/manager',
+  MANAGER: '/manager',
   STUDYCAFE_INFO: '/studycafes',
   CHATTING: '/chat',
   CHATTING_ROOM: '/chat/rooms',
