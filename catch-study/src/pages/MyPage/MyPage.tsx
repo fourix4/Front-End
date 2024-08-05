@@ -1,20 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUser } from '../../apis/api/user';
-import { getUserInfo, isAuthUser } from '../../apis/services/user';
-import Topbar from '../../components/Topbar/Topbar';
-import BookingHistory from '../../components/BookingHistory/BookingHistory';
 import {
   getBookingHistoryRecent,
   getBookingHistorySelectDate,
 } from '../../apis/api/booking';
+import { getUser } from '../../apis/api/user';
 import { getDateHistory, getRecentHistory } from '../../apis/services/booking';
+import { getUserInfo, isAuthUser } from '../../apis/services/user';
+import loading from '../../assets/loading.svg';
+import BookingHistory from '../../components/BookingHistory/BookingHistory';
+import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
+import Topbar from '../../components/Topbar/Topbar';
+import { ROUTE } from '../../config/constants';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { BookingHistoryTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
-import loading from '../../assets/loading.svg';
-import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
-import useInfiniteScroll from '../../hooks/useInfiniteScroll';
-import { ROUTE } from '../../config/constants';
 
 interface UserInfoTypes {
   userName: string;
@@ -120,12 +120,12 @@ const MyPage: React.FC = () => {
     <>
       <Topbar />
       <div className='[&>*]:m-middle'>
-        <div className='sm:w-smWeb lg:w-lgWeb p-20 border-b border-light-gray'>
+        <div className='p-20 border-b sm:w-smWeb lg:w-lgWeb border-light-gray'>
           <p className='mb-10 text-20'>{userInfo.userName}</p>
           <p className='text-dark-gray'>{userInfo.email}</p>
         </div>
-        <div className='sm:w-smWeb lg:w-lgWeb px-20 py-10 border-b border-light-gray bg-bright-gray'>
-          <p className='text-20 font-bold mb-10'>예약 내역</p>
+        <div className='px-20 py-10 border-b sm:w-smWeb lg:w-lgWeb border-light-gray bg-bright-gray'>
+          <p className='mb-10 font-bold text-20'>예약 내역</p>
           <div className='mb-10'>
             <input
               onChange={startTimeChange}
@@ -140,7 +140,7 @@ const MyPage: React.FC = () => {
             />
             <button
               onClick={dateSearchClick}
-              className='ml-10 w-50 h-40 bg-blue rounded-sm text-white'
+              className='h-40 ml-10 text-white rounded-sm w-50 bg-blue'
             >
               검색
             </button>
@@ -151,7 +151,7 @@ const MyPage: React.FC = () => {
               : `${getInputFormatTime(startTime.year, startTime.month, startTime.date)} ~ ${getInputFormatTime(endTime.year, endTime.month, endTime.date)}`}
           </p>
         </div>
-        <div className='sm:w-smWeb lg:w-lgWeb min-h-300 h-600 overflow-y-auto'>
+        <div className='overflow-y-auto sm:w-smWeb lg:w-lgWeb min-h-300 h-600'>
           {history.map((historyData, i) => (
             <BookingHistory key={i} historyData={historyData} />
           ))}
