@@ -1,13 +1,17 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getChattingRoom } from '../../apis/api/chatting';
 import { getCheckUser } from '../../apis/api/user';
 import { getChattingRoomData } from '../../apis/services/chatting';
 import { isAuthUser } from '../../apis/services/user';
-import ChattingRoomList from '../../components/ChattingRoomList/ChattingRoomList';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
 import { ChattingRoomTypes } from '../../types/chatting';
+import ChattingListSkeleton from '../../skeleton/ChattingListSkeleton';
+
+const ChattingRoomList = lazy(
+  () => import('../../components/ChattingRoomList/ChattingRoomList'),
+);
 
 const ChattingPage: React.FC = () => {
   const navigate = useNavigate();
@@ -37,7 +41,11 @@ const ChattingPage: React.FC = () => {
   return (
     <>
       <Topbar />
-      {authChecked && <ChattingRoomList rooms={chattingRooms} />}
+      {authChecked && (
+        <Suspense fallback={<ChattingListSkeleton />}>
+          <ChattingRoomList rooms={chattingRooms} />
+        </Suspense>
+      )}
     </>
   );
 };
