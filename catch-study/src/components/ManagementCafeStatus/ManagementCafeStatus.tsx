@@ -9,7 +9,7 @@ const ManagementCafeStatus: React.FC<ManagementCafeStatusPropsTypes> = ({
   cafeStatus,
 }) => {
   return (
-    <div className='relative w-full p-20 border-2 rounded-sm border-light-gray sm:w-smWeb lg:w-lgWeb'>
+    <div className='relative w-full p-20 border-2 rounded-sm border-light-gray sm:w-smWeb lg:w-lgWeb bg-bright-gray'>
       <h1 className='font-bold text-20'>{cafeStatus.cafe_name}</h1>
       <Link to={`/management/detail/${cafeStatus.cafe_id}`}>
         <button className='absolute p-6 bg-white border-2 text-14 text-light-gray top-10 right-10 border-light-gray rounded-default'>
