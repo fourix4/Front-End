@@ -51,13 +51,15 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
             <h2 className='font-semibold text-17'>가격</h2>
             <div className='mb-4'>
               <div className=''>
-                {cafeInfo.usage_fee.map((fee, index) => (
-                  <div key={index}>
-                    <p>
-                      {fee.hours} 시간 {fee.price} 원
-                    </p>
-                  </div>
-                ))}
+                {cafeInfo.usage_fee
+                  .sort((a, b) => a.hours - b.hours)
+                  .map((fee, index) => (
+                    <div key={index}>
+                      <p>
+                        {fee.hours} 시간 {fee.price} 원
+                      </p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
