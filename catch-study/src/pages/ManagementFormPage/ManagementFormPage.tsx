@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import { postManagementInfo } from '../../apis/api/manager';
+import { isSuccessCafeInfo } from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesForm';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
@@ -13,6 +15,8 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 
 const ManagementFormPage: React.FC = () => {
   useAuthCheck();
+
+  const navigator = useNavigate();
 
   const {
     roomInfos,
@@ -62,7 +66,12 @@ const ManagementFormPage: React.FC = () => {
 
     const rawData = await postManagementInfo(formData);
 
-    console.log('받음', rawData);
+    if (!isSuccessCafeInfo(rawData)) {
+      alert(rawData.message);
+      return;
+    }
+
+    navigator('/management');
   };
 
   return (

@@ -65,7 +65,12 @@ const ManagementEditPage: React.FC = () => {
 
     const rawData = await patchManagementInfo(formData);
 
-    console.log('받기', rawData);
+    if (!isSuccessCafeInfo(rawData)) {
+      alert(rawData.message);
+      navigator(ROUTE.MANAGEMENT);
+    }
+
+    navigator('/management');
   };
 
   useEffect(() => {
