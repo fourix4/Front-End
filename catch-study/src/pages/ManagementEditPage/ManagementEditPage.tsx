@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getManagementInfo, patchManagementInfo } from '../../apis/api/manager';
 import {
   getCafeInfoData,
@@ -23,6 +23,7 @@ const ManagementEditPage: React.FC = () => {
 
   const navigator = useNavigate();
 
+  const { cafeId } = useParams<{ cafeId: string }>();
   const {
     formData,
     setFormData,
@@ -67,7 +68,9 @@ const ManagementEditPage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const rawData = await getManagementInfo();
+      if (!cafeId) return;
+
+      const rawData = await getManagementInfo(cafeId);
 
       if (!isSuccessCafeInfo(rawData)) {
         alert(rawData.message);

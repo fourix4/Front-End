@@ -35,7 +35,7 @@ export const ROUTE = {
   BOOKING: '/booking',
   MANAGEMENT: '/management',
   MANAGEMENT_FORM: '/management/form',
-  MANAGEMENT_EDIT: '/management/edit',
+  MANAGEMENT_EDIT: '/management/edit/:cafeId',
   MANAGEMENT_DETAIL: '/management/detail/:cafeId',
   STUDYCAFE_BOOKING: '/studycafe/booking',
   PAYMENT: '/payment',

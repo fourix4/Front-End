@@ -42,6 +42,7 @@ export const formDataAtom = atom<FormDataTypes>({
 });
 
 export const cafeInfoAtom = atom<CafeInfoTypes>({
+  cafe_id: '',
   cafe_name: '',
   address: {
     city: '',
