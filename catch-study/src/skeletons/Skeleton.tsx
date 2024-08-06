@@ -1,7 +1,7 @@
 interface SkeletonPropTypes {
   width: string;
   height?: string;
-  rounded?: 'rounded-default' | 'rounded-none' | 'rounded-full';
+  rounded?: 'rounded-default' | 'rounded-none' | 'rounded-full' | 'rounded-sm';
   className?: string;
 }
 
