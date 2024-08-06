@@ -1,9 +1,23 @@
-import useManagementInfo from '../../hooks/useManagementInfo';
+import { UsageFeeTypes } from '../../types/management';
 
-const FeeForm: React.FC = () => {
-  const { usageFees, handleAddItem, handleArrayChange, handleRemoveItem } =
-    useManagementInfo();
+interface FeeFormProps {
+  usageFees: UsageFeeTypes[];
+  handleAddItem: (type: 'fee') => void;
+  handleArrayChange: (
+    index: number,
+    field: keyof UsageFeeTypes,
+    value: string,
+    type: 'fee',
+  ) => void;
+  handleRemoveItem: (index: number, type: 'fee') => void;
+}
 
+const FeeForm: React.FC<FeeFormProps> = ({
+  usageFees,
+  handleAddItem,
+  handleArrayChange,
+  handleRemoveItem,
+}) => {
   return (
     <>
       <div className='flex items-center justify-start gap-20'>
