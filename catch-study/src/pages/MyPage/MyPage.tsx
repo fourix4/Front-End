@@ -12,10 +12,10 @@ import LogoutDelete from '../../components/LogoutDelete/LogoutDelete';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import BookingHistorySkeleton from '../../skeletons/BookingHistorySkeleton';
+import BookingUserSkeleton from '../../skeletons/BookingUserSkeleton';
 import { BookingHistoryTypes, UserInfoTypes } from '../../types/interfaces';
 import { getInputFormatTime } from '../../utils/time.utils';
-import BookingHistorySkeleton from '../../skeleton/BookingHistorySkeleton';
-import BookingUserSkeleton from '../../skeleton/BookingUserSkeleton';
 
 const BookingHistory = lazy(
   () => import('../../components/BookingHistory/BookingHistory'),

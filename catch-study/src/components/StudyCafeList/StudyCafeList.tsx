@@ -3,8 +3,8 @@ import { getStudycafeList } from '../../apis/api/studycafe';
 import { getStudycafeListData } from '../../apis/services/studycafe';
 import loadingGif from '../../assets/loading.svg';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import StudyCafeSkeleton from '../../skeletons/StudyCafeSkeleton';
 import { CityFilterTypes, StudyCafeListTypes } from '../../types/interfaces';
-import StudyCafeSkeleton from '../../skeleton/StudyCafeSkeleton';
 
 interface StudyCafeListPropTypes {
   filter: CityFilterTypes;
