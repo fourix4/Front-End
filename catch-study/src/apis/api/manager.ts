@@ -49,12 +49,15 @@ export const postManagementInfo = async (formData: FormDataTypes) => {
   }
 };
 
-export const patchManagementInfo = async (editFormData: FormDataTypes) => {
+export const patchManagementInfo = async (
+  editFormData: FormDataTypes,
+  cafeId: string,
+) => {
   try {
     const dataForm = createFormData(editFormData);
 
     const { data } = await instance.patch<ResponseTypes>(
-      API_ADDRESS.MANAGER,
+      `${API_ADDRESS.MANAGER}/${cafeId}`,
       dataForm,
     );
 
