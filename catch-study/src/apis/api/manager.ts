@@ -66,10 +66,10 @@ export const patchManagementInfo = async (editFormData: FormDataTypes) => {
   }
 };
 
-export const getManagementInfo = async () => {
+export const getManagementInfo = async (cafeId: string) => {
   try {
     const { data } = await instance.get<CafeInfoResponseTypes>(
-      API_ADDRESS.MANAGER,
+      `${API_ADDRESS.MANAGER}/${cafeId}`,
     );
 
     return data;
