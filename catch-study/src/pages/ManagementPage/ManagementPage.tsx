@@ -47,23 +47,6 @@ const ManagementPage: React.FC = () => {
           </Link>
         </div>
       </div>
-
-      {/* <div className='flex flex-col items-center w-full h-full gap-20 p-20'>
-        {isExist && cafeInfo ? (
-          <ManagementCafeInfo cafeInfo={cafeInfo} />
-        ) : (
-          <div className='w-full sm:w-smWeb lg:w-lgWeb'>
-            <Link to={ROUTE.MANAGEMENT_FORM}>
-              <button className='input-box'>스터디 카페 정보 입력</button>
-            </Link>
-          </div>
-        )}
-        <div className='w-full sm:w-smWeb lg:w-lgWeb'>
-          <Link to={ROUTE.CHATTING}>
-            <button className='input-box'>채팅</button>
-          </Link>
-        </div>
-      </div> */}
     </>
   );
 };
