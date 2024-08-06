@@ -6,6 +6,7 @@ import {
   isSuccessCafeInfo,
 } from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesForm';
+import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
@@ -25,6 +26,11 @@ const ManagementEditPage: React.FC = () => {
   const {
     formData,
     address,
+    usageFees,
+    setUsageFees,
+    handleAddItem,
+    handleArrayChange,
+    handleRemoveItem,
     setAddress,
     setFormData,
     handleInputChange,
@@ -63,7 +69,9 @@ const ManagementEditPage: React.FC = () => {
       return;
     }
 
-    const rawData = await patchManagementInfo(formData);
+    if (!cafeId) return;
+
+    const rawData = await patchManagementInfo(formData, cafeId);
 
     if (!isSuccessCafeInfo(rawData)) {
       alert(rawData.message);
@@ -89,6 +97,7 @@ const ManagementEditPage: React.FC = () => {
       if (data) {
         setFormData(data);
         setAddress(data.address);
+        setUsageFees(data.usage_fee);
         setPrevThumnail(data.title_image);
         setPrevStoreImages(data.multiple_images);
       }
@@ -147,6 +156,13 @@ const ManagementEditPage: React.FC = () => {
           value={formData.closed_day}
           onChange={handleInputChange}
           className='input-box'
+        />
+        <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
+        <FeeForm
+          usageFees={usageFees}
+          handleAddItem={handleAddItem}
+          handleArrayChange={handleArrayChange}
+          handleRemoveItem={handleRemoveItem}
         />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
         <ImageEditForm
