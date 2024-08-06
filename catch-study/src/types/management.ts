@@ -36,6 +36,7 @@ export interface FormDataTypes {
 }
 
 export interface CafeInfoTypes {
+  cafe_id: string;
   cafe_name: string;
   address: AddressTypes;
   opening_hours: string;
