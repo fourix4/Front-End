@@ -1,11 +1,18 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { CITY_LIST } from '../../config/constants';
-import useManagementInfo from '../../hooks/useManagementInfo';
+import { AddressTypes } from '../../types/management';
 
-const AddressForm: React.FC = () => {
-  const { address, handleInputChange, handleSelectChange } =
-    useManagementInfo();
+interface AddressFormProps {
+  address: AddressTypes;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>, field?: string) => void;
+  handleSelectChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+}
 
+const AddressForm: React.FC<AddressFormProps> = ({
+  address,
+  handleInputChange,
+  handleSelectChange,
+}) => {
   const [city, setCity] = useState(address.city || '시');
   const [country, setCountry] = useState(address.country || '군/구');
   const [town, setTown] = useState(address.town || '동');
