@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getManagementInfo, patchManagementInfo } from '../../apis/api/manager';
 import {
@@ -6,9 +6,7 @@ import {
   isSuccessCafeInfo,
 } from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesForm';
-import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageEditForm from '../../components/ImageEditForm/ImageEditForm';
-import RoomForm from '../../components/RoomForm/RoomForm';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
 import {
@@ -26,13 +24,17 @@ const ManagementEditPage: React.FC = () => {
   const { cafeId } = useParams<{ cafeId: string }>();
   const {
     formData,
-    setFormData,
+    address,
     setAddress,
-    setCancelTime,
-    setRoomInfos,
-    setUsageFees,
+    setFormData,
     handleInputChange,
+    handleSelectChange,
+    handleThumbnailChange,
+    handleStoreImagesChange,
   } = useManagementInfo();
+
+  const [prevThumnail, setPrevThumnail] = useState<string | null>(null);
+  const [prevStoreImages, setPrevStoreImages] = useState<string[]>([]);
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
@@ -82,9 +84,8 @@ const ManagementEditPage: React.FC = () => {
       if (data) {
         setFormData(data);
         setAddress(data.address);
-        setCancelTime(data.room_info.cancel_available_time);
-        setRoomInfos(data.room_info.rooms);
-        setUsageFees(data.usage_fee);
+        setPrevThumnail(data.title_image);
+        setPrevStoreImages(data.multiple_images);
       }
     })();
   }, []);
@@ -113,7 +114,11 @@ const ManagementEditPage: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
-        <AddressForm />
+        <AddressForm
+          address={address}
+          handleInputChange={e => handleInputChange(e, 'address')}
+          handleSelectChange={e => handleSelectChange(e)}
+        />
         <div className='flex items-center justify-center gap-10'>
           <input
             name='opening_hours'
@@ -139,11 +144,12 @@ const ManagementEditPage: React.FC = () => {
           className='input-box'
         />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <FeeForm />
-        <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <RoomForm />
-        <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <ImageEditForm />
+        <ImageEditForm
+          titleImage={prevThumnail}
+          multipleImages={prevStoreImages}
+          handleThumbnailChange={handleThumbnailChange}
+          handleStoreImagesChange={handleStoreImagesChange}
+        />
         <div className='w-full pt-50'>
           <button
             type='submit'
