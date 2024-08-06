@@ -1,10 +1,14 @@
-import React from 'react';
-import useManagementInfo from '../../hooks/useManagementInfo';
+import React, { ChangeEvent } from 'react';
 
-const ImageForm: React.FC = () => {
-  const { handleThumbnailChange, handleStoreImagesChange } =
-    useManagementInfo();
+interface ImageEditFormProps {
+  handleThumbnailChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleStoreImagesChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
+const ImageForm: React.FC<ImageEditFormProps> = ({
+  handleThumbnailChange,
+  handleStoreImagesChange,
+}) => {
   return (
     <div className='flex flex-col gap-20'>
       <div className='flex flex-col justify-start gap-10 mb-4'>
