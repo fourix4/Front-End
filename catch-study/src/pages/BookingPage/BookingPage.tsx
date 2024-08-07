@@ -20,8 +20,8 @@ import { getUserInfo, isAuthUser } from '../../apis/services/user';
 import { setChattingName, setChattingRoomId } from '../../atoms/chatting';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
+import BookingSkeleton from '../../skeletons/BookingSkeleton';
 import { BookingTypes } from '../../types/interfaces';
-import BookingSkeleton from '../../skeleton/BookingSkeleton';
 
 const CurrentBooking = lazy(
   () => import('../../components/CurrentBooking/CurrentBooking'),

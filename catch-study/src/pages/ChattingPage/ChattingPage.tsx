@@ -6,8 +6,8 @@ import { getChattingRoomData } from '../../apis/services/chatting';
 import { isAuthUser } from '../../apis/services/user';
 import Topbar from '../../components/Topbar/Topbar';
 import { ROUTE } from '../../config/constants';
+import ChattingListSkeleton from '../../skeletons/ChattingListSkeleton';
 import { ChattingRoomTypes } from '../../types/chatting';
-import ChattingListSkeleton from '../../skeleton/ChattingListSkeleton';
 
 const ChattingRoomList = lazy(
   () => import('../../components/ChattingRoomList/ChattingRoomList'),
