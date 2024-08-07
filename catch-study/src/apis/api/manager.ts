@@ -1,6 +1,7 @@
 import { API_ADDRESS } from '../../config/api';
 import {
   CafeInfoResponseTypes,
+  CafeStatusReponseTypes,
   ErrorResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
@@ -36,7 +37,7 @@ export const postManagementInfo = async (formData: FormDataTypes) => {
     const dataForm = createFormData(formData);
 
     const { data } = await instance.post<ResponseTypes>(
-      API_ADDRESS.MANAGER_INFO_URI,
+      API_ADDRESS.MANAGER,
       dataForm,
     );
 
@@ -48,12 +49,15 @@ export const postManagementInfo = async (formData: FormDataTypes) => {
   }
 };
 
-export const patchManagementInfo = async (editFormData: FormDataTypes) => {
+export const patchManagementInfo = async (
+  editFormData: FormDataTypes,
+  cafeId: string,
+) => {
   try {
     const dataForm = createFormData(editFormData);
 
     const { data } = await instance.patch<ResponseTypes>(
-      API_ADDRESS.MANAGER_INFO_URI,
+      `${API_ADDRESS.MANAGER}/${cafeId}`,
       dataForm,
     );
 
@@ -65,10 +69,24 @@ export const patchManagementInfo = async (editFormData: FormDataTypes) => {
   }
 };
 
-export const getManagementInfo = async () => {
+export const getManagementInfo = async (cafeId: string) => {
   try {
     const { data } = await instance.get<CafeInfoResponseTypes>(
-      API_ADDRESS.MANAGER_INFO_URI,
+      `${API_ADDRESS.MANAGER}/${cafeId}`,
+    );
+
+    return data;
+  } catch (error) {
+    const errorObj = error as ErrorResponseTypes;
+
+    return errorObj;
+  }
+};
+
+export const getCafeStatus = async () => {
+  try {
+    const { data } = await instance.get<CafeStatusReponseTypes>(
+      API_ADDRESS.MANAGER,
     );
 
     return data;

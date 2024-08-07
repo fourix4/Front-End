@@ -1,4 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import { postManagementInfo } from '../../apis/api/manager';
+import { isSuccessCafeInfo } from '../../apis/services/manager';
 import AddressForm from '../../components/AddressForm/AddreesForm';
 import FeeForm from '../../components/FeeForm/FeeForm';
 import ImageForm from '../../components/ImangeForm/ImageForm';
@@ -14,8 +16,25 @@ import useManagementInfo from '../../hooks/useManagementInfo';
 const ManagementFormPage: React.FC = () => {
   useAuthCheck();
 
-  const { formData, handleInputChange, handleInputChangeNumber } =
-    useManagementInfo();
+  const navigator = useNavigate();
+
+  const {
+    roomInfos,
+    cancelTime,
+    usageFees,
+    formData,
+    address,
+    setCancelTime,
+    handleInputChange,
+    handleSelectChange,
+    handleRoomNameChange,
+    handleThumbnailChange,
+    handleStoreImagesChange,
+    handleInputChangeNumber,
+    handleRemoveItem,
+    handleAddItem,
+    handleArrayChange,
+  } = useManagementInfo();
 
   const getErrorMessage = (errorType: ManagementErrorTypes): string => {
     return MANAGEMENT_INFO_ERROR[errorType];
@@ -47,7 +66,12 @@ const ManagementFormPage: React.FC = () => {
 
     const rawData = await postManagementInfo(formData);
 
-    console.log('받음', rawData);
+    if (!isSuccessCafeInfo(rawData)) {
+      alert(rawData.message);
+      return;
+    }
+
+    navigator('/management');
   };
 
   return (
@@ -74,7 +98,11 @@ const ManagementFormPage: React.FC = () => {
           onChange={handleInputChange}
           className='input-box'
         />
-        <AddressForm />
+        <AddressForm
+          address={address}
+          handleInputChange={e => handleInputChange(e, 'address')}
+          handleSelectChange={e => handleSelectChange(e)}
+        />
         <div className='flex items-center justify-center gap-10'>
           <input
             name='opening_hours'
@@ -110,11 +138,27 @@ const ManagementFormPage: React.FC = () => {
             className='input-box'
           />
         </div>
-        <FeeForm />
+        <FeeForm
+          usageFees={usageFees}
+          handleAddItem={handleAddItem}
+          handleArrayChange={handleArrayChange}
+          handleRemoveItem={handleRemoveItem}
+        />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <RoomForm />
+        <RoomForm
+          roomInfos={roomInfos}
+          cancelTime={cancelTime}
+          handleAddItem={handleAddItem}
+          setCancelTime={setCancelTime}
+          handleRoomNameChange={handleRoomNameChange}
+          handleArrayChange={handleArrayChange}
+          handleRemoveItem={handleRemoveItem}
+        />
         <span className='w-full pb-10 mt-10 border-t-2 border-light-gray'></span>
-        <ImageForm />
+        <ImageForm
+          handleThumbnailChange={handleThumbnailChange}
+          handleStoreImagesChange={handleStoreImagesChange}
+        />
         <div className='w-full pt-50'>
           <button
             type='submit'

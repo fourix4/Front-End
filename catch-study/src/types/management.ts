@@ -36,6 +36,7 @@ export interface FormDataTypes {
 }
 
 export interface CafeInfoTypes {
+  cafe_id: string;
   cafe_name: string;
   address: AddressTypes;
   opening_hours: string;
@@ -51,4 +52,13 @@ export interface CafeInfoTypes {
   title_image: string | null;
   multiple_images: string[];
   cafe_phone: string;
+}
+
+export interface CafeStatusTypes {
+  cafe_id: number;
+  cafe_name: string;
+  address: AddressTypes;
+  using_seats: number;
+  seats: number;
+  sales: number;
 }

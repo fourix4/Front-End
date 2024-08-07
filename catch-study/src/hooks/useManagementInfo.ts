@@ -1,29 +1,81 @@
-import { useAtom } from 'jotai';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import {
-  addressAtom,
-  cafeInfoAtom,
-  cancelTimeAtom,
-  formDataAtom,
-  roomInfosAtom,
-  storeImagesAtom,
-  thumbnailAtom,
-  usageFeesAtom,
-} from '../atoms/management';
-import { RoomInfoTypes, UsageFeeTypes } from '../types/management';
+  AddressTypes,
+  CafeInfoTypes,
+  FormDataTypes,
+  RoomInfoTypes,
+  UsageFeeTypes,
+} from '../types/management';
 
 type ManagementChangeTypes = 'room' | 'fee';
 
 const useManagementInfo = () => {
-  const [roomInfos, setRoomInfos] = useAtom(roomInfosAtom);
-  const [address, setAddress] = useAtom(addressAtom);
-  const [cancelTime, setCancelTime] = useAtom(cancelTimeAtom);
-  const [usageFees, setUsageFees] = useAtom(usageFeesAtom);
-  const [thumbnail, setThumbnail] = useAtom(thumbnailAtom);
-  const [storeImages, setStoreImages] = useAtom(storeImagesAtom);
-  const [formData, setFormData] = useAtom(formDataAtom);
-  const [cafeData, setCafeData] = useAtom(cafeInfoAtom);
+  // const [roomInfos, setRoomInfos] = useAtom(roomInfosAtom);
+  // const [address, setAddress] = useAtom(addressAtom);
+  // const [cancelTime, setCancelTime] = useAtom(cancelTimeAtom);
+  // const [usageFees, setUsageFees] = useAtom(usageFeesAtom);
+  // const [thumbnail, setThumbnail] = useAtom(thumbnailAtom);
+  // const [storeImages, setStoreImages] = useAtom(storeImagesAtom);
+  // const [formData, setFormData] = useAtom(formDataAtom);
+  // const [cafeData, setCafeData] = useAtom(cafeInfoAtom);
+
+  const [roomInfos, setRoomInfos] = useState<RoomInfoTypes[]>([]);
+  const [address, setAddress] = useState<AddressTypes>({
+    city: '',
+    country: '',
+    town: '',
+    etc: '',
+  });
+  const [cancelTime, setCancelTime] = useState<number>(0);
+  const [usageFees, setUsageFees] = useState<UsageFeeTypes[]>([]);
+  const [thumbnail, setThumbnail] = useState<File | string | null>(null);
+  const [storeImages, setStoreImages] = useState<File[] | string[]>([]);
+  const [formData, setFormData] = useState<FormDataTypes>({
+    cafe_name: '',
+    address: {
+      city: '',
+      country: '',
+      town: '',
+      etc: '',
+    },
+    opening_hours: '',
+    closed_hours: '',
+    closed_day: '',
+    seats: 0,
+    room_info: {
+      cancel_available_time: 0,
+      rooms: [],
+    },
+    seat_chart_image: '',
+    usage_fee: [],
+    title_image: null,
+    multiple_images: [],
+    cafe_phone: '',
+  });
+  const [cafeData, setCafeData] = useState<CafeInfoTypes>({
+    cafe_id: '',
+    cafe_name: '',
+    address: {
+      city: '',
+      country: '',
+      town: '',
+      etc: '',
+    },
+    opening_hours: '',
+    closed_hours: '',
+    closed_day: '',
+    seats: 0,
+    room_info: {
+      cancel_available_time: 0,
+      rooms: [],
+    },
+    seat_chart_image: '',
+    usage_fee: [],
+    title_image: null,
+    multiple_images: [],
+    cafe_phone: '',
+  });
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement>,

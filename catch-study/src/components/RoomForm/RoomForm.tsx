@@ -1,17 +1,32 @@
 import { ChangeEvent } from 'react';
-import useManagementInfo from '../../hooks/useManagementInfo';
+import { RoomInfoTypes } from '../../types/management';
 
-const RoomForm: React.FC = () => {
-  const {
-    roomInfos,
-    cancelTime,
-    handleAddItem,
-    setCancelTime,
-    handleRoomNameChange,
-    handleArrayChange,
-    handleRemoveItem,
-  } = useManagementInfo();
-
+interface RoomFormProps {
+  roomInfos: RoomInfoTypes[];
+  cancelTime: number;
+  handleAddItem: (type: 'room') => void;
+  setCancelTime: (value: number) => void;
+  handleRoomNameChange: (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void;
+  handleArrayChange: (
+    index: number,
+    field: keyof RoomInfoTypes,
+    value: string,
+    type: 'room',
+  ) => void;
+  handleRemoveItem: (index: number, type: 'room') => void;
+}
+const RoomForm: React.FC<RoomFormProps> = ({
+  roomInfos,
+  cancelTime,
+  handleAddItem,
+  setCancelTime,
+  handleRoomNameChange,
+  handleArrayChange,
+  handleRemoveItem,
+}) => {
   const handleCancelTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     const numberValue = value === '' ? 0 : parseInt(value, 10);

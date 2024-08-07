@@ -10,9 +10,9 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
 }) => {
   return (
     <>
-      <div className='relative w-full p-20 border-2 rounded-sm border-light-gray bg-bright-gray'>
+      <div className='relative w-full p-20 border-2 rounded-sm border-light-gray bg-bright-gray sm:w-smWeb lg:w-lgWeb'>
         <h1 className='mb-10 font-bold text-20'>스터디 카페 정보</h1>
-        <Link to={'/management/edit'}>
+        <Link to={`/management/edit/${cafeInfo.cafe_id}`}>
           <button className='absolute p-6 bg-white border-2 text-14 text-light-gray top-10 right-10 border-light-gray rounded-default'>
             수정하기
           </button>
@@ -51,13 +51,15 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
             <h2 className='font-semibold text-17'>가격</h2>
             <div className='mb-4'>
               <div className=''>
-                {cafeInfo.usage_fee.map((fee, index) => (
-                  <div key={index}>
-                    <p>
-                      {fee.hours} 시간 {fee.price} 원
-                    </p>
-                  </div>
-                ))}
+                {cafeInfo.usage_fee
+                  .sort((a, b) => a.hours - b.hours)
+                  .map((fee, index) => (
+                    <div key={index}>
+                      <p>
+                        {fee.hours} 시간 {fee.price} 원
+                      </p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { STATUS } from '../../config/api';
 import {
   CafeInfoResponseTypes,
+  CafeStatusReponseTypes,
   ErrorResponseTypes,
   ResponseTypes,
 } from '../../types/interfaces';
@@ -21,4 +22,14 @@ export const isSuccessCafeInfo = (rawData: ResponseTypes) => {
   }
 
   return false;
+};
+
+export const getCafeStatusData = (
+  rawData: CafeStatusReponseTypes | ErrorResponseTypes,
+) => {
+  if (rawData.code === STATUS.SUCCESS && 'data' in rawData) {
+    return rawData.data.result;
+  }
+
+  return [];
 };

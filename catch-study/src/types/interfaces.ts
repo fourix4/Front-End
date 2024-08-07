@@ -1,5 +1,5 @@
 import { ChattingRoomTypes } from './chatting';
-import { CafeInfoTypes } from './management';
+import { CafeInfoTypes, CafeStatusTypes } from './management';
 
 export interface ResponseTypes {
   code: number;
@@ -224,6 +224,12 @@ export interface MakeChattingTypes extends ResponseTypes {
 export interface CafeInfoResponseTypes extends ResponseTypes {
   data: {
     result: CafeInfoTypes;
+  };
+}
+
+export interface CafeStatusReponseTypes extends ResponseTypes {
+  data: {
+    result: CafeStatusTypes[];
   };
 }
 
