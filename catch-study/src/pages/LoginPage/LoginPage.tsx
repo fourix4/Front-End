@@ -5,8 +5,6 @@ const LoginPage = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    console.log(process.env.REACT_APP_KAKAO_LOGIN_URL);
-
     window.location.href = `${process.env.REACT_APP_KAKAO_LOGIN_URL}`;
   };
 
