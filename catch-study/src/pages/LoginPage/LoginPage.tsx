@@ -5,7 +5,7 @@ const LoginPage = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    window.location.href = `http://3.39.182.9:8080/oauth2/authorization/kakao`;
+    window.location.href = `${process.env.REACT_APP_KAKAO_LOGIN_URL}`;
   };
 
   const googleLoginClick = (

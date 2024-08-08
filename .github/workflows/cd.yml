@@ -44,6 +44,7 @@ jobs:
           echo REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}\ >> .env.production
           echo REACT_APP_GOOGLE_CLIENT_ID=${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }}\ >> .env.production
           echo REACT_APP_GOOGLE_REDIRECT_URI=${{ secrets.REACT_APP_GOOGLE_REDIRECT_URI }}\ >> .env.production
+          echo REACT_APP_KAKAO_LOGIN_URL=${{ secrets.REACT_APP_KAKAO_LOGIN_URL }}\ >> .env.production
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
