@@ -24,7 +24,7 @@ const Studycafe: React.FC<StudycafePropTypes> = ({
           <div className='flex items-center w-full p-20 sm:w-smWeb lg:w-lgWeb'>
             <img
               className='mr-20 w-100 h-100'
-              src={cafe.cafe_image}
+              src={cafe.thumbnail}
               referrerPolicy='no-referrer'
             />
             <div>
