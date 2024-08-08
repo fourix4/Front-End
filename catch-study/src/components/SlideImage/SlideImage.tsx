@@ -5,11 +5,12 @@ interface SlideImagePropTypes {
 }
 
 const SlideImage: React.FC<SlideImagePropTypes> = ({ images }) => {
-  const [imageList] = useState([
-    images[images.length - 1],
-    ...images,
-    images[0],
-  ]);
+  const [imageList, setImageList] = useState<string[]>([]);
+
+  useEffect(() => {
+    setImageList([images[images.length - 1], ...images, images[0]]);
+  }, [images]);
+
   const [currentImgIndex, setCurrentImgIndex] = useState(1);
   const [style, setStyle] = useState({
     transform: `translateX(-${currentImgIndex}00%)`,
