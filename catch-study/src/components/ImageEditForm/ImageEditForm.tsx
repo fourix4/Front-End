@@ -28,6 +28,7 @@ const ImageEditForm: React.FC<ImageEditFormProps> = ({
             <img
               src={titleImage}
               alt='Thumbnail Preview'
+              referrerPolicy='no-referrer'
               className='object-cover w-64 h-64 mt-2 md:w-128 md:h-128'
             />
           </div>
@@ -50,6 +51,7 @@ const ImageEditForm: React.FC<ImageEditFormProps> = ({
                   key={index}
                   src={image}
                   alt={`Store Preview ${index + 1}`}
+                  referrerPolicy='no-referrer'
                   className='object-cover w-64 h-64 md:w-128 md:h-128'
                 />
               ))}
