@@ -92,6 +92,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
             {cafeInfo.title_image && (
               <img
                 src={cafeInfo.title_image}
+                referrerPolicy='no-referrer'
                 className='object-cover w-64 h-64 mt-4'
               />
             )}
@@ -104,6 +105,7 @@ const ManagementCafeInfo: React.FC<ManagementCafeInfoPropTypes> = ({
                   key={index}
                   src={image}
                   className='object-cover w-64 h-64 mt-4'
+                  referrerPolicy='no-referrer'
                   alt={`Store Image ${index + 1}`}
                 />
               ))
