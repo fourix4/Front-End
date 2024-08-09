@@ -48,7 +48,6 @@ const ManagementEditPage: React.FC = () => {
 
   const handleEditSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('보내기', formData);
 
     let errorType: ManagementErrorTypes | null = null;
 
