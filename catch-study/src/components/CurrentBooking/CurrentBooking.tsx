@@ -88,7 +88,6 @@ const CurrentBooking: React.FC<CurrentBookingPropTypes> = ({
           </div>
         </div>
       ))}
-      ;
     </>
   );
 };
