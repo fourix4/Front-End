@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CITY_LIST } from '../../config/constants';
+import CITY_LIST from '../../config/cityList';
 import { CityFilterTypes } from '../../types/interfaces';
 
 interface CityFilterPropTypes {
@@ -56,7 +56,7 @@ const CityFilter: React.FC<CityFilterPropTypes> = ({ onFilterChange }) => {
         >
           <option className='text-14'>동</option>
           {city !== '시' && country !== '군/구'
-            ? CITY_LIST['동'][country].map(option => (
+            ? CITY_LIST['동'][city][country].map(option => (
                 <option key={option}>{option}</option>
               ))
             : ''}

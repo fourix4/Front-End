@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { CITY_LIST } from '../../config/constants';
+import CITY_LIST from '../../config/cityList';
 import { AddressTypes } from '../../types/management';
 
 interface AddressFormProps {
@@ -53,7 +53,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         >
           <option hidden>군/구</option>
           {city !== '시'
-            ? CITY_LIST['군/구'][city]?.map(option => (
+            ? CITY_LIST['군/구'][city].map(option => (
                 <option key={option} value={option}>
                   {option}
                 </option>
@@ -71,7 +71,7 @@ const AddressForm: React.FC<AddressFormProps> = ({
         >
           <option hidden>동</option>
           {city !== '시' && country !== '군/구'
-            ? CITY_LIST['동'][country]?.map(option => (
+            ? CITY_LIST['동'][city][country].map(option => (
                 <option key={option} value={option}>
                   {option}
                 </option>
