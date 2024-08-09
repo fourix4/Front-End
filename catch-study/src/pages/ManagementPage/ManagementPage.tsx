@@ -22,12 +22,7 @@ const ManagementPage: React.FC = () => {
   useEffect(() => {
     (async () => {
       const rawData = await getCafeStatus();
-
-      console.log('raw', rawData);
-
       const data = getCafeStatusData(rawData);
-
-      console.log(data);
 
       setCafeStatus(data);
     })();

@@ -1,4 +1,4 @@
-import { Client, Frame } from '@stomp/stompjs';
+import { Client } from '@stomp/stompjs';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SockJS from 'sockjs-client';
@@ -113,9 +113,6 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 1000,
-      debug: (str: string) => {
-        console.log(str);
-      },
       connectHeaders: {
         chatRoomId: roomId.toString(),
         Authorization: `Bearer ${accessToken}`,
@@ -124,9 +121,7 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       },
     });
 
-    client.onConnect = (frame: Frame) => {
-      console.log(`/sub/${roomId}/chat`, frame);
-
+    client.onConnect = () => {
       client.subscribe(
         `/sub/${roomId}/chat`,
         chat => {
