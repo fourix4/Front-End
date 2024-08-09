@@ -109,7 +109,9 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
   useEffect(() => {
     // 소켓 연결
-    const socket = new SockJS('wss://catch-study.store/');
+    const socket = new SockJS('https://catch-study.store/ws', null, {
+      transports: ['xhr-streaming', 'websocket'],
+    });
     const client = new Client({
       webSocketFactory: () => socket,
       reconnectDelay: 1000,
