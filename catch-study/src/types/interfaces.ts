@@ -26,7 +26,7 @@ export interface StudyCafeListTypes {
   cafe_id: number;
   cafe_name: string;
   address: string;
-  cafe_image: string;
+  thumbnail: string;
 }
 
 export interface StudyCafeListResponseTypes extends ResponseTypes {
