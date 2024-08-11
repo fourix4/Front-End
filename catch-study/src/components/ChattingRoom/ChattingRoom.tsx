@@ -168,6 +168,12 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
     client.activate();
     setStompClient(client);
+
+    return () => {
+      if (client.connected) {
+        client.deactivate();
+      }
+    };
   }, [accessToken, navigate]);
 
   useEffect(() => {
