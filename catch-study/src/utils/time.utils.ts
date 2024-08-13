@@ -9,7 +9,7 @@ export const getChatTime = (date: Date) => {
 export const getDateFullFormat = (date: Date) => {
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
-  const day = date.getDay();
+  const day = date.getDate();
 
   return `${year}년 ${month}월 ${day}일`;
 };
