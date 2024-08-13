@@ -168,13 +168,19 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
 
     client.activate();
     setStompClient(client);
-  }, [accessToken, navigate]);
+
+    return () => {
+      if (client.connected) {
+        client.deactivate();
+      }
+    };
+  }, [accessToken]);
 
   useEffect(() => {
     const groupChattingsByDate = (chattings: ChattingTypes[]) => {
       return chattings.reduce(
         (groups: Record<string, ChattingTypes[]>, chat) => {
-          const date = new Date(chat.create_date).toLocaleDateString();
+          const date = new Date(chat.create_date).toLocaleDateString('ko-KR');
 
           if (!groups[date]) {
             groups[date] = [];

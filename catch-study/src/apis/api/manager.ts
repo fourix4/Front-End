@@ -8,10 +8,6 @@ import {
 import { FormDataTypes } from '../../types/management';
 import instance from '../utils/axios';
 
-export interface DataTypes {
-  [key: string]: any;
-}
-
 const createFormData = (data: FormDataTypes): FormData => {
   const formData = new FormData();
 
