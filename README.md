@@ -18,8 +18,9 @@ https://catch-study.kro.kr/
 # 🙋‍♂️ 팀원 소개
 
 | <img src="https://avatars.githubusercontent.com/u/79002373?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/101779861?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/62873417?v=4" width="150" height="150"/> | <img src="https://avatars.githubusercontent.com/u/48711163?v=4" width="150" height="150"/> |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| FE 팀원: 조현정<br/>https://github.com/HyunJungJo98                                        | FE 팀원: 유의진<br/>https://github.com/ejinn1                                               | BE 팀원: 이다은<br/>https://github.com/llynn97                                             | BE 팀원: 김태훈<br/>https://github.com/TaeHoon0                                            |
+|:------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|
+| **FE 팀원: 조현정**<br/>[@HyunJungJo98](https://github.com/HyunJungJo98)                   | **FE 팀원: 유의진**<br/>[@ejinn1](https://github.com/ejinn1)                                | **BE 팀원: 이다은**<br/>[@llynn97](https://github.com/llynn97)                             | **BE 팀원: 김태훈**<br/>[@TaeHoon0](https://github.com/TaeHoon0)                           |
+
 
 # 🤼 담당 기능
 
@@ -137,44 +138,73 @@ https://catch-study.kro.kr/
 
 ## 일반 사용자
 
-- 스터디카페 목록 표시 : 시, 군/구, 동을 선택하면 해당 주소에 위치한 스터디카페 목록이 표시된다.
+- **스터디카페 목록 표시**: 시, 군/구, 동을 선택하면 해당 주소에 위치한 스터디카페 목록이 표시됩니다.
+  
+  <img src="https://github.com/user-attachments/assets/7f6ec2fd-1c16-4496-a061-fbce0066f1fb" width="390px"/>
 
-  ![image](https://github.com/user-attachments/assets/7f6ec2fd-1c16-4496-a061-fbce0066f1fb)
+- **스터디카페 상세 정보 표시**: 선택한 스터디카페의 상세 정보가 표시됩니다.
 
-- 스터디카페 상세 정보 표시 : 선택한 스터디카페의 상세 정보가 표시된다.
-  ![image](https://github.com/user-attachments/assets/ba25d94f-6cb3-4606-b851-dcf3b760a28c)
-- 로그인 : 카카오 계정과 구글 계정으로 회원가입을 할 수 있다.
-  ![image](https://github.com/user-attachments/assets/a279960b-2c27-4b01-9a73-3458e2b55199)
-- 좌석 예약 : 사용 가능한 좌석과 시간을 선택하여 예약 할 수 있다.
+  <img src="https://github.com/user-attachments/assets/ba25d94f-6cb3-4606-b851-dcf3b760a28c" width="390px"/>
 
-  ![image](https://github.com/user-attachments/assets/e5123ff1-ccfb-4b71-982d-5e726cc39713)
+- **로그인**: 카카오 계정과 구글 계정으로 회원가입을 할 수 있습니다.
 
-  ![image](https://github.com/user-attachments/assets/c035678a-8990-4807-9950-325b10befd87)
+  <img src="https://github.com/user-attachments/assets/a279960b-2c27-4b01-9a73-3458e2b55199" width="390px"/>
 
-- 스터디룸 예약 : 예약 가능한 시간을 선택하여 예약 할 수 있다.
+- **좌석 예약**: 사용 가능한 좌석과 시간을 선택하여 예약할 수 있습니다.
 
-  ![image](https://github.com/user-attachments/assets/bee047e2-7844-4d3c-95a5-70b2b8d10736)
+  <img src="https://github.com/user-attachments/assets/e5123ff1-ccfb-4b71-982d-5e726cc39713" width="390px"/>
+  
+  <img src="https://github.com/user-attachments/assets/c035678a-8990-4807-9950-325b10befd87" width="390px"/>
 
-  ![image](https://github.com/user-attachments/assets/fed69b1f-a0a3-4d62-b05e-c4d62acd0f44)
+- **스터디룸 예약**: 예약 가능한 시간을 선택하여 예약할 수 있습니다.
 
-- 결제 : 카카오 페이를 사용하여 간편 결제를 할 수 있다.
+  <img src="https://github.com/user-attachments/assets/bee047e2-7844-4d3c-95a5-70b2b8d10736" width="390px"/>
+  
+  <img src="https://github.com/user-attachments/assets/fed69b1f-a0a3-4d62-b05e-c4d62acd0f44" width="390px"/>
 
-  ![image](https://github.com/user-attachments/assets/60804755-34e5-4a24-bf2c-c59024a3f709)
+- **결제**: 카카오 페이를 사용하여 간편 결제를 할 수 있습니다.
 
-  ![image](https://github.com/user-attachments/assets/713181fe-ae8d-4329-a2b3-587a7b503758)
+  <img src="https://github.com/user-attachments/assets/60804755-34e5-4a24-bf2c-c59024a3f709" width="390px"/>
+  
+  <img src="https://github.com/user-attachments/assets/713181fe-ae8d-4329-a2b3-587a7b503758" width="390px"/>
 
-- 현재 예약 내역 확인 : 현재 예약한 내용을 확인하고 인증번호를 통해 출입 할 수 있다.
+- **현재 예약 내역 확인**: 현재 예약한 내용을 확인하고 인증번호를 통해 출입할 수 있습니다.
 
-  ![image](https://github.com/user-attachments/assets/720cafd4-cb29-44cd-b49f-2d4203794466)
+  <img src="https://github.com/user-attachments/assets/720cafd4-cb29-44cd-b49f-2d4203794466" width="390px"/>
 
-- 관리자 1:1 문의 : ‘관리자 1:1 문의’ 버튼을 누르면 해당 스터디카페 관리자와의 채팅방이 개설된다.
+- **관리자 1:1 문의**: ‘관리자 1:1 문의’ 버튼을 누르면 해당 스터디카페 관리자와의 채팅방이 개설됩니다.
 
-    <img src="https://github.com/user-attachments/assets/57b4271a-8c6c-42ac-91f1-f65daa3c4df6" width="390px"/>
+  <img src="https://github.com/user-attachments/assets/57b4271a-8c6c-42ac-91f1-f65daa3c4df6" width="390px"/>
 
+- **채팅**: 해당 스터디카페의 관리자에게 실시간으로 문의를 남길 수 있습니다.
 
-- 채팅 : 해당 스터디카페의 관리자에게 실시간으로 문의를 남길 수 있다.
+  <img src="https://github.com/user-attachments/assets/a6b953d2-e0a1-49a4-87a7-df4cb5b03bfd" width="390px"/>
 
-    <img src="https://github.com/user-attachments/assets/a6b953d2-e0a1-49a4-87a7-df4cb5b03bfd" width="390px"/>
+- **예약 내역 조회**: 처음에 최근 30개 예약 내역을 표시하고 이후 날짜를 선택하면 해당 기간 안의 예약 내역을 표시합니다.
 
-- 예약 내역 조회 : 처음에 최근 30개 예약 내역을 표시하고 이후 날짜를 선택하면 해당 기간 안의 예약 내역을 표시한다.
   <img src="https://github.com/user-attachments/assets/bf5c1dec-267c-403f-8f05-909031ea1842" width="390px"/>
+
+## 스터디카페 관리자
+
+- **스터디카페 정보 조회**: 현재 자신이 운영 중인 스터디카페의 상태를 확인할 수 있습니다.
+
+  <img src="https://github.com/user-attachments/assets/e41c0ae0-74e5-4afd-8538-c869303f4015" width="390px"/>
+
+- **스터디카페 정보 입력**: 새로운 스터디카페를 등록할 수 있습니다.
+
+  <img src="https://github.com/user-attachments/assets/2be336bd-31fe-47d8-bc90-569998c4288d" width="390px"/>
+
+- **스터디카페 정보 상세보기**: 상세보기 버튼을 누르면 해당 스터디카페의 상세 정보를 확인할 수 있습니다.
+
+  <img src="https://github.com/user-attachments/assets/6589d809-c306-4cd5-b103-4f9f81db8140" width="390px"/>
+
+- **스터디카페 정보 수정**: 상세보기 페이지에서 수정하기 버튼을 누르면 해당 스터디카페의 정보를 수정할 수 있습니다.
+
+  <img src="https://github.com/user-attachments/assets/cfb16218-6c36-4ab7-99f3-083059d46d7c" width="390px"/>
+
+- **채팅**: 스터디카페를 이용 중인 고객에게 실시간으로 문의를 답변할 수 있습니다.
+
+  <img src="https://github.com/user-attachments/assets/61b3d2f0-9e65-48c3-9f90-1c6f84241347" width="390px"/>
+  
+  <img src="https://github.com/user-attachments/assets/ed179b8f-d320-47e8-8afd-2754d0d83034" width="390px"/>
+
