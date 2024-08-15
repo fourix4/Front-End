@@ -4,7 +4,6 @@ import { ROUTE } from './config/constants';
 import MainPage from './pages/MainPage/MainPage';
 
 import LoadingPage from './pages/LoadingPage/LoadingPage';
-import ManagementDetailPage from './pages/ManagementDetailPage/ManagementDetailPage';
 
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 const RedirectionPage = lazy(
@@ -34,6 +33,10 @@ const PaymentSuccessPage = lazy(
 const BookingPage = lazy(() => import('./pages/BookingPage/BookingPage'));
 const GoogleRedirectionPage = lazy(
   () => import('./pages/GoogleRedirectionPage/GoogleRedirectionPage'),
+);
+
+const ManagementDetailPage = lazy(
+  () => import('./pages/ManagementDetailPage/ManagementDetailPage'),
 );
 
 const App: React.FC = () => {
