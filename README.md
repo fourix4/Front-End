@@ -208,3 +208,12 @@ https://catch-study.kro.kr/
   
   <img src="https://github.com/user-attachments/assets/ed179b8f-d320-47e8-8afd-2754d0d83034" width="390px"/>
 
+
+# 🧐 리팩토링, 개선
+- [🚥 axios response interceptor 보수 ‐ 에러 핸들링](https://github.com/fourix4/Front-End/wiki/%F0%9F%9A%A5-axios-response-interceptor-%EB%B3%B4%EC%88%98-%E2%80%90-%EC%97%90%EB%9F%AC-%ED%95%B8%EB%93%A4%EB%A7%81)
+- [⛱️ 무한 스크롤 hook으로 분리](https://github.com/fourix4/Front-End/wiki/%E2%9B%B1%EF%B8%8F-%EB%AC%B4%ED%95%9C-%EC%8A%A4%ED%81%AC%EB%A1%A4-hook%EC%9C%BC%EB%A1%9C-%EB%B6%84%EB%A6%AC)
+- [💿 Github Actions 의존성 모듈 설치 캐시](https://github.com/fourix4/Front-End/wiki/%F0%9F%92%BF-Github-Actions-%EC%9D%98%EC%A1%B4%EC%84%B1-%EB%AA%A8%EB%93%88-%EC%84%A4%EC%B9%98-%EC%BA%90%EC%8B%9C)
+- [📏 반응형 웹](https://github.com/fourix4/Front-End/wiki/%F0%9F%93%8F-%EB%B0%98%EC%9D%91%ED%98%95-%EC%9B%B9)
+- [💀 스켈레톤 UI](https://github.com/fourix4/Front-End/wiki/%F0%9F%92%80-%EC%8A%A4%EC%BC%88%EB%A0%88%ED%86%A4-UI)
+- [🎆 LCP 개선](https://github.com/fourix4/Front-End/wiki/%F0%9F%8E%86-LCP-%EA%B0%9C%EC%84%A0)
+- [🔨 채팅 스크롤 UX 개선](https://github.com/fourix4/Front-End/wiki/%F0%9F%94%A8-%EC%B1%84%ED%8C%85-%EC%8A%A4%ED%81%AC%EB%A1%A4-UX-%EA%B0%9C%EC%84%A0)
