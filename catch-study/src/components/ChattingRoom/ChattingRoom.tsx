@@ -51,8 +51,6 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       headers: {
         chatRoodId: roomId.toString(),
         Authorization: `Bearer ${accessToken}`,
-        email,
-        userId: userId.toString(),
       },
     });
 
@@ -118,8 +116,6 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
       connectHeaders: {
         chatRoomId: roomId.toString(),
         Authorization: `Bearer ${accessToken}`,
-        email,
-        userId: userId.toString(),
       },
     });
 
