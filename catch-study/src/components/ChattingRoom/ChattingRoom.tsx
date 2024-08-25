@@ -142,8 +142,6 @@ const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
         {
           chatRoomId: roomId.toString(),
           Authorization: `Bearer ${accessToken}`,
-          email,
-          userId: userId.toString(),
         },
       );
 
