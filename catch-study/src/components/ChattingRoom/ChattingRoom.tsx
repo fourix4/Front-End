@@ -17,7 +17,6 @@ interface ChattingRoomPropTypes {
 
 const ChattingRoom: React.FC<ChattingRoomPropTypes> = ({
   userId,
-  email,
   roomId,
   chattingName,
 }) => {
